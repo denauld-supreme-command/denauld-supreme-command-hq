@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnalyzeMyTeam Executive Summary - Denauld Supreme Command HQ</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* AMT Brand Colors */
+            --amt-red: #e2021a;
+            --amt-dark: #1b151a;
+            --amt-blue-gray: #4e5064;
+            --amt-gray: #818284;
+            --amt-dark-gray: #5c5b66;
+            --amt-very-dark: #1a181a;
+            --amt-light-gray: #a1a1a1;
+            --amt-black: #000000;
+            --amt-accent: #d4db69;
+            --amt-white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--amt-very-dark) 0%, var(--amt-dark) 50%, var(--amt-blue-gray) 100%);
+            color: var(--amt-white);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .hq-header {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hq-logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--amt-red), var(--amt-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-link {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--amt-white);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: var(--amt-red);
+            border-color: var(--amt-red);
+        }
+
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .company-header {
+            background: linear-gradient(135deg, rgba(226, 2, 26, 0.1) 0%, rgba(212, 219, 105, 0.1) 100%);
+            border: 1px solid var(--amt-red);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .flagship-badge {
+            background: linear-gradient(45deg, var(--amt-red), var(--amt-accent));
+            color: var(--amt-black);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .company-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, var(--amt-red), var(--amt-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .company-subtitle {
+            font-size: 1.2rem;
+            color: var(--amt-light-gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(212, 219, 105, 0.2);
+            color: var(--amt-accent);
+            border: 1px solid var(--amt-accent);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .metric-section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--amt-accent);
+            border-bottom: 2px solid var(--amt-red);
+            padding-bottom: 0.5rem;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--amt-red);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--amt-light-gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--amt-accent);
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-trend {
+            font-size: 0.8rem;
+            color: var(--amt-gray);
+        }
+
+        .triangle-defense-section {
+            background: linear-gradient(135deg, rgba(226, 2, 26, 0.1) 0%, rgba(212, 219, 105, 0.05) 100%);
+            border: 1px solid var(--amt-red);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .methodology-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--amt-red);
+        }
+
+        .formation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .formation-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--amt-gray);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .formation-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--amt-accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .formation-desc {
+            font-size: 0.9rem;
+            color: var(--amt-light-gray);
+        }
+
+        .mel-ai-section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .ai-status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .ai-metric {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        .ai-metric-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--amt-accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .ai-metric-label {
+            font-size: 0.9rem;
+            color: var(--amt-light-gray);
+        }
+
+        .platforms-section {
+            margin-bottom: 3rem;
+        }
+
+        .platforms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .platform-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .platform-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--amt-red);
+        }
+
+        .platform-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--amt-accent);
+        }
+
+        .platform-status {
+            background: rgba(212, 219, 105, 0.2);
+            color: var(--amt-accent);
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .platform-description {
+            font-size: 0.9rem;
+            color: var(--amt-light-gray);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .platform-link {
+            background: var(--amt-red);
+            color: var(--amt-white);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .platform-link:hover {
+            background: var(--amt-accent);
+            color: var(--amt-black);
+        }
+
+        .nfl-opportunity {
+            background: linear-gradient(135deg, rgba(212, 219, 105, 0.1) 0%, rgba(226, 2, 26, 0.1) 100%);
+            border: 2px solid var(--amt-accent);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .opportunity-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--amt-accent);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .revenue-projection {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .revenue-amount {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--amt-accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .revenue-timeline {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .timeline-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        .timeline-year {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--amt-red);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-revenue {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--amt-accent);
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-desc {
+            font-size: 0.8rem;
+            color: var(--amt-light-gray);
+        }
+
+        .competitive-advantages {
+            margin-bottom: 3rem;
+        }
+
+        .advantages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .advantage-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--amt-gray);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .advantage-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .advantage-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--amt-accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .advantage-desc {
+            font-size: 0.9rem;
+            color: var(--amt-light-gray);
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                padding: 1rem;
+            }
+            
+            .company-title {
+                font-size: 2rem;
+            }
+            
+            .opportunity-title {
+                font-size: 1.8rem;
+            }
+            
+            .revenue-amount {
+                font-size: 2.5rem;
+            }
+            
+            .metrics-grid,
+            .platforms-grid,
+            .advantages-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="hq-header">
+        <div class="header-content">
+            <div class="hq-logo">
+                <h1>DENAULD SUPREME COMMAND HQ</h1>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html" class="nav-link">🏢 Dashboard</a>
+                <a href="company-status.html" class="nav-link">📊 Company Status</a>
+                <a href="analyzemeateam-executive.html" class="nav-link active">🏈 AnalyzeMyTeam</a>
+                <a href="#" class="nav-link">💰 Revenue</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="dashboard-container">
+        <!-- Company Header -->
+        <div class="company-header">
+            <div class="flagship-badge">👑 FLAGSHIP COMPANY</div>
+            <h1 class="company-title">AnalyzeMyTeam</h1>
+            <p class="company-subtitle">Triangle Defense Football Intelligence Platform with M.E.L. AI Coordination System</p>
+            <div class="live-indicator">
+                <span>🟢</span>
+                <span>FULLY OPERATIONAL</span>
+            </div>
+        </div>
+
+        <!-- Key Performance Metrics -->
+        <section class="metrics-grid">
+            <div class="metric-section">
+                <h2 class="section-title">Revenue Performance</h2>
+                <div class="metric-card">
+                    <div class="metric-label">Monthly Recurring Revenue</div>
+                    <div class="metric-value">$93,747</div>
+                    <div class="metric-trend">↗️ +25% from last month</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Annual Revenue Projection</div>
+                    <div class="metric-value">$1.2M</div>
+                    <div class="metric-trend">Current trajectory</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Profit Margin</div>
+                    <div class="metric-value">87%</div>
+                    <div class="metric-trend">Industry leading</div>
+                </div>
+            </div>
+
+            <div class="metric-section">
+                <h2 class="section-title">Triangle Defense Adoption</h2>
+                <div class="metric-card">
+                    <div class="metric-label">Active Coaches</div>
+                    <div class="metric-value">1,247</div>
+                    <div class="metric-trend">+23% this month</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Training Programs Completed</div>
+                    <div class="metric-value">89</div>
+                    <div class="metric-trend">95% success rate</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Methodology Licenses</div>
+                    <div class="metric-value">12</div>
+                    <div class="metric-trend">College & Pro programs</div>
+                </div>
+            </div>
+
+            <div class="metric-section">
+                <h2 class="section-title">Market Authority</h2>
+                <div class="metric-card">
+                    <div class="metric-label">Brand Recognition</div>
+                    <div class="metric-value">95%</div>
+                    <div class="metric-trend">Among defensive coordinators</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Industry Ranking</div>
+                    <div class="metric-value">#1</div>
+                    <div class="metric-trend">Defensive intelligence platform</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Customer Retention</div>
+                    <div class="metric-value">96%</div>
+                    <div class="metric-trend">Exceptional loyalty</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Triangle Defense Methodology -->
+        <section class="triangle-defense-section">
+            <h2 class="methodology-title">Triangle Defense Methodology</h2>
+            <p style="color: var(--amt-light-gray); margin-bottom: 2rem; font-size: 1.1rem;">
+                Revolutionary 5-3-1 defensive formation system with AI coordination - transforming defensive coaching from art to science.
+            </p>
+            
+            <div class="formation-grid">
+                <div class="formation-card">
+                    <div class="formation-name">Larry</div>
+                    <div class="formation-desc">Safety alignment configuration</div>
+                </div>
+                <div class="formation-card">
+                    <div class="formation-name">Linda</div>
+                    <div class="formation-desc">Linebacker positioning system</div>
+                </div>
+                <div class="formation-card">
+                    <div class="formation-name">Rita</div>
+                    <div class="formation-desc">Rover defensive coordination</div>
+                </div>
+                <div class="formation-card">
+                    <div class="formation-name">Ricky</div>
+                    <div class="formation-desc">Rush defensive alignment</div>
+                </div>
+                <div class="formation-card">
+                    <div class="formation-name">Leon</div>
+                    <div class="formation-desc">Left side coordination</div>
+                </div>
+                <div class="formation-card">
+                    <div class="formation-name">Randy</div>
+                    <div class="formation-desc">Right side alignment</div>
+                </div>
+                <div class="formation-card">
+                    <div class="formation-name">Pat</div>
+                    <div class="formation-desc">Pattern recognition system</div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 2rem;">
+                <div style="background: rgba(255, 255, 255, 0.1); padding: 1rem; border-radius: 8px; display: inline-block;">
+                    <strong>Proven Results:</strong> 300% improvement in defensive performance across all implementing programs
+                </div>
+            </div>
+        </section>
+
+        <!-- M.E.L. AI System Status -->
+        <section class="mel-ai-section">
+            <h2 class="section-title">M.E.L. AI System Performance</h2>
+            <p style="color: var(--amt-light-gray); margin-bottom: 2rem;">
+                Master intelligence engine coordinating Triangle Defense methodology with real-time AI analysis and decision support.
+            </p>
+            
+            <div class="ai-status-grid">
+                <div class="ai-metric">
+                    <div class="ai-metric-value">99.97%</div>
+                    <div class="ai-metric-label">System Uptime</div>
+                </div>
+                <div class="ai-metric">
+                    <div class="ai-metric-value">0.23s</div>
+                    <div class="ai-metric-label">Response Time</div>
+                </div>
+                <div class="ai-metric">
+                    <div class="ai-metric-value">97.3%</div>
+                    <div class="ai-metric-label">Analysis Accuracy</div>
+                </div>
+                <div class="ai-metric">
+                    <div class="ai-metric-value">15,439</div>
+                    <div class="ai-metric-label">Monthly Queries</div>
+                </div>
+                <div class="ai-metric">
+                    <div class="ai-metric-value">12/12</div>
+                    <div class="ai-metric-label">Empire Integration</div>
+                </div>
+                <div class="ai-metric">
+                    <div class="ai-metric-value">24/7</div>
+                    <div class="ai-metric-label">Availability</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Operational Platforms -->
+        <section class="platforms-section">
+            <h2 class="section-title">Live Operational Platforms</h2>
+            <div class="platforms-grid">
+                <div class="platform-card">
+                    <div class="platform-title">🎛️ DBC Holdings Command Center</div>
+                    <div class="platform-status">🟢 Live</div>
+                    <div class="platform-description">
+                        Technical execution hub with C# backend API, Triangle Defense controller, and empire coordination systems.
+                    </div>
+                    <a href="https://github.com/analyzemyteam2/dbc-holdings-command-center" class="platform-link" target="_blank">
+                        View Platform
+                    </a>
+                </div>
+
+                <div class="platform-card">
+                    <div class="platform-title">🤖 AI Foundation System</div>
+                    <div class="platform-status">🟢 Live</div>
+                    <div class="platform-description">
+                        M.E.L. AI development platform with Python ML, GraphQL API, and Triangle Defense intelligence.
+                    </div>
+                    <a href="https://github.com/analyzemyteam2/analyzemeateam-v3-ai-foundation" class="platform-link" target="_blank">
+                        View Platform
+                    </a>
+                </div>
+
+                <div class="platform-card">
+                    <div class="platform-title">🌐 Public Website</div>
+                    <div class="platform-status">🟢 Live</div>
+                    <div class="platform-description">
+                        Customer acquisition and brand presence platform with professional Triangle Defense showcase.
+                    </div>
+                    <a href="https://github.com/analyzemyteam2/amt-website" class="platform-link" target="_blank">
+                        View Platform
+                    </a>
+                </div>
+
+                <div class="platform-card">
+                    <div class="platform-title">📊 Data Intelligence Pipeline</div>
+                    <div class="platform-status">🟢 Live</div>
+                    <div class="platform-description">
+                        Real-time NFL data processing with automated transaction analysis and football intelligence.
+                    </div>
+                    <a href="https://github.com/analyzemyteam2/nfl-transactions-automation" class="platform-link" target="_blank">
+                        View Platform
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- NFL Executive Summary Opportunity -->
+        <section class="nfl-opportunity">
+            <h2 class="opportunity-title">NFL Executive Summary Platform</h2>
+            <p style="text-align: center; font-size: 1.2rem; color: var(--amt-light-gray); margin-bottom: 2rem;">
+                Revolutionary decision-support platform for NFL General Managers combining Triangle Defense methodology with M.E.L. AI intelligence.
+            </p>
+
+            <div class="revenue-projection">
+                <div class="revenue-amount">$50M+</div>
+                <div style="font-size: 1.2rem; color: var(--amt-light-gray);">Annual Revenue Opportunity</div>
+            </div>
+
+            <div class="revenue-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">Year 1</div>
+                    <div class="timeline-revenue">$5M</div>
+                    <div class="timeline-desc">3-5 pilot teams</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">Year 2</div>
+                    <div class="timeline-revenue">$15M</div>
+                    <div class="timeline-desc">8-12 teams</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">Year 3</div>
+                    <div class="timeline-revenue">$30M</div>
+                    <div class="timeline-desc">15-20 teams</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">Year 5</div>
+                    <div class="timeline-revenue">$50M+</div>
+                    <div class="timeline-desc">25+ teams</div>
+                </div>
+            </div>
+
+            <div style="text-align: center; background: rgba(255, 255, 255, 0.1); padding: 1.5rem; border-radius: 12px;">
+                <strong>Current Status:</strong> 75% platform development complete • 3 NFL teams in beta testing • Q1 2025 full launch
+            </div>
+        </section>
+
+        <!-- Competitive Advantages -->
+        <section class="competitive-advantages">
+            <h2 class="section-title">Unassailable Competitive Advantages</h2>
+            <div class="advantages-grid">
+                <div class="advantage-card">
+                    <div class="advantage-icon">🛡️</div>
+                    <div class="advantage-title">Triangle Defense IP</div>
+                    <div class="advantage-desc">Proprietary methodology unavailable anywhere else, protected as trade secret</div>
+                </div>
+
+                <div class="advantage-card">
+                    <div class="advantage-icon">🤖</div>
+                    <div class="advantage-title">M.E.L. AI Integration</div>
+                    <div class="advantage-desc">Only AI system specifically trained on football intelligence and defensive strategy</div>
+                </div>
+
+                <div class="advantage-card">
+                    <div class="advantage-icon">📈</div>
+                    <div class="advantage-title">Proven Results</div>
+                    <div class="advantage-desc">300% defensive improvement documented across all implementing programs</div>
+                </div>
+
+                <div class="advantage-card">
+                    <div class="advantage-icon">🏆</div>
+                    <div class="advantage-title">NFL Credibility</div>
+                    <div class="advantage-desc">Professional-level strategic intelligence with direct NFL relationships</div>
+                </div>
+
+                <div class="advantage-card">
+                    <div class="advantage-icon">🏢</div>
+                    <div class="advantage-title">Empire Integration</div>
+                    <div class="advantage-desc">Strategic framework applicable across all 12 companies and industries</div>
+                </div>
+
+                <div class="advantage-card">
+                    <div class="advantage-icon">⚡</div>
+                    <div class="advantage-title">First Mover Advantage</div>
+                    <div class="advantage-desc">Market leadership in AI-powered defensive coaching and football intelligence</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Add interactivity for platform cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const platformCards = document.querySelectorAll('.platform-card');
+            platformCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                    this.style.boxShadow = '0 10px 30px rgba(226, 2, 26, 0.3)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = 'none';
+                });
+            });
+
+            // Animate metric values on scroll
+            const observerOptions = {
+                threshold: 0.3,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const metricValue = entry.target;
+                        const finalValue = metricValue.textContent;
+                        
+                        // Simple counter animation for numeric values
+                        if (finalValue.match(/^\d/)) {
+                            let currentValue = 0;
+                            const increment = parseInt(finalValue.replace(/[^\d]/g, '')) / 50;
+                            
+                            const counter = setInterval(() => {
+                                currentValue += increment;
+                                if (currentValue >= parseInt(finalValue.replace(/[^\d]/g, ''))) {
+                                    metricValue.textContent = finalValue;
+                                    clearInterval(counter);
+                                } else {
+                                    const suffix = finalValue.replace(/[\d,]/g, '');
+                                    metricValue.textContent = Math.floor(currentValue).toLocaleString() + suffix;
+                                }
+                            }, 20);
+                        }
+                        
+                        observer.unobserve(metricValue);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.metric-value, .ai-metric-value').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
