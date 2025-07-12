@@ -1,6 +1,8 @@
+# Netlify Configuration for Denauld Supreme Command HQ
 [build]
   publish = "."
   command = ""
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF ."
 
 [build.environment]
   NODE_VERSION = "18"
@@ -106,13 +108,12 @@
   to = "/index.html"
   status = 200
 
-# Context-based deployment (for different environments)
+# Context-based deployment
 [context.production]
   [context.production.environment]
     ACCESS_CONTROL = "private"
     EMPIRE_MODE = "production"
     HQ_SECURITY = "maximum"
-    ALLOWED_USERS = "denauld@analyzemeateam.com,victoria@caseclosed.com,alexandra@empire.command"
 
 [context.deploy-preview]
   [context.deploy-preview.environment]
@@ -124,68 +125,17 @@
     ACCESS_CONTROL = "development"
     EMPIRE_MODE = "development"
 
-# Edge Functions for Authentication (when needed)
+# Edge Functions for Authentication
 [[edge_functions]]
   function = "auth-check"
   path = "/*"
-
-# Forms Configuration (for contact/feedback)
-[forms]
-  spam_filter = true
 
 # Functions Configuration
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
 
-# Build Plugins
-[[plugins]]
-  package = "@netlify/plugin-lighthouse"
-
-  [plugins.inputs.thresholds]
-    performance = 0.9
-    accessibility = 0.9
-    best-practices = 0.9
-    seo = 0.9
-
-[[plugins]]
-  package = "netlify-plugin-minify-html"
-
-  [plugins.inputs]
-    contexts = ["production"]
-
-# Environment Variables Documentation
-# The following environment variables should be set in Netlify UI:
-#
-# Required for Production:
-# - ACCESS_CONTROL: "private" (enables authentication)
-# - EMPIRE_MODE: "production" (production settings)
-# - HQ_SECURITY: "maximum" (highest security level)
-# - ALLOWED_USERS: "denauld@analyzemeateam.com,victoria@caseclosed.com,alexandra@empire.command"
-# - NETLIFY_AUTH_TOKEN: (for API access)
-# - WEBHOOK_SECRET: (for secure webhooks)
-#
-# Optional for Enhanced Features:
-# - GOOGLE_CLIENT_ID: (for Google Calendar integration)
-# - GOOGLE_CLIENT_SECRET: (for Google Calendar integration)
-# - ZOOM_API_KEY: (for Zoom integration)
-# - ZOOM_API_SECRET: (for Zoom integration)
-# - USEMOTION_API_KEY: (for UseMotion calendar integration)
-# - SLACK_WEBHOOK_URL: (for notification integration)
-# - GITHUB_TOKEN: (for repository data fetching)
-#
-# Company Integration APIs:
-# - AMT_API_ENDPOINT: "https://api.analyzemeateam.com"
-# - MEDIA_223_API_ENDPOINT: "https://api.223media.com"
-# - CASECLOSED_API_ENDPOINT: "https://api.caseclosed.com"
-# - BARNABAS_API_ENDPOINT: "https://api.barnabas.ai"
-#
-# Security & Monitoring:
-# - SENTRY_DSN: (for error monitoring)
-# - ANALYTICS_ID: (for usage analytics)
-# - SECURITY_KEY: (for additional encryption)
-
-# Site Information
+# Build Processing
 [build.processing]
   skip_processing = false
 
@@ -200,23 +150,7 @@
 [build.processing.html]
   pretty_urls = true
 
-# Split Testing (for A/B testing executive features)
-[split_testing]
-  enabled = false
-
-# Large Media (for handling large assets if needed)
-[large_media]
-  enabled = false
-
-# Identity (Netlify Identity for user management)
-[identity]
-  enabled = false
-
-# Git LFS (if needed for large files)
-[lfs]
-  enabled = false
-
-# Custom Headers for Specific File Types
+# Custom Headers for File Types
 [[headers]]
   for = "*.json"
   [headers.values]
@@ -227,176 +161,3 @@
   for = "*.xml"
   [headers.values]
     Content-Type = "application/xml; charset=utf-8"
-
-# Development-specific headers
-[[headers]]
-  for = "/*"
-  [headers.values.dev]
-    X-Development-Mode = "true"
-
-# Performance Optimizations
-[build.processing.images]
-  compress = true
-
-# Dev Server Configuration (for local development)
-[dev]
-  command = "python -m http.server 8888"
-  port = 8888
-  publish = "."
-  functions = "netlify/functions"
-
-# Custom Build Command (if needed)
-[build]
-  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF ."
-
-# Preview Configuration
-[context.deploy-preview]
-  command = ""
-  publish = "."
-
-# Branch-specific configuration
-[context.branch-deploy]
-  command = ""
-  publish = "."
-
-# Feature Flags (for gradual feature rollout)
-[feature_flags]
-  hq_dashboard_v2 = false
-  advanced_analytics = false
-  real_time_updates = false
-  voice_commands = false
-
-# Performance Monitoring
-[monitoring]
-  enabled = true
-
-# Custom Domain Configuration
-[site]
-  id = "TBD"  # Will be filled when site is created
-
-# Webhook Configuration
-[webhooks]
-  github_integration = true
-  company_updates = true
-
-# Rate Limiting
-[rate_limiting]
-  enabled = true
-  max_requests = 1000
-  window = 3600  # 1 hour
-
-# Geo-location (if international access needed)
-[geo]
-  country_code_header = true
-
-# AI/ML Edge Functions (for future M.E.L. integration)
-[edge_functions.ai]
-  enabled = false
-  model = "gpt-4"
-
-# Backup Configuration
-[backup]
-  schedule = "daily"
-  retention_days = 30
-
-# Notification Settings
-[notifications]
-  email = "denauld@analyzemeateam.com"
-  slack_webhook = "${SLACK_WEBHOOK_URL}"
-
-# Analytics Configuration
-[analytics]
-  provider = "netlify"
-  track_performance = true
-  track_errors = true
-
-# SEO Configuration (disabled for private site)
-[seo]
-  index = false
-  follow = false
-
-# Mobile Configuration
-[mobile]
-  progressive_web_app = true
-  app_shell_caching = true
-
-# Error Handling
-[error_handling]
-  custom_404 = "/index.html"
-  custom_500 = "/index.html"
-
-# Maintenance Mode (for updates)
-[maintenance]
-  enabled = false
-  message = "Denauld Supreme Command HQ is currently undergoing maintenance. Please check back shortly."
-
-# Access Log Configuration
-[access_logs]
-  enabled = true
-  format = "combined"
-  retention_days = 90
-
-# SSL/TLS Configuration
-[ssl]
-  force_ssl = true
-  hsts_max_age = 31536000
-  hsts_include_subdomains = true
-
-# CDN Configuration
-[cdn]
-  global_distribution = true
-  cache_optimization = true
-
-# API Gateway Configuration
-[api_gateway]
-  enabled = false
-  cors_enabled = true
-
-# Real-time Updates (WebSocket configuration)
-[realtime]
-  enabled = false
-  max_connections = 100
-
-# Database Configuration (if needed)
-[database]
-  provider = "none"  # Currently static site
-
-# File Upload Configuration
-[uploads]
-  max_file_size = "10MB"
-  allowed_types = ["image/*", "application/pdf"]
-
-# Compliance and Privacy
-[compliance]
-  gdpr_compliant = true
-  privacy_policy = "/privacy"
-  terms_of_service = "/terms"
-
-# Audit Trail
-[audit]
-  enabled = true
-  log_level = "info"
-  retention_days = 365
-
-# Emergency Access
-[emergency]
-  override_key = "${EMERGENCY_ACCESS_KEY}"
-  contact_email = "denauld@analyzemeateam.com"
-
-# Version Control Integration
-[version_control]
-  auto_deploy = true
-  branch_deploys = true
-  pr_previews = true
-
-# Quality Assurance
-[qa]
-  lighthouse_checks = true
-  security_scanning = true
-  performance_monitoring = true
-
-# Documentation
-[docs]
-  api_docs = false
-  user_guide = false
-  admin_guide = true
