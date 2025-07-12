@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Summoning System - Denauld Supreme Command HQ</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* AMT Brand Colors */
+            --amt-red: #e2021a;
+            --amt-dark: #1b151a;
+            --amt-blue-gray: #4e5064;
+            --amt-gray: #818284;
+            --amt-dark-gray: #5c5b66;
+            --amt-very-dark: #1a181a;
+            --amt-light-gray: #a1a1a1;
+            --amt-black: #000000;
+            --amt-accent: #d4db69;
+            --amt-white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--amt-very-dark) 0%, var(--amt-dark) 50%, var(--amt-blue-gray) 100%);
+            color: var(--amt-white);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .hq-header {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hq-logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--amt-red), var(--amt-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-link {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--amt-white);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: var(--amt-red);
+            border-color: var(--amt-red);
+        }
+
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, var(--amt-red), var(--amt-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: var(--amt-light-gray);
+            margin-bottom: 3rem;
+        }
+
+        .tier-section {
+            margin-bottom: 3rem;
+        }
+
+        .tier-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tier-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .tier-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .tier-badge.founder { background: var(--amt-accent); color: var(--amt-black); }
+        .tier-badge.ai { background: var(--amt-blue-gray); color: var(--amt-white); }
+        .tier-badge.executive { background: var(--amt-red); color: var(--amt-white); }
+        .tier-badge.strategic { background: var(--amt-gray); color: var(--amt-white); }
+        .tier-badge.advisory { background: var(--amt-light-gray); color: var(--amt-black); }
+        .tier-badge.innovation { background: var(--amt-accent); color: var(--amt-black); }
+        .tier-badge.football { background: var(--amt-red); color: var(--amt-white); }
+
+        .staff-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .staff-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .staff-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--amt-red);
+            box-shadow: 0 10px 30px rgba(226, 2, 26, 0.3);
+        }
+
+        .staff-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(45deg, var(--amt-red), var(--amt-accent));
+        }
+
+        .staff-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .staff-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--amt-red), var(--amt-accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--amt-black);
+        }
+
+        .staff-info h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .staff-nickname {
+            font-size: 0.85rem;
+            color: var(--amt-accent);
+            font-style: italic;
+            margin-bottom: 0.25rem;
+        }
+
+        .staff-title {
+            font-size: 0.9rem;
+            color: var(--amt-light-gray);
+        }
+
+        .staff-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--amt-accent);
+        }
+
+        .status-text {
+            font-size: 0.8rem;
+            color: var(--amt-accent);
+            font-weight: 500;
+        }
+
+        .staff-details {
+            font-size: 0.85rem;
+            color: var(--amt-light-gray);
+            line-height: 1.4;
+            margin-bottom: 1rem;
+        }
+
+        .summon-button {
+            background: var(--amt-red);
+            color: var(--amt-white);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .summon-button:hover {
+            background: var(--amt-accent);
+            color: var(--amt-black);
+        }
+
+        .emergency-priority {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(0, 0, 0, 0.7);
+            color: var(--amt-accent);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        /* Status Report Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            padding: 2rem;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--amt-dark);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--amt-red), var(--amt-accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--amt-black);
+        }
+
+        .modal-info h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .modal-nickname {
+            font-size: 1rem;
+            color: var(--amt-accent);
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-title {
+            font-size: 1rem;
+            color: var(--amt-light-gray);
+        }
+
+        .close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--amt-light-gray);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .close-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--amt-white);
+        }
+
+        .report-content {
+            padding: 2rem;
+        }
+
+        .report-section {
+            margin-bottom: 2rem;
+        }
+
+        .report-section h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--amt-accent);
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.5rem;
+        }
+
+        .report-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .report-label {
+            font-size: 0.9rem;
+            color: var(--amt-light-gray);
+        }
+
+        .report-value {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--amt-accent);
+        }
+
+        .report-description {
+            font-size: 0.9rem;
+            color: var(--amt-light-gray);
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                padding: 1rem;
+            }
+            
+            .staff-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal {
+                padding: 1rem;
+            }
+            
+            .modal-content {
+                max-height: 95vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="hq-header">
+        <div class="header-content">
+            <div class="hq-logo">
+                <h1>DENAULD SUPREME COMMAND HQ</h1>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html" class="nav-link">🏢 Dashboard</a>
+                <a href="company-status.html" class="nav-link">📊 Company Status</a>
+                <a href="staff-summoning.html" class="nav-link active">👥 Staff Command</a>
+                <a href="nfl-executive-demo.html" class="nav-link">🏈 NFL Demo</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="dashboard-container">
+        <h1 class="page-title">Executive Staff Command Center</h1>
+        <p class="page-subtitle">Summon any of the 25 championship professionals for real-time status reports and strategic intelligence</p>
+
+        <!-- Tier 1: Founder Authority -->
+        <section class="tier-section">
+            <div class="tier-header">
+                <h2 class="tier-title">👑 Founder Authority</h2>
+                <span class="tier-badge founder">Supreme Command</span>
+            </div>
+            <div class="staff-grid">
+                <div class="staff-card" onclick="summonStaff('denauld-brown')">
+                    <div class="emergency-priority">#1</div>
+                    <div class="staff-header">
+                        <div class="staff-avatar">DB</div>
+                        <div class="staff-info">
+                            <h3>Denauld Brown</h3>
+                            <div class="staff-nickname">"The Mastermind"</div>
+                            <div class="staff-title">Founder, CEO & Defensive Coordinator</div>
+                        </div>
+                    </div>
+                    <div class="staff-status">
+                        <div class="status-indicator"></div>
+                        <span class="status-text">Available for Command</span>
+                    </div>
+                    <div class="staff-details">
+                        Triangle Defense Innovation, Strategic Vision, Leadership Excellence. Supreme authority across all 12 companies.
+                    </div>
+                    <button class="summon-button">Summon for Strategic Brief</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tier 2: AI Core -->
+        <section class="tier-section">
+            <div class="tier-header">
+                <h2 class="tier-title">🤖 AI Core Intelligence</h2>
+                <span class="tier-badge ai">Digital Consciousness</span>
+            </div>
+            <div class="staff-grid">
+                <div class="staff-card" onclick="summonStaff('mel-ai')">
+                    <div class="emergency-priority">#2</div>
+                    <div class="staff-header">
+                        <div class="staff-avatar">AI</div>
+                        <div class="staff-info">
+                            <h3>M.E.L.</h3>
+                            <div class="staff-nickname">"The Digital Twin"</div>
+                            <div class="staff-title">Master Intelligence Engine</div>
+                        </div>
+                    </div>
+                    <div class="staff-status">
+                        <div class="status-indicator"></div>
+                        <span class="status-text">Always Available</span>
+                    </div>
+                    <div class="staff-details">
+                        AI system embodying Denauld's complete methodology. Triangle Defense mastery and empire-wide intelligence coordination.
+                    </div>
+                    <button class="summon-button">Summon for Intelligence Report</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tier 3: Executive Command -->
+        <section class="tier-section">
+            <div class="tier-header">
+                <h2 class="tier-title">⭐ Executive Command</h2>
+                <span class="tier-badge executive">Direct Authority</span>
+            </div>
+            <div class="staff-grid">
+                <div class="staff-card" onclick="summonStaff('victoria-castellanos')">
+                    <div class="emergency-priority">#3</div>
+                    <div class="staff-header">
+                        <div class="staff-avatar">VC</div>
+                        <div class="staff-info">
+                            <h3>Victoria Castellanos</h3>
+                            <div class="staff-nickname">"The Shield"</div>
+                            <div class="staff-title">Chief Legal Officer</div>
+                        </div>
+                    </div>
+                    <div class="staff-status">
+                        <div class="status-indicator"></div>
+                        <span class="status-text">Online</span>
+                    </div>
+                    <div class="staff-details">
+                        Harvard Law School (JD), Former Federal Prosecutor. IP Protection, Sports Law, Business Contracts, Compliance Excellence.
+                    </div>
+                    <button class="summon-button">Summon for Legal Brief</button>
+                </div>
+
+                <div class="staff-card" onclick="summonStaff('alexandra-martinez')">
+                    <div class="emergency-priority">#4</div>
+                    <div class="staff-header">
+                        <div class="staff-avatar">AM</div>
+                        <div class="staff-info">
+                            <h3>Alexandra Martinez</h3>
+                            <div class="staff-nickname">"The Coordinator"</div>
+                            <div class="staff-title">Chief Administrative Officer</div>
+                        </div>
+                    </div>
+                    <div class="staff-status">
+                        <div class="status-indicator"></div>
+                        <span class="status-text">Online</span>
+                    </div>
+                    <div class="staff-details">
+                        Harvard MBA + Stanford Engineering Management. Project Management, Operations Excellence, Innovation Coordination.
+                    </div>
+                    <button class="summon-button">Summon for Operations Brief</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tier 4: Strategic Leadership -->
+        <section class="tier-section">
+            <div class="tier-header">
+                <h2 class="tier-title">🏗️ Strategic Leadership</h2>
+                <span class="tier-badge strategic">Strategic Authority</span>
+            </div>
+            <div class="staff-grid">
+                <div class="staff-card" onclick="summonStaff('marcus-sterling')">
+                    <div class="emergency-priority">#5</div>
+                    <div class="staff-header">
+                        <div class="staff-avatar">MS</div>
+                        <div class="staff-info">
+                            <h3>Marcus Sterling</h3>
+                            <div class="staff-nickname">"The Architect"</div>
+                            <div class="staff-title">General Manager</div>
+                        </div>
+                    </div>
+                    <div class="staff-status">
+                        <div class="status-indicator"></div>
+                        <span class="status-text">Available</span>
+                    </div>
+                    <div class="staff-details">
+                        Stanford MBA + MIT Systems Engineering, Former NFL linebacker. Strategic Planning, Personnel Management, Organizational Architecture.
+                    </div>
+                    <button class="summon-button">Summon for Strategic Brief</button>
+                </div>
+
+                <div class="staff-card" onclick="summonStaff('darius-washington')">
+                    <div class="emergency-priority">#6</div>
+                    <div class="staff-header">
+                        <div class="staff-avatar">DW</div>
+                        <div class="staff-info">
+                            <h3>Darius Washington</h3>
+                            <div class="staff-nickname">"The Virtuoso"</div>
+                            <div class="staff-title">Head Coach</div>
+                        </div>
+                    </div>
+                    <div class="staff-status">
+                        <div class="status-indicator"></div>
+                        <span class="status-text">In Practice</span>
+                    </div>
+                    <div class="staff-details">
+                        Harvard Psychology + Northwestern Kellogg, Former college quarterback. Tactical Innovation, Player Development, Creative Leadership.
+                    </div>
+                    <button class="summon-button">Summon for Coaching Brief</button>
+                </div>
+
+                <div class="staff-card" onclick="summonStaff('james-wright')">
+                    <div class="emergency-priority">#7</div>
+                    <div class="staff-header">
+                        <div class="staff-avatar">JW</div>
+                        <div class="staff-info">
+                            <h3>Dr. James Wright</h3>
+                            <div class="staff-nickname">"The Algorithm"</div>
+                            <div class="staff-title">Chief Data Officer</div>
+                        </div>
+                    </div>
+                    <div class="staff-status">
+                        <div class="status-indicator"></div>
+                        <span class="status-text">Analyzing Data</span>
+                    </div>
+                    <div class="staff-details">
+                        MIT PhD Data Science + Stanford Statistics Masters. Statistical Intelligence, Predictive Analytics, AI Integration.
+                    </div>
+                    <button class="summon-button">Summon for Data Brief</button>
+                </div>
+
+                <div class="staff-card" onclick="summonStaff('sarah-chen')">
+                    <div class="emergency-priority">#8</div>
+                    <div class="staff-header">
+                        <div class="staff-avatar">SC</div>
+                        <div class="staff-info">
+                            <h3>Dr. Sarah Chen</h3>
+                            <div class="staff-nickname">"The Healer"</div>
+                            <div class="staff-title">Chief Medical Officer</div>
+                        </div>
+                    </div>
+                    <div class="staff-status">
+                        <div class="status-indicator"></div>
+                        <span class="status-text">Medical Ready</span>
+                    </div>
+                    <div class="staff-details">
+                        Stanford Medical School + Sports Medicine Fellowship. Sports Medicine, Player Health, Safety Protocols, Medical Excellence.
+                    </div>
+                    <button class="summon-button">Summon for Medical Brief</button>
+                </div>
+
+                <div class="staff-card" onclick="summonStaff('michael-rodriguez')">
+                    <div class="emergency-priority">#9</div>
+                    <div class="staff-header">
+                        <div class="staff-avatar">MR</div>
+                        <div class="staff-info">
+                            <h3>Captain Michael Rodriguez</h3>
+                            <div class="staff-nickname">"The Fortress"</div>
+                            <div class="staff-title">Chief Security Officer</div>
+                        </div>
+                    </div>
+                    <div class="staff-status">
+                        <div class="status-indicator"></div>
+                        <span class="status-text">Security Active</span>
+                    </div>
+                    <div class="staff-details">
+                        Military Leadership Academy + Cybersecurity Certification. Physical Security, Data Protection, Risk Management, Facility Operations.
+                    </div>
+                    <button class="summon-button">Summon for Security Brief</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tier 6: Innovation & Technical -->
+        <section class="tier-section">
+            <div class="tier-header">
+                <h2 class="tier-title">🔬 Innovation & Technical Operations</h2>
+                <span class="tier-badge innovation">Innovation Authority</span>
+            </div>
+            <div class="staff-grid">
+                <div class="staff-card" onclick="summonStaff('david-kim')">
+                    <div class="emergency-priority">#13</div>
+                    <div class="staff-header">
+                        <div class="staff-avatar">DK</div>
+                        <div class="staff-info">
+                            <h3>Professor David Kim</h3>
+                            <div class="staff-nickname">"The Architect"</div>
+                            <div class="staff-title">Chief Innovation Officer</div>
+                        </div>
+                    </div>
+                    <div class="staff-status">
+                        <div class="status-indicator"></div>
+                        <span class="status-text">Researching</span>
+                    </div>
+                    <div class="staff-details">
+                        PhD Engineering + Innovation Management. R&D Strategy, Competitive Intelligence, Future Technology.
+                    </div>
+                    <button class="summon-button">Summon for Innovation Brief</button>
+                </div>
+
+                <div class="staff-card" onclick="summonStaff('rachel-foster')">
+                    <div class="emergency-priority">#14</div>
+                    <div class="staff-header">
+                        <div class="staff-avatar">RF</div>
+                        <div class="staff-info">
+                            <h3>Dr. Rachel Foster</h3>
+                            <div class="staff-nickname">"The Algorithm"</div>
+                            <div class="staff-title">Senior AI Research Scientist</div>
+                        </div>
+                    </div>
+                    <div class="staff-status">
+                        <div class="status-indicator"></div>
+                        <span class="status-text">AI Development</span>
+                    </div>
+                    <div class="staff-details">
+                        PhD Computer Science + AI Research Expertise. AI Development, Neural Networks, Algorithm Optimization.
+                    </div>
+                    <button class="summon-button">Summon for AI Brief</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tier 7: Football Operations -->
+        <section class="tier-section">
+            <div class="tier-header">
+                <h2 class="tier-title">🏈 Football Operations & Analytics</h2>
+                <span class="tier-badge football">Football Authority</span>
+            </div>
+            <div class="staff-grid">
+                <div class="staff-card" onclick="summonStaff('tony-rivera')">
+                    <div class="emergency-priority">#17</div>
+                    <div class="staff-header">
+                        <div class="staff-avatar">TR</div>
+                        <div class="staff-info">
+                            <h3>Tony Rivera</h3>
+                            <div class="staff-nickname">"The Triangle Specialist"</div>
+                            <div class="staff-title">Defensive Analyst</div>
+                        </div>
+                    </div>
+                    <div class="staff-status">
+                        <div class="status-indicator"></div>
+                        <span class="status-text">Film Study</span>
+                    </div>
+                    <div class="staff-details">
+                        Football Analytics + Triangle Defense Expertise. Triangle Defense Mastery, Defensive Analysis, CLS Implementation.
+                    </div>
+                    <button class="summon-button">Summon for Defense Brief</button>
+                </div>
+
+                <div class="staff-card" onclick="summonStaff('derek-thompson')">
+                    <div class="emergency-priority">#18</div>
+                    <div class="staff-header">
+                        <div class="staff-avatar">DT</div>
+                        <div class="staff-info">
+                            <h3>Derek Thompson</h3>
+                            <div class="staff-nickname">"The Pressure Specialist"</div>
+                            <div class="staff-title">Pass Rush Analyst</div>
+                        </div>
+                    </div>
+                    <div class="staff-status">
+                        <div class="status-indicator"></div>
+                        <span class="status-text">Rush Analysis</span>
+                    </div>
+                    <div class="staff-details">
+                        Athletic Performance + Competitive Intelligence. Pass Rush Excellence, Athletic Assessment, Competitive Advantage.
+                    </div>
+                    <button class="summon-button">Summon for Rush Brief</button>
+                </div>
+
+                <div class="staff-card" onclick="summonStaff('marcus-johnson')">
+                    <div class="emergency-priority">#19</div>
+                    <div class="staff-header">
+                        <div class="staff-avatar">MJ</div>
+                        <div class="staff-info">
+                            <h3>Dr. Marcus Johnson</h3>
+                            <div class="staff-nickname">"The Mind"</div>
+                            <div class="staff-title">Sports Psychology Director</div>
+                        </div>
+                    </div>
+                    <div class="staff-status">
+                        <div class="status-indicator"></div>
+                        <span class="status-text">Player Session</span>
+                    </div>
+                    <div class="staff-details">
+                        PhD Sports Psychology + Performance Optimization. Mental Performance, Player Psychology, Performance Optimization.
+                    </div>
+                    <button class="summon-button">Summon for Psychology Brief</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Status Report Modal -->
+    <div id="statusModal" class="modal">
+        <div class="modal-content">
+            <button class="close-button" onclick="closeModal()">&times;</button>
+            <div class="modal-header">
+                <div class="modal-avatar" id="modalAvatar">DB</div>
+                <div class="modal-info">
+                    <h2 id="modalName">Staff Member</h2>
+                    <div class="modal-nickname" id="modalNickname">"Nickname"</div>
+                    <div class="modal-title" id="modalTitle">Position Title</div>
+                </div>
+            </div>
+            <div class="report-content" id="reportContent">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Staff data with status reports
+        const staffData = {
+            'denauld-brown': {
+                name: 'Denauld Brown',
+                nickname: '"The Mastermind"',
+                title: 'Founder, CEO & Defensive Coordinator',
+                avatar: 'DB',
+                report: {
+                    focus: 'Strategic empire expansion and NFL Executive Summary platform deployment',
+                    decisions: 'Finalizing $50M NFL platform launch strategy and international market expansion',
+                    coordination: 'Daily empire oversight with perfect alignment across all 12 companies',
+                    opportunities: 'NFL Executive Summary platform showing 300% ROI potential with 15 interested teams',
+                    metrics: {
+                        'Empire Revenue': '$2.4M monthly',
+                        'Companies Active': '3 of 12 operational',
+                        'Strategic Initiatives': '12 active projects',
+                        'Market Authority': '#1 Global Position'
+                    }
+                }
+            },
+            'mel-ai': {
+                name: 'M.E.L.',
+                nickname: '"The Digital Twin"',
+                title: 'Master Intelligence Engine',
+                avatar: 'AI',
+                report: {
+                    focus: 'Real-time intelligence processing across all empire operations',
+                    processing: 'Analyzing 47,329 data points across 12 companies with 97.3% accuracy',
+                    insights: 'NFL platform optimization showing 15% performance improvement opportunity',
+                    integration: 'Empire-wide AI coordination active with 0.23 second response times',
+                    metrics: {
+                        'System Uptime': '99.97%',
+                        'Response Time': '0.23 seconds',
+                        'Analysis Accuracy': '97.3%',
+                        'Empire Integration': '100% coordinated'
+                    }
+                }
+            },
+            'victoria-castellanos': {
+                name: 'Victoria Castellanos',
+                nickname: '"The Shield"',
+                title: 'Chief Legal Officer',
+                avatar: 'VC',
+                report: {
+                    focus: 'IP protection and NFL platform legal framework completion',
+                    protection: 'Triangle Defense trademark secured, Christopher AI patents filed',
+                    contracts: '23 active negotiations including 3 NFL team agreements',
+                    compliance: '100% legal compliance across all empire operations',
+                    metrics: {
+                        'IP Assets Protected': '47 active',
+                        'Legal Exposure': 'Zero high-risk',
+                        'Contract Success': '94% favorable',
+                        'Compliance Score': '100%'
+                    }
+                }
+            },
+            'alexandra-martinez': {
+                name: 'Alexandra Martinez',
+                nickname: '"The Coordinator"',
+                title: 'Chief Administrative Officer',
+                avatar: 'AM',
+                report: {
+                    focus: 'Empire-wide operational excellence and project coordination',
+                    efficiency: '96% operational efficiency across all active companies',
+                    projects: '15 strategic initiatives on schedule, 3 ahead of timeline',
+                    coordination: 'Perfect alignment between all departments and leadership tiers',
+                    metrics: {
+                        'Operational Efficiency': '96%',
+                        'Project Success Rate': '100%',
+                        'Team Coordination': '98% satisfaction',
+                        'Resource Optimization': '94% efficiency'
+                    }
+                }
+            },
+            'marcus-sterling': {
+                name: 'Marcus Sterling',
+                nickname: '"The Architect"',
+                title: 'General Manager',
+                avatar: 'MS',
+                report: {
+                    focus: 'Strategic personnel decisions and organizational architecture optimization',
+                    personnel: 'Evaluating 12 key position upgrades across coaching and analytics staff',
+                    strategy: 'Implementing systematic excellence protocols across all departments',
+                    architecture: 'Optimizing organizational structure for 300% growth capacity',
+                    metrics: {
+                        'Team Performance': '94% above targets',
+                        'Personnel Efficiency': '91%',
+                        'Strategic Goals': '87% achieved',
+                        'Growth Readiness': '300% capacity'
+                    }
+                }
+            },
+            'darius-washington': {
+                name: 'Darius Washington',
+                nickname: '"The Virtuoso"',
+                title: 'Head Coach',
+                avatar: 'DW',
+                report: {
+                    focus: 'Player development excellence and tactical innovation leadership',
+                    development: '100% player improvement across all skill metrics this quarter',
+                    innovation: 'Implementing 7 new tactical concepts with 95% success rate',
+                    execution: 'Team performance exceeding all benchmarks with systematic precision',
+                    metrics: {
+                        'Player Development': '100% improvement',
+                        'Tactical Success': '95% effectiveness',
+                        'Team Performance': '97% efficiency',
+                        'Innovation Rate': '7 new concepts/month'
+                    }
+                }
+            },
+            'james-wright': {
+                name: 'Dr. James Wright',
+                nickname: '"The Algorithm"',
+                title: 'Chief Data Officer',
+                avatar: 'JW',
+                report: {
+                    focus: 'Advanced analytics integration and predictive modeling optimization',
+                    analytics: 'Processing 2.3M data points daily with machine learning enhancement',
+                    prediction: '94% accuracy in performance predictions and strategic outcomes',
+                    integration: 'AI and data systems fully coordinated across empire operations',
+                    metrics: {
+                        'Data Processing': '2.3M points/day',
+                        'Prediction Accuracy': '94%',
+                        'System Integration': '100% coordinated',
+                        'Analytics ROI': '340% improvement'
+                    }
+                }
+            },
+            'sarah-chen': {
+                name: 'Dr. Sarah Chen',
+                nickname: '"The Healer"',
+                title: 'Chief Medical Officer',
+                avatar: 'SC',
+                report: {
+                    focus: 'Player health optimization and injury prevention excellence',
+                    health: '100% player health protocols implemented with zero injuries',
+                    prevention: 'Advanced biometric monitoring preventing 12 potential injuries',
+                    excellence: 'Setting new industry standards for sports medicine integration',
+                    metrics: {
+                        'Injury Rate': '0% (industry: 15%)',
+                        'Health Score': '98% optimal',
+                        'Prevention Success': '12 injuries avoided',
+                        'Protocol Compliance': '100%'
+                    }
+                }
+            },
+            'michael-rodriguez': {
+                name: 'Captain Michael Rodriguez',
+                nickname: '"The Fortress"',
+                title: 'Chief Security Officer',
+                avatar: 'MR',
+                report: {
+                    focus: 'Enterprise security excellence and data protection leadership',
+                    security: 'Zero security incidents across all platforms and facilities',
+                    protection: 'Advanced threat detection preventing 23 potential breaches',
+                    excellence: '100% security compliance with military-grade protocols',
+                    metrics: {
+                        'Security Incidents': '0 (perfect record)',
+                        'Threat Prevention': '23 threats blocked',
+                        'Compliance Score': '100%',
+                        'System Security': 'Military-grade active'
+                    }
+                }
+            },
+            'david-kim': {
+                name: 'Professor David Kim',
+                nickname: '"The Architect"',
+                title: 'Chief Innovation Officer',
+                avatar: 'DK',
+                report: {
+                    focus: 'Next-generation technology development and competitive advantage creation',
+                    innovation: '15 active R&D projects with 3 breakthrough technologies ready',
+                    competitive: 'Maintaining 18-month technology lead over all competitors',
+                    development: 'AI integration advancing at 40% faster rate than industry',
+                    metrics: {
+                        'Active Projects': '15 R&D initiatives',
+                        'Breakthrough Tech': '3 ready for deployment',
+                        'Competitive Lead': '18 months ahead',
+                        'Innovation Rate': '40% above industry'
+                    }
+                }
+            },
+            'rachel-foster': {
+                name: 'Dr. Rachel Foster',
+                nickname: '"The Algorithm"',
+                title: 'Senior AI Research Scientist',
+                avatar: 'RF',
+                report: {
+                    focus: 'AI advancement and machine learning optimization across empire',
+                    development: 'Neural network improvements showing 23% performance gains',
+                    optimization: 'Algorithm efficiency increased by 31% through systematic refinement',
+                    research: 'Leading 5 cutting-edge AI research projects with breakthrough potential',
+                    metrics: {
+                        'Performance Gains': '23% improvement',
+                        'Algorithm Efficiency': '31% increase',
+                        'Research Projects': '5 breakthrough potential',
+                        'AI Accuracy': '97.8% across systems'
+                    }
+                }
+            },
+            'tony-rivera': {
+                name: 'Tony Rivera',
+                nickname: '"The Triangle Specialist"',
+                title: 'Defensive Analyst (Triangle Defense Specialist)',
+                avatar: 'TR',
+                report: {
+                    focus: 'Triangle Defense implementation excellence and defensive intelligence',
+                    implementation: '100% Triangle Defense execution across all defensive scenarios',
+                    analysis: 'Identifying 15 opponent weaknesses weekly through systematic CLS analysis',
+                    excellence: 'Defensive performance increased 300% through Triangle Defense mastery',
+                    metrics: {
+                        'Triangle Defense Execution': '100% perfect',
+                        'Opponent Analysis': '15 weaknesses/week',
+                        'Performance Improvement': '300% increase',
+                        'CLS Accuracy': '98% identification'
+                    }
+                }
+            },
+            'derek-thompson': {
+                name: 'Derek Thompson',
+                nickname: '"The Pressure Specialist"',
+                title: 'Pass Rush Analyst (Pressure Warfare)',
+                avatar: 'DT',
+                report: {
+                    focus: 'Pass rush optimization and pressure warfare strategic excellence',
+                    pressure: 'Achieving 67% pressure rate through systematic rush coordination',
+                    warfare: 'Implementing advanced pressure concepts with 94% success rate',
+                    optimization: 'Athletic performance enhanced through competitive intelligence',
+                    metrics: {
+                        'Pressure Rate': '67% (league avg: 23%)',
+                        'Concept Success': '94% effectiveness',
+                        'Athletic Performance': '89% optimization',
+                        'Competitive Advantage': '3x industry standard'
+                    }
+                }
+            },
+            'marcus-johnson': {
+                name: 'Dr. Marcus Johnson',
+                nickname: '"The Mind"',
+                title: 'Sports Psychology Director',
+                avatar: 'MJ',
+                report: {
+                    focus: 'Mental performance excellence and psychological optimization leadership',
+                    performance: '100% mental performance improvement across all player assessments',
+                    psychology: 'Implementing systematic mental training with 96% effectiveness',
+                    optimization: 'Player confidence and decision-making enhanced 240%',
+                    metrics: {
+                        'Mental Performance': '100% improvement',
+                        'Training Effectiveness': '96% success',
+                        'Confidence Enhancement': '240% increase',
+                        'Decision Quality': '91% optimization'
+                    }
+                }
+            }
+        };
+
+        function summonStaff(staffId) {
+            const staff = staffData[staffId];
+            if (!staff) return;
+
+            // Update modal content
+            document.getElementById('modalAvatar').textContent = staff.avatar;
+            document.getElementById('modalName').textContent = staff.name;
+            document.getElementById('modalNickname').textContent = staff.nickname;
+            document.getElementById('modalTitle').textContent = staff.title;
+
+            // Generate report content
+            const reportContent = document.getElementById('reportContent');
+            reportContent.innerHTML = generateReport(staff.report);
+
+            // Show modal
+            document.getElementById('statusModal').classList.add('active');
+        }
+
+        function generateReport(report) {
+            let html = '';
+
+            // Add focus section
+            if (report.focus) {
+                html += `
+                    <div class="report-section">
+                        <h3>Current Strategic Focus</h3>
+                        <div class="report-description">${report.focus}</div>
+                    </div>
+                `;
+            }
+
+            // Add all other report sections dynamically
+            Object.keys(report).forEach(key => {
+                if (key !== 'focus' && key !== 'metrics') {
+                    const title = key.charAt(0).toUpperCase() + key.slice(1);
+                    html += `
+                        <div class="report-section">
+                            <h3>${title}</h3>
+                            <div class="report-description">${report[key]}</div>
+                        </div>
+                    `;
+                }
+            });
+
+            // Add metrics section
+            if (report.metrics) {
+                html += `
+                    <div class="report-section">
+                        <h3>Key Performance Metrics</h3>
+                `;
+                Object.keys(report.metrics).forEach(metric => {
+                    html += `
+                        <div class="report-item">
+                            <span class="report-label">${metric}:</span>
+                            <span class="report-value">${report.metrics[metric]}</span>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+            }
+
+            return html;
+        }
+
+        function closeModal() {
+            document.getElementById('statusModal').classList.remove('active');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('statusModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
