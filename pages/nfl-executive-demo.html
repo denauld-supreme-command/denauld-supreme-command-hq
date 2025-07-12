@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFL Executive Summary - Demo Platform</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --nfl-dark: #0c1419;
+            --nfl-darker: #000000;
+            --nfl-accent: #ff4444;
+            --nfl-gold: #ffd700;
+            --nfl-green: #00ff88;
+            --nfl-blue: #0066cc;
+            --nfl-orange: #ff8800;
+            --nfl-gray: #333333;
+            --nfl-light-gray: #666666;
+            --nfl-white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--nfl-darker);
+            color: var(--nfl-white);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .nfl-container {
+            display: grid;
+            grid-template-columns: 280px 1fr 200px;
+            grid-template-rows: 60px 1fr 120px;
+            height: 100vh;
+            gap: 1px;
+            background: var(--nfl-gray);
+        }
+
+        /* Header */
+        .nfl-header {
+            grid-column: 1 / -1;
+            background: var(--nfl-dark);
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            border-bottom: 2px solid var(--nfl-accent);
+        }
+
+        .header-logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--nfl-gold);
+        }
+
+        .header-nav {
+            margin-left: auto;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-item {
+            color: var(--nfl-white);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: var(--nfl-accent);
+        }
+
+        /* Left Sidebar - Player Roster */
+        .roster-sidebar {
+            background: var(--nfl-dark);
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .roster-header {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--nfl-gold);
+            text-transform: uppercase;
+        }
+
+        .player-card {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: var(--nfl-gray);
+            border-radius: 6px;
+            border-left: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .player-card:hover {
+            background: rgba(255, 68, 68, 0.1);
+            border-left-color: var(--nfl-accent);
+        }
+
+        .player-card.starter {
+            border-left-color: var(--nfl-green);
+        }
+
+        .player-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--nfl-light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .player-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .player-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .player-details {
+            font-size: 0.75rem;
+            color: var(--nfl-light-gray);
+            margin-bottom: 0.25rem;
+        }
+
+        .player-salary {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--nfl-green);
+        }
+
+        /* Main Content Area */
+        .main-content {
+            background: var(--nfl-dark);
+            padding: 1.5rem;
+            overflow-y: auto;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            gap: 1.5rem;
+        }
+
+        /* Executive Summary Section */
+        .executive-summary {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .cap-management {
+            background: var(--nfl-gray);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .cap-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--nfl-gold);
+        }
+
+        .cap-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .cap-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .cap-label {
+            font-size: 0.9rem;
+            color: var(--nfl-light-gray);
+        }
+
+        .cap-value {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--nfl-white);
+        }
+
+        .performance-ratings {
+            background: var(--nfl-gray);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .rating-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .rating-label {
+            font-size: 0.85rem;
+            color: var(--nfl-light-gray);
+        }
+
+        .rating-bar {
+            width: 100px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .rating-fill {
+            height: 100%;
+            background: var(--nfl-green);
+            width: 100%;
+        }
+
+        .rating-value {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--nfl-green);
+            margin-left: 0.5rem;
+        }
+
+        /* Player Analysis Section */
+        .player-analysis {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+        }
+
+        .contract-snapshot {
+            background: var(--nfl-gray);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .featured-player {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .featured-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--nfl-light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .featured-info h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .featured-position {
+            font-size: 0.9rem;
+            color: var(--nfl-light-gray);
+        }
+
+        .contract-details {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .contract-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .contract-label {
+            font-size: 0.85rem;
+            color: var(--nfl-light-gray);
+        }
+
+        .contract-value {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .market-analysis {
+            background: var(--nfl-gray);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .analysis-section h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--nfl-gold);
+        }
+
+        .analysis-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .analysis-label {
+            font-size: 0.8rem;
+            color: var(--nfl-light-gray);
+        }
+
+        .analysis-value {
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* Right Sidebar - Navigation */
+        .nav-sidebar {
+            background: var(--nfl-dark);
+            padding: 1rem 0.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-button {
+            background: var(--nfl-accent);
+            color: var(--nfl-white);
+            border: none;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-button:hover {
+            background: #ff6666;
+            transform: translateY(-1px);
+        }
+
+        .nav-button.secondary {
+            background: var(--nfl-gray);
+        }
+
+        .nav-button.secondary:hover {
+            background: var(--nfl-light-gray);
+        }
+
+        /* Bottom Financial Summary */
+        .financial-summary {
+            grid-column: 1 / -1;
+            background: var(--nfl-dark);
+            padding: 1rem 2rem;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 2rem;
+            border-top: 2px solid var(--nfl-accent);
+        }
+
+        .financial-item {
+            text-align: center;
+        }
+
+        .financial-label {
+            font-size: 0.8rem;
+            color: var(--nfl-light-gray);
+            margin-bottom: 0.25rem;
+        }
+
+        .financial-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .financial-value.positive { color: var(--nfl-green); }
+        .financial-value.negative { color: var(--nfl-accent); }
+        .financial-value.neutral { color: var(--nfl-gold); }
+
+        /* Powered by M.E.L. AI */
+        .mel-indicator {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: var(--nfl-gold);
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            opacity: 0.7;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .nfl-container {
+                grid-template-columns: 250px 1fr 180px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nfl-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto 1fr auto;
+            }
+            
+            .roster-sidebar,
+            .nav-sidebar {
+                display: none;
+            }
+            
+            .executive-summary,
+            .player-analysis {
+                grid-template-columns: 1fr;
+            }
+            
+            .financial-summary {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="nfl-container">
+        <!-- Header -->
+        <header class="nfl-header">
+            <div class="header-logo">NFL EXECUTIVE PLATFORM</div>
+            <nav class="header-nav">
+                <a href="#" class="nav-item active">Executive Summary</a>
+                <a href="#" class="nav-item">Analytics</a>
+                <a href="#" class="nav-item">Reports</a>
+                <a href="../index.html" class="nav-item">← HQ Dashboard</a>
+            </nav>
+        </header>
+
+        <!-- Left Sidebar - Player Roster -->
+        <aside class="roster-sidebar">
+            <div class="roster-header">Starting Lineup</div>
+            
+            <div class="player-card starter">
+                <div class="player-avatar">QB</div>
+                <div class="player-info">
+                    <div class="player-name">Bill Johnson</div>
+                    <div class="player-details">6-3 235 37 USC 15</div>
+                    <div class="player-salary">$37,500,000</div>
+                </div>
+            </div>
+
+            <div class="player-card starter">
+                <div class="player-avatar">RB</div>
+                <div class="player-info">
+                    <div class="player-name">Pete Simpson</div>
+                    <div class="player-details">5-11 197 27 PST 4</div>
+                    <div class="player-salary">$1,797,000</div>
+                </div>
+            </div>
+
+            <div class="player-card starter">
+                <div class="player-avatar">TE</div>
+                <div class="player-info">
+                    <div class="player-name">JJ Stevens</div>
+                    <div class="player-details">6-5 260 29 OIJ 8</div>
+                    <div class="player-salary">$2,000,000</div>
+                </div>
+            </div>
+
+            <div class="player-card starter">
+                <div class="player-avatar">RB</div>
+                <div class="player-info">
+                    <div class="player-name">Jake Wilson</div>
+                    <div class="player-details">6-1 224 25 HOI 3</div>
+                    <div class="player-salary">$615,000</div>
+                </div>
+            </div>
+
+            <div class="player-card starter">
+                <div class="player-avatar">WR</div>
+                <div class="player-info">
+                    <div class="player-name">Michael House</div>
+                    <div class="player-details">6-3 218 33 MIT 14</div>
+                    <div class="player-salary">$11,000,000</div>
+                </div>
+            </div>
+
+            <div class="player-card starter">
+                <div class="player-avatar">TE</div>
+                <div class="player-info">
+                    <div class="player-name">Trey Aaron</div>
+                    <div class="player-details">6-6 270 24 HID 4</div>
+                    <div class="player-salary">$960,632</div>
+                </div>
+            </div>
+
+            <div class="player-card">
+                <div class="player-avatar">C</div>
+                <div class="player-info">
+                    <div class="player-name">Jared Volk</div>
+                    <div class="player-details">6-8 321 BIL 30 8</div>
+                    <div class="player-salary">$6,500,000</div>
+                </div>
+            </div>
+
+            <div class="player-card">
+                <div class="player-avatar">RG</div>
+                <div class="player-info">
+                    <div class="player-name">Tyler Noble</div>
+                    <div class="player-details">6-5 310 25 HIZ 2</div>
+                    <div class="player-salary">$540,000</div>
+                </div>
+            </div>
+
+            <div class="player-card">
+                <div class="player-avatar">C</div>
+                <div class="player-info">
+                    <div class="player-name">Aaron Flake</div>
+                    <div class="player-details">6-1 304 24 PSU 6</div>
+                    <div class="player-salary">$775,000</div>
+                </div>
+            </div>
+
+            <div class="player-card">
+                <div class="player-avatar">RG</div>
+                <div class="player-info">
+                    <div class="player-name">David France</div>
+                    <div class="player-details">6-5 331 30 IDA 8</div>
+                    <div class="player-salary">$8,000,000</div>
+                </div>
+            </div>
+
+            <div class="player-card">
+                <div class="player-avatar">LT</div>
+                <div class="player-info">
+                    <div class="player-name">Big Mike</div>
+                    <div class="player-details">6-5 307 23 FLA 3</div>
+                    <div class="player-salary">$1,245,192</div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Executive Summary -->
+            <section class="executive-summary">
+                <div class="cap-management">
+                    <h2 class="cap-title">Executive Summary</h2>
+                    <div class="cap-grid">
+                        <div class="cap-item">
+                            <span class="cap-label">Cap Ceiling:</span>
+                            <span class="cap-value">$167,000,000</span>
+                        </div>
+                        <div class="cap-item">
+                            <span class="cap-label">Cap Rollover:</span>
+                            <span class="cap-value">$4,485,068</span>
+                        </div>
+                        <div class="cap-item">
+                            <span class="cap-label">Cap Adjusted:</span>
+                            <span class="cap-value">$171,827,118</span>
+                        </div>
+                        <div class="cap-item">
+                            <span class="cap-label">Cap Floor:</span>
+                            <span class="cap-value">$148,630,000</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(255, 68, 68, 0.1); border-radius: 6px;">
+                        <div style="color: var(--nfl-gold); font-weight: 600; margin-bottom: 0.5rem;">CONTRACT SNAP SHOT</div>
+                        <div style="color: var(--nfl-accent); font-weight: 600;">CAP %: 8.70%</div>
+                        <div style="color: var(--nfl-gold); font-weight: 600;">CAP HIT: $15,850,000</div>
+                        <div style="color: var(--nfl-accent); font-weight: 600;">DEAD CAP: $20,700,000</div>
+                    </div>
+                </div>
+
+                <div class="performance-ratings">
+                    <h2 class="cap-title">Weekly Team Performance Ratings</h2>
+                    
+                    <div class="rating-item">
+                        <span class="rating-label">Concept Rating</span>
+                        <div style="display: flex; align-items: center;">
+                            <div class="rating-bar"><div class="rating-fill"></div></div>
+                            <span class="rating-value">5.0</span>
+                        </div>
+                    </div>
+
+                    <div class="rating-item">
+                        <span class="rating-label">Drive Rating</span>
+                        <div style="display: flex; align-items: center;">
+                            <div class="rating-bar"><div class="rating-fill"></div></div>
+                            <span class="rating-value">5.0</span>
+                        </div>
+                    </div>
+
+                    <div class="rating-item">
+                        <span class="rating-label">Formation Defensibility Rating</span>
+                        <div style="display: flex; align-items: center;">
+                            <div class="rating-bar"><div class="rating-fill"></div></div>
+                            <span class="rating-value">5.0</span>
+                        </div>
+                    </div>
+
+                    <div class="rating-item">
+                        <span class="rating-label">Formation Performance Rating</span>
+                        <div style="display: flex; align-items: center;">
+                            <div class="rating-bar"><div class="rating-fill"></div></div>
+                            <span class="rating-value">5.0</span>
+                        </div>
+                    </div>
+
+                    <div class="rating-item">
+                        <span class="rating-label">Play Sequence Rating</span>
+                        <div style="display: flex; align-items: center;">
+                            <div class="rating-bar"><div class="rating-fill"></div></div>
+                            <span class="rating-value">5.0</span>
+                        </div>
+                    </div>
+
+                    <div class="rating-item">
+                        <span class="rating-label">Scheme Rating</span>
+                        <div style="display: flex; align-items: center;">
+                            <div class="rating-bar"><div class="rating-fill"></div></div>
+                            <span class="rating-value">5.0</span>
+                        </div>
+                    </div>
+
+                    <div class="rating-item">
+                        <span class="rating-label">Tactics Rating</span>
+                        <div style="display: flex; align-items: center;">
+                            <div class="rating-bar"><div class="rating-fill" style="background: var(--nfl-orange);"></div></div>
+                            <span class="rating-value" style="color: var(--nfl-orange);">5.0</span>
+                        </div>
+                    </div>
+
+                    <div class="rating-item">
+                        <span class="rating-label">Play Comparison Rating</span>
+                        <div style="display: flex; align-items: center;">
+                            <div class="rating-bar"><div class="rating-fill"></div></div>
+                            <span class="rating-value">5.0</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Player Analysis -->
+            <section class="player-analysis">
+                <div class="contract-snapshot">
+                    <div class="featured-player">
+                        <div class="featured-avatar">#12</div>
+                        <div class="featured-info">
+                            <h3>Peter Simpson</h3>
+                            <div class="featured-position">#12 Pos: WR</div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                        <div style="background: #ff4444; color: white; padding: 0.25rem 0.5rem; border-radius: 50%; font-size: 0.8rem; font-weight: 600;">20%</div>
+                        <div style="background: #ff4444; color: white; padding: 0.25rem 0.5rem; border-radius: 50%; font-size: 0.8rem; font-weight: 600;">11%</div>
+                        <div style="background: #ff4444; color: white; padding: 0.25rem 0.5rem; border-radius: 50%; font-size: 0.8rem; font-weight: 600;">6%</div>
+                        <div style="background: #ff4444; color: white; padding: 0.25rem 0.5rem; border-radius: 50%; font-size: 0.8rem; font-weight: 600;">0%</div>
+                        <div style="background: #ff4444; color: white; padding: 0.25rem 0.5rem; border-radius: 50%; font-size: 0.8rem; font-weight: 600;">63%</div>
+                    </div>
+
+                    <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem;">
+                        <div style="background: #ff4444; color: white; padding: 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: 600;">X</div>
+                        <div style="background: #ff4444; color: white; padding: 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: 600;">F</div>
+                        <div style="background: #ff4444; color: white; padding: 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: 600;">A</div>
+                        <div style="background: #ff4444; color: white; padding: 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: 600;">T</div>
+                        <div style="background: #ff4444; color: white; padding: 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: 600;">Z</div>
+                    </div>
+
+                    <div style="background: rgba(255, 255, 255, 0.1); padding: 1rem; border-radius: 6px;">
+                        <div style="font-weight: 600; margin-bottom: 0.5rem;">Calculated Market Value</div>
+                        <div style="color: var(--nfl-green); font-weight: 600;">*5 yrs, $172,949,960</div>
+                        <div style="color: var(--nfl-green); font-weight: 600;">*Avg. Salary: $34,589,992</div>
+                        <div style="color: var(--nfl-green); font-weight: 600;">*NFL Rank: 45</div>
+                        <div style="color: var(--nfl-green); font-weight: 600;">*WR Rank: 9</div>
+                        <div style="color: var(--nfl-green); font-weight: 600;">*Free Agent: 2023</div>
+                        <div style="color: var(--nfl-green); font-weight: 600;">*Avg. Salary: $2,367,912</div>
+                        <div style="color: var(--nfl-green); font-weight: 600;">*Comparison</div>
+                    </div>
+                </div>
+
+                <div class="market-analysis">
+                    <h3 style="color: var(--nfl-gold); margin-bottom: 1rem;">Market Analysis Dashboard</h3>
+                    
+                    <div style="background: rgba(255, 255, 255, 0.05); padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; text-align: center;">
+                            <div>
+                                <div style="color: var(--nfl-light-gray); font-size: 0.8rem;">QRL OFF Per Value:</div>
+                                <div style="color: var(--nfl-green); font-weight: 600;">$55,349,824</div>
+                            </div>
+                            <div>
+                                <div style="color: var(--nfl-light-gray); font-size: 0.8rem;">BIR OFF Per Value:</div>
+                                <div style="color: var(--nfl-green); font-weight: 600;">$10,431,160</div>
+                            </div>
+                            <div>
+                                <div style="color: var(--nfl-light-gray); font-size: 0.8rem;">Value difference:</div>
+                                <div style="color: var(--nfl-green); font-weight: 600;">$57,909,664</div>
+                            </div>
+                            <div>
+                                <div style="color: var(--nfl-light-gray); font-size: 0.8rem;">Key Matching</div>
+                                <div style="color: var(--nfl-accent); font-weight: 600;">$</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 200px; gap: 1rem;">
+                        <div>
+                            <div style="background: rgba(255, 255, 255, 0.05); padding: 1rem; border-radius: 6px; margin-bottom: 1rem;">
+                                <div style="display: grid; gap: 0.5rem;">
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <span style="color: var(--nfl-light-gray); font-size: 0.8rem;">Salary Cap Comparison</span>
+                                        <span style="color: var(--nfl-green); font-weight: 600;">5.0</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <span style="color: var(--nfl-light-gray); font-size: 0.8rem;">Play Depreciation</span>
+                                        <span style="color: var(--nfl-green); font-weight: 600;">5.0</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <span style="color: var(--nfl-light-gray); font-size: 0.8rem;">Player Value Rating</span>
+                                        <span style="color: var(--nfl-green); font-weight: 600;">5.0</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <span style="color: var(--nfl-light-gray); font-size: 0.8rem;">Conference Rating</span>
+                                        <span style="color: var(--nfl-green); font-weight: 600;">5.0</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <span style="color: var(--nfl-light-gray); font-size: 0.8rem;">Draft Rating</span>
+                                        <span style="color: var(--nfl-green); font-weight: 600;">5.0</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <span style="color: var(--nfl-light-gray); font-size: 0.8rem;">Personnel Rating</span>
+                                        <span style="color: var(--nfl-accent); font-weight: 600;">5.0</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="background: rgba(255, 255, 255, 0.05); border-radius: 50%; width: 150px; height: 150px; display: flex; align-items: center; justify-content: center; margin: auto;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 0.8rem; color: var(--nfl-light-gray);">M.E.L. AI</div>
+                                <div style="font-size: 1.2rem; font-weight: 600; color: var(--nfl-gold);">ANALYSIS</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: rgba(255, 255, 255, 0.05); padding: 1rem; border-radius: 6px; margin-top: 1rem; text-align: center;">
+                        <div style="color: var(--nfl-gold); font-size: 0.9rem; margin-bottom: 0.5rem;">Good morning Jim. Would you like to continue your weekly performance summary?</div>
+                        <div style="color: var(--nfl-green); font-weight: 600;">Yes.</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Right Sidebar - Navigation -->
+        <aside class="nav-sidebar">
+            <button class="nav-button">ROSTER</button>
+            <button class="nav-button secondary">CONTRACTS</button>
+            <button class="nav-button secondary">COACHES</button>
+            <button class="nav-button secondary">SCOUTING</button>
+            <button class="nav-button secondary">MATCH-UPS</button>
+            <button class="nav-button secondary">GAME PLANS</button>
+            <button class="nav-button secondary">SUB-RATE</button>
+            <button class="nav-button secondary">MODES</button>
+            <button class="nav-button secondary">PROJECTIONS</button>
+            <button class="nav-button secondary">SIMULATIONS</button>
+            <button class="nav-button secondary">REPORTS</button>
+            <button class="nav-button secondary">TEAM</button>
+            <button class="nav-button secondary">INDIVIDUAL</button>
+            <button class="nav-button secondary">PLAY-BY-PLAY</button>
+            <button class="nav-button secondary">PARTICIPATION</button>
+            <button class="nav-button secondary">PERFORMANCE</button>
+        </aside>
+
+        <!-- Bottom Financial Summary -->
+        <footer class="financial-summary">
+            <div class="financial-item">
+                <div class="financial-label">Maximum Salary Cap:</div>
+                <div class="financial-value neutral">$231,231,574</div>
+            </div>
+            <div class="financial-item">
+                <div class="financial-label">Active Contracts:</div>
+                <div class="financial-value positive">$166,753,066</div>
+            </div>
+            <div class="financial-item">
+                <div class="financial-label">Injured Reserve:</div>
+                <div class="financial-value negative">$25,511,869</div>
+            </div>
+            <div class="financial-item">
+                <div class="financial-label">Dead Cap:</div>
+                <div class="financial-value negative">$24,811,069</div>
+            </div>
+            <div class="financial-item">
+                <div class="financial-label">Total Cap:</div>
+                <div class="financial-value neutral">$218,035,004</div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- M.E.L. AI Indicator -->
+    <div class="mel-indicator">Powered by M.E.L. AI Intelligence</div>
+
+    <script>
+        // Simple interactivity for demo
+        document.addEventListener('DOMContentLoaded', function() {
+            // Player card click functionality
+            const playerCards = document.querySelectorAll('.player-card');
+            playerCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // Remove active class from all cards
+                    playerCards.forEach(c => c.classList.remove('active'));
+                    // Add active class to clicked card
+                    this.classList.add('active');
+                    
+                    // Simple highlight effect
+                    this.style.background = 'rgba(255, 68, 68, 0.2)';
+                    setTimeout(() => {
+                        this.style.background = '';
+                    }, 2000);
+                });
+            });
+
+            // Navigation button interactions
+            const navButtons = document.querySelectorAll('.nav-button');
+            navButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active from all buttons
+                    navButtons.forEach(b => b.classList.remove('active'));
+                    // Add active to clicked button
+                    this.classList.add('active');
+                    
+                    console.log(`Navigating to: ${this.textContent}`);
+                });
+            });
+
+            // Simulate real-time updates
+            setInterval(() => {
+                const melIndicator = document.querySelector('.mel-indicator');
+                melIndicator.style.opacity = '1';
+                setTimeout(() => {
+                    melIndicator.style.opacity = '0.7';
+                }, 1000);
+            }, 10000);
+        });
+    </script>
+</body>
+</html>
