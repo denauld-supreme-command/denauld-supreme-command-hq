@@ -684,10 +684,12 @@
                     <button class="summon-button">Summon for Data Brief</button>
                 </div>
 
-                <div class="staff-card" onclick="summonStaff('sarah-chen')">
+                <div class="staff-card has-photo" onclick="summonStaff('sarah-chen')">
                     <div class="emergency-priority">#8</div>
                     <div class="staff-header">
-                        <div class="staff-avatar">SC</div>
+                        <div class="staff-avatar has-photo">
+                            <img src="../images/staff/dr-sarah-chen.png" alt="Dr. Sarah Chen" class="staff-photo" onerror="this.style.display='none'; this.parentNode.innerHTML='SC'; this.parentNode.classList.remove('has-photo');">
+                        </div>
                         <div class="staff-info">
                             <h3>Dr. Sarah Chen</h3>
                             <div class="staff-nickname">"The Healer"</div>
@@ -704,10 +706,12 @@
                     <button class="summon-button">Summon for Medical Brief</button>
                 </div>
 
-                <div class="staff-card" onclick="summonStaff('captain-rodriguez')">
+                <div class="staff-card has-photo" onclick="summonStaff('captain-rodriguez')">
                     <div class="emergency-priority">#9</div>
                     <div class="staff-header">
-                        <div class="staff-avatar">MR</div>
+                        <div class="staff-avatar has-photo">
+                            <img src="../images/staff/captain-michael-rodriguez.png" alt="Captain Michael Rodriguez" class="staff-photo" onerror="this.style.display='none'; this.parentNode.innerHTML='MR'; this.parentNode.classList.remove('has-photo');">
+                        </div>
                         <div class="staff-info">
                             <h3>Captain Michael Rodriguez</h3>
                             <div class="staff-nickname">"The Fortress"</div>
@@ -777,10 +781,12 @@
                     <button class="summon-button">Summon for HR Brief</button>
                 </div>
 
-                <div class="staff-card" onclick="summonStaff('elena-vasquez')">
+                <div class="staff-card has-photo" onclick="summonStaff('elena-vasquez')">
                     <div class="emergency-priority">#12</div>
                     <div class="staff-header">
-                        <div class="staff-avatar">EV</div>
+                        <div class="staff-avatar has-photo">
+                            <img src="../images/staff/elena-vasquez.png" alt="Elena Vasquez" class="staff-photo" onerror="this.style.display='none'; this.parentNode.innerHTML='EV'; this.parentNode.classList.remove('has-photo');">
+                        </div>
                         <div class="staff-info">
                             <h3>Elena Vasquez</h3>
                             <div class="staff-nickname">"The Voice"</div>
@@ -806,10 +812,12 @@
                 <span class="tier-badge innovation">Innovation Authority</span>
             </div>
             <div class="staff-grid">
-                <div class="staff-card" onclick="summonStaff('david-kim')">
+                <div class="staff-card has-photo" onclick="summonStaff('david-kim')">
                     <div class="emergency-priority">#13</div>
                     <div class="staff-header">
-                        <div class="staff-avatar">DK</div>
+                        <div class="staff-avatar has-photo">
+                            <img src="../images/staff/david-kim.png" alt="Professor David Kim" class="staff-photo" onerror="this.style.display='none'; this.parentNode.innerHTML='DK'; this.parentNode.classList.remove('has-photo');">
+                        </div>
                         <div class="staff-info">
                             <h3>Professor David Kim</h3>
                             <div class="staff-nickname">"The Architect"</div>
@@ -826,10 +834,12 @@
                     <button class="summon-button">Summon for Innovation Brief</button>
                 </div>
 
-                <div class="staff-card" onclick="summonStaff('rachel-foster')">
+                <div class="staff-card has-photo" onclick="summonStaff('rachel-foster')">
                     <div class="emergency-priority">#14</div>
                     <div class="staff-header">
-                        <div class="staff-avatar">RF</div>
+                        <div class="staff-avatar has-photo">
+                            <img src="../images/staff/dr-rachel-foster.png" alt="Dr. Rachel Foster" class="staff-photo" onerror="this.style.display='none'; this.parentNode.innerHTML='RF'; this.parentNode.classList.remove('has-photo');">
+                        </div>
                         <div class="staff-info">
                             <h3>Dr. Rachel Foster</h3>
                             <div class="staff-nickname">"The Algorithm"</div>
@@ -1108,7 +1118,7 @@
     </div>
 
     <script>
-        // Complete staff data with correct photo paths
+        // Complete staff data with correct photo paths and new staff members
         const staffData = {
             'denauld-brown': {
                 name: 'Denauld Brown',
@@ -1250,6 +1260,46 @@
                     }
                 }
             },
+            'sarah-chen': {
+                name: 'Dr. Sarah Chen',
+                nickname: '"The Healer"',
+                title: 'Chief Medical Officer',
+                avatar: 'SC',
+                photo: '../images/staff/dr-sarah-chen.png',
+                hasPhoto: true,
+                report: {
+                    focus: 'Medical excellence and player health optimization protocols',
+                    wellness: 'Implementing comprehensive health monitoring for all personnel',
+                    protocols: 'Advanced injury prevention reducing incidents by 73%',
+                    excellence: 'Medical response time averaging 0.8 seconds for emergencies',
+                    metrics: {
+                        'Injury Prevention': '73% reduction',
+                        'Response Time': '0.8 seconds',
+                        'Health Optimization': '96% effectiveness',
+                        'Medical Excellence': '100% protocols'
+                    }
+                }
+            },
+            'captain-rodriguez': {
+                name: 'Captain Michael Rodriguez',
+                nickname: '"The Fortress"',
+                title: 'Chief Security Officer',
+                avatar: 'MR',
+                photo: '../images/staff/captain-michael-rodriguez.png',
+                hasPhoto: true,
+                report: {
+                    focus: 'Physical security excellence and data protection fortress operations',
+                    security: 'Zero security breaches across all empire facilities and systems',
+                    protection: 'Advanced threat detection preventing 47 potential incidents',
+                    operations: 'Military-grade security protocols with 100% implementation',
+                    metrics: {
+                        'Security Breaches': 'Zero incidents',
+                        'Threat Prevention': '47 incidents blocked',
+                        'Protocol Implementation': '100% complete',
+                        'Response Readiness': '24/7 active'
+                    }
+                }
+            },
             'bill-mckenzie': {
                 name: 'Bill McKenzie',
                 nickname: '"The Professor"',
@@ -1287,6 +1337,66 @@
                         'Hiring Success': '92% top performers',
                         'Retention Rate': '89% improvement',
                         'Development ROI': '340% value'
+                    }
+                }
+            },
+            'elena-vasquez': {
+                name: 'Elena Vasquez',
+                nickname: '"The Voice"',
+                title: 'Chief Communications Officer',
+                avatar: 'EV',
+                photo: '../images/staff/elena-vasquez.png',
+                hasPhoto: true,
+                report: {
+                    focus: 'Strategic communications excellence and media relations mastery',
+                    communications: 'Managing 47 active media relationships with 100% positive coverage',
+                    strategy: 'Brand strategy execution resulting in 340% awareness increase',
+                    crisis: 'Crisis communications protocols preventing 12 potential negative incidents',
+                    metrics: {
+                        'Media Relationships': '47 active',
+                        'Positive Coverage': '100% success',
+                        'Brand Awareness': '340% increase',
+                        'Crisis Prevention': '12 incidents avoided'
+                    }
+                }
+            },
+            'david-kim': {
+                name: 'Professor David Kim',
+                nickname: '"The Architect"',
+                title: 'Chief Innovation Officer',
+                avatar: 'DK',
+                photo: '../images/staff/david-kim.png',
+                hasPhoto: true,
+                report: {
+                    focus: 'Innovation excellence and future technology development',
+                    innovation: 'Leading 15 breakthrough technology initiatives across empire',
+                    research: 'R&D investment generating 450% ROI through strategic partnerships',
+                    technology: 'Future technology identification providing 3-year competitive advantage',
+                    metrics: {
+                        'Innovation Projects': '15 active',
+                        'R&D ROI': '450% return',
+                        'Tech Advantage': '3-year lead',
+                        'Patent Applications': '23 filed'
+                    }
+                }
+            },
+            'rachel-foster': {
+                name: 'Dr. Rachel Foster',
+                nickname: '"The Algorithm"',
+                title: 'Senior AI Research Scientist',
+                avatar: 'RF',
+                photo: '../images/staff/dr-rachel-foster.png',
+                hasPhoto: true,
+                report: {
+                    focus: 'AI research excellence and neural network optimization',
+                    research: 'Developing next-generation AI systems with 97% accuracy improvement',
+                    networks: 'Neural network optimization reducing processing time by 89%',
+                    algorithms: 'Algorithm development creating competitive advantage in 5 key areas',
+                    metrics: {
+                        'AI Accuracy': '97% improvement',
+                        'Processing Speed': '89% faster',
+                        'Algorithm Innovation': '5 breakthroughs',
+                        'Research Publications': '12 peer-reviewed'
                     }
                 }
             },
@@ -1370,7 +1480,7 @@
                     }
                 }
             }
-            // Add other staff members as needed...
+            // Additional staff members would be added here with similar structure
         };
 
         function summonStaff(staffId) {
@@ -1477,7 +1587,7 @@
 
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('Executive Staff Command Center - All 25 professionals ready for summoning');
+            console.log('Executive Staff Command Center - All 25 professionals ready for summoning with photo integration');
         });
     </script>
 </body>
