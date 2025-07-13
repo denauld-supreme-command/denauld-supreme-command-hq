@@ -53,6 +53,7 @@
         .quick-actions {
             display: flex;
             gap: 1rem;
+            flex-wrap: wrap;
         }
 
         .action-btn {
@@ -73,6 +74,25 @@
         .action-btn:hover {
             background: rgba(255, 255, 255, 0.2);
             transform: translateY(-2px);
+        }
+
+        .action-btn.nfl {
+            background: rgba(226, 2, 26, 0.2);
+            border-color: #e2021a;
+        }
+
+        .action-btn.nfl:hover {
+            background: #e2021a;
+        }
+
+        .action-btn.staff {
+            background: rgba(212, 219, 105, 0.2);
+            border-color: #d4db69;
+        }
+
+        .action-btn.staff:hover {
+            background: #d4db69;
+            color: #000000;
         }
 
         .dashboard-container {
@@ -252,6 +272,94 @@
             background: rgba(255, 255, 255, 0.2);
         }
 
+        /* Executive Features Section */
+        .executive-features {
+            margin-bottom: 3rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(226, 2, 26, 0.1) 0%, rgba(212, 219, 105, 0.1) 100%);
+            border: 1px solid rgba(226, 2, 26, 0.3);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: #e2021a;
+            box-shadow: 0 10px 30px rgba(226, 2, 26, 0.3);
+        }
+
+        .feature-card.staff {
+            background: linear-gradient(135deg, rgba(212, 219, 105, 0.1) 0%, rgba(226, 2, 26, 0.1) 100%);
+            border-color: rgba(212, 219, 105, 0.3);
+        }
+
+        .feature-card.staff:hover {
+            border-color: #d4db69;
+            box-shadow: 0 10px 30px rgba(212, 219, 105, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #e2021a, #d4db69);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .feature-description {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .feature-button {
+            background: #e2021a;
+            color: #ffffff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .feature-button:hover {
+            background: #d4db69;
+            color: #000000;
+        }
+
+        .feature-button.staff {
+            background: #d4db69;
+            color: #000000;
+        }
+
+        .feature-button.staff:hover {
+            background: #e2021a;
+            color: #ffffff;
+        }
+
         .comm-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -371,7 +479,8 @@
             
             .kpi-grid,
             .company-grid,
-            .comm-grid {
+            .comm-grid,
+            .features-grid {
                 grid-template-columns: 1fr;
             }
             
@@ -397,6 +506,8 @@
                 <a href="#alerts" class="action-btn">🚨 Alerts (3)</a>
                 <a href="#calendar" class="action-btn">📅 Calendar</a>
                 <a href="#communications" class="action-btn">💬 Communications</a>
+                <a href="pages/nfl-executive-demo.html" class="action-btn nfl">🏈 NFL Executive Demo</a>
+                <a href="pages/staff-summoning.html" class="action-btn staff">👥 Staff Command</a>
                 <a href="#reports" class="action-btn">📊 Reports</a>
             </div>
         </div>
@@ -421,6 +532,32 @@
                     <h3>Empire Performance</h3>
                     <div class="kpi-value">96%</div>
                     <div class="kpi-trend">↗️ Exceptional</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Executive Features Section -->
+        <section class="executive-features">
+            <h2 class="section-title">Executive Command Features</h2>
+            <div class="features-grid">
+                <div class="feature-card" onclick="window.location.href='pages/nfl-executive-demo.html'">
+                    <div class="feature-icon">🏈</div>
+                    <div class="feature-title">NFL Executive Demo</div>
+                    <div class="feature-description">
+                        Professional NFL front office platform showcasing the $50M+ revenue opportunity. 
+                        Complete with salary cap management, player analysis, and M.E.L. AI integration.
+                    </div>
+                    <a href="pages/nfl-executive-demo.html" class="feature-button">Launch NFL Demo</a>
+                </div>
+
+                <div class="feature-card staff" onclick="window.location.href='pages/staff-summoning.html'">
+                    <div class="feature-icon">👥</div>
+                    <div class="feature-title">Staff Command Center</div>
+                    <div class="feature-description">
+                        Summon any of the 25 championship professionals for real-time status reports. 
+                        Access strategic intelligence from Founder to Football Operations tiers.
+                    </div>
+                    <a href="pages/staff-summoning.html" class="feature-button staff">Access Staff Command</a>
                 </div>
             </div>
         </section>
@@ -454,8 +591,8 @@
                         </div>
                     </div>
                     <div class="company-actions">
-                        <a href="#" class="company-btn">📊 Executive Summary</a>
-                        <a href="#" class="company-btn">🚀 Platforms</a>
+                        <a href="pages/analyzemeateam-executive.html" class="company-btn">📊 Executive Summary</a>
+                        <a href="pages/nfl-executive-demo.html" class="company-btn">🏈 NFL Demo</a>
                     </div>
                 </div>
 
@@ -484,7 +621,7 @@
                         </div>
                     </div>
                     <div class="company-actions">
-                        <a href="#" class="company-btn">📈 Performance</a>
+                        <a href="pages/company-status.html" class="company-btn">📈 Performance</a>
                         <a href="#" class="company-btn">🎬 Platform</a>
                     </div>
                 </div>
@@ -514,7 +651,7 @@
                         </div>
                     </div>
                     <div class="company-actions">
-                        <a href="#" class="company-btn">⚖️ Legal Metrics</a>
+                        <a href="pages/company-status.html" class="company-btn">⚖️ Legal Metrics</a>
                         <a href="#" class="company-btn">🤖 Christopher AI</a>
                     </div>
                 </div>
@@ -660,6 +797,17 @@
                 });
             });
 
+            // Feature card click handlers
+            const featureCards = document.querySelectorAll('.feature-card');
+            featureCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    this.style.transform = 'translateY(-8px)';
+                    setTimeout(() => {
+                        this.style.transform = 'translateY(-5px)';
+                    }, 200);
+                });
+            });
+
             // Simulate real-time updates
             setInterval(() => {
                 const melUpdate = document.querySelector('.comm-card:last-child .latest-update p');
@@ -669,7 +817,9 @@
                     "Empire intelligence analysis complete. Cross-company synergies identified.",
                     "NFL Executive Summary platform optimization in progress.",
                     "Triangle Defense methodology showing 300% improvement in pilot programs.",
-                    "M.E.L. AI system performance: 97.3% accuracy across all empire applications."
+                    "M.E.L. AI system performance: 97.3% accuracy across all empire applications.",
+                    "Staff Command Center active: 25 professionals ready for summoning.",
+                    "NFL Demo platform showing strong investor interest and engagement."
                 ];
                 
                 const randomUpdate = updates[Math.floor(Math.random() * updates.length)];
