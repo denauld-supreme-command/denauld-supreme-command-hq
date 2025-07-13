@@ -454,6 +454,51 @@
             color: var(--amt-accent);
         }
 
+        /* Enhanced Roster Health Styles */
+        .module-preview {
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            max-height: 120px;
+        }
+
+        .preview-scroll {
+            max-height: 100px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--amt-accent) var(--amt-dark);
+        }
+
+        .preview-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.4rem 0.5rem;
+            margin-bottom: 0.3rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 2px solid transparent;
+        }
+
+        .preview-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-left-color: var(--amt-accent);
+            transform: translateX(2px);
+        }
+
+        .preview-label {
+            font-size: 0.65rem;
+            color: var(--amt-light-gray);
+            font-weight: 500;
+        }
+
+        .preview-value {
+            font-size: 0.65rem;
+            font-weight: 700;
+        }
+
         /* Module Breakdown Styles */
         .module-breakdown {
             margin-top: 0.75rem;
@@ -463,12 +508,61 @@
             display: none;
         }
 
+        .breakdown-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--amt-red);
+        }
+
+        .breakdown-title {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--amt-red);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .breakdown-updated {
+            font-size: 0.6rem;
+            color: var(--amt-accent);
+            font-style: italic;
+        }
+
+        .breakdown-section {
+            margin-bottom: 1rem;
+        }
+
+        .section-label {
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: var(--amt-accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.25rem;
+        }
+
         .breakdown-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 0.5rem;
-            padding: 0.25rem 0;
+            padding: 0.5rem;
+            margin-bottom: 0.3rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 2px solid transparent;
+        }
+
+        .breakdown-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-left-color: var(--amt-red);
+            transform: translateX(3px);
         }
 
         .breakdown-label {
@@ -490,6 +584,54 @@
 
         .breakdown-value.red {
             color: #ef4444;
+        }
+
+        .breakdown-arrow {
+            color: var(--amt-red);
+            font-weight: 700;
+            opacity: 0;
+            transition: all 0.2s;
+        }
+
+        .breakdown-item:hover .breakdown-arrow {
+            opacity: 1;
+        }
+
+        .breakdown-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .breakdown-action-btn {
+            background: var(--amt-red);
+            color: var(--amt-white);
+            border: none;
+            padding: 0.5rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex: 1;
+        }
+
+        .breakdown-action-btn:hover {
+            background: var(--amt-accent);
+            color: var(--amt-black);
+        }
+
+        .breakdown-action-btn.secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--amt-light-gray);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .breakdown-action-btn.secondary:hover {
+            background: var(--team-accent);
+            color: var(--amt-white);
         }
 
         /* Contract Section Styles */
@@ -766,7 +908,7 @@
             <div class="team-selector" onclick="selectTeam()">🦅 Philadelphia Eagles</div>
             <div class="ai-assistant" onclick="activateAI()">🤖 M.E.L. AI Active</div>
             <nav class="header-nav">
-                <a href="index.html" class="nav-tab">← HQ</a>
+                <a href="#" class="nav-tab">← HQ</a>
                 <a href="#" class="nav-tab active">Command</a>
                 <a href="#" class="nav-tab">Draft</a>
                 <a href="#" class="nav-tab">Analytics</a>
@@ -874,6 +1016,7 @@
 
                 <!-- Deep Intelligence Panel -->
                 <div class="deep-intel">
+                    <!-- Enhanced Roster Health Module -->
                     <div class="intel-module" onclick="toggleRosterHealth()">
                         <div class="module-header">
                             <div class="module-title">Roster Health</div>
@@ -883,34 +1026,117 @@
                             <div class="data-value">94%</div>
                             <div class="data-change">+2%</div>
                         </div>
+                        
+                        <!-- Scrollable Preview Panel (Collapsed State) -->
+                        <div class="module-preview" id="roster-preview">
+                            <div class="preview-scroll">
+                                <div class="preview-item" onclick="drillDeeper('injury-rate')">
+                                    <span class="preview-label">Injury Rate</span>
+                                    <span class="preview-value green">6%</span>
+                                </div>
+                                <div class="preview-item" onclick="drillDeeper('age-profile')">
+                                    <span class="preview-label">Age Profile</span>
+                                    <span class="preview-value green">26.4y</span>
+                                </div>
+                                <div class="preview-item" onclick="drillDeeper('depth-quality')">
+                                    <span class="preview-label">Depth Quality</span>
+                                    <span class="preview-value yellow">78%</span>
+                                </div>
+                                <div class="preview-item" onclick="drillDeeper('durability')">
+                                    <span class="preview-label">Durability</span>
+                                    <span class="preview-value green">91%</span>
+                                </div>
+                                <div class="preview-item" onclick="drillDeeper('practice-participation')">
+                                    <span class="preview-label">Practice</span>
+                                    <span class="preview-value green">96%</span>
+                                </div>
+                                <div class="preview-item" onclick="drillDeeper('load-management')">
+                                    <span class="preview-label">Load Mgmt</span>
+                                    <span class="preview-value green">100%</span>
+                                </div>
+                                <div class="preview-item" onclick="drillDeeper('recovery-metrics')">
+                                    <span class="preview-label">Recovery</span>
+                                    <span class="preview-value green">89%</span>
+                                </div>
+                                <div class="preview-item" onclick="drillDeeper('conditioning')">
+                                    <span class="preview-label">Conditioning</span>
+                                    <span class="preview-value green">92%</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Detailed Breakdown (Expanded State) -->
                         <div class="module-breakdown" id="roster-breakdown">
-                            <div class="breakdown-item">
-                                <span class="breakdown-label">Injury Rate:</span>
-                                <span class="breakdown-value green">6% (League Avg: 12%)</span>
+                            <div class="breakdown-header">
+                                <span class="breakdown-title">🏥 COMPREHENSIVE HEALTH ANALYSIS</span>
+                                <span class="breakdown-updated">Updated 3 min ago</span>
                             </div>
-                            <div class="breakdown-item">
-                                <span class="breakdown-label">Age Profile:</span>
-                                <span class="breakdown-value green">26.4 yrs (Optimal)</span>
+                            
+                            <div class="breakdown-section">
+                                <div class="section-label">PHYSICAL METRICS</div>
+                                <div class="breakdown-item" onclick="drillDeeper('injury-rate')">
+                                    <span class="breakdown-label">Injury Rate:</span>
+                                    <span class="breakdown-value green">6% (League Avg: 12%)</span>
+                                    <span class="breakdown-arrow">→</span>
+                                </div>
+                                <div class="breakdown-item" onclick="drillDeeper('age-profile')">
+                                    <span class="breakdown-label">Age Profile:</span>
+                                    <span class="breakdown-value green">26.4 yrs (Optimal)</span>
+                                    <span class="breakdown-arrow">→</span>
+                                </div>
+                                <div class="breakdown-item" onclick="drillDeeper('durability')">
+                                    <span class="breakdown-label">Durability Score:</span>
+                                    <span class="breakdown-value green">91% (5-yr avg)</span>
+                                    <span class="breakdown-arrow">→</span>
+                                </div>
                             </div>
-                            <div class="breakdown-item">
-                                <span class="breakdown-label">Depth Quality:</span>
-                                <span class="breakdown-value yellow">78% (CB concern)</span>
+                            
+                            <div class="breakdown-section">
+                                <div class="section-label">OPERATIONAL METRICS</div>
+                                <div class="breakdown-item" onclick="drillDeeper('practice-participation')">
+                                    <span class="breakdown-label">Practice Participation:</span>
+                                    <span class="breakdown-value green">96% (Full speed)</span>
+                                    <span class="breakdown-arrow">→</span>
+                                </div>
+                                <div class="breakdown-item" onclick="drillDeeper('load-management')">
+                                    <span class="breakdown-label">Load Management:</span>
+                                    <span class="breakdown-value green">Optimized (0 overuse)</span>
+                                    <span class="breakdown-arrow">→</span>
+                                </div>
+                                <div class="breakdown-item" onclick="drillDeeper('depth-quality')">
+                                    <span class="breakdown-label">Depth Quality:</span>
+                                    <span class="breakdown-value yellow">78% (CB concern)</span>
+                                    <span class="breakdown-arrow">→</span>
+                                </div>
                             </div>
-                            <div class="breakdown-item">
-                                <span class="breakdown-label">Durability Score:</span>
-                                <span class="breakdown-value green">91% (5-yr avg)</span>
+                            
+                            <div class="breakdown-section">
+                                <div class="section-label">PERFORMANCE METRICS</div>
+                                <div class="breakdown-item" onclick="drillDeeper('recovery-metrics')">
+                                    <span class="breakdown-label">Recovery Rate:</span>
+                                    <span class="breakdown-value green">89% (Above target)</span>
+                                    <span class="breakdown-arrow">→</span>
+                                </div>
+                                <div class="breakdown-item" onclick="drillDeeper('conditioning')">
+                                    <span class="breakdown-label">Conditioning Level:</span>
+                                    <span class="breakdown-value green">92% (Peak form)</span>
+                                    <span class="breakdown-arrow">→</span>
+                                </div>
+                                <div class="breakdown-item" onclick="drillDeeper('mental-health')">
+                                    <span class="breakdown-label">Mental Health Index:</span>
+                                    <span class="breakdown-value green">94% (Excellent)</span>
+                                    <span class="breakdown-arrow">→</span>
+                                </div>
                             </div>
-                            <div class="breakdown-item">
-                                <span class="breakdown-label">Practice Participation:</span>
-                                <span class="breakdown-value green">96% (Full speed)</span>
-                            </div>
-                            <div class="breakdown-item">
-                                <span class="breakdown-label">Load Management:</span>
-                                <span class="breakdown-value green">Optimized (0 overuse)</span>
+                            
+                            <div class="breakdown-actions">
+                                <button class="breakdown-action-btn" onclick="generateHealthReport()">📊 Full Health Report</button>
+                                <button class="breakdown-action-btn secondary" onclick="scheduleCheckup()">🏥 Schedule Team Checkup</button>
                             </div>
                         </div>
                     </div>
 
+                    <!-- Contract Efficiency Module -->
                     <div class="intel-module" onclick="toggleContractEfficiency()">
                         <div class="module-header">
                             <div class="module-title">Contract Efficiency</div>
@@ -1036,16 +1262,43 @@
     </div>
 
     <script>
-        // Toggle Roster Health Breakdown
+        // Enhanced Roster Health Toggle
         function toggleRosterHealth() {
             const breakdown = document.getElementById('roster-breakdown');
-            breakdown.style.display = breakdown.style.display === 'none' ? 'block' : 'none';
+            const preview = document.getElementById('roster-preview');
+            
+            if (breakdown.style.display === 'none') {
+                breakdown.style.display = 'block';
+                preview.style.display = 'none';
+            } else {
+                breakdown.style.display = 'none';
+                preview.style.display = 'block';
+            }
         }
 
         // Toggle Contract Efficiency Breakdown
         function toggleContractEfficiency() {
             const breakdown = document.getElementById('contract-breakdown');
             breakdown.style.display = breakdown.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Deep Drill Down Function
+        function drillDeeper(metric) {
+            event.stopPropagation();
+            
+            const insights = {
+                'injury-rate': 'M.E.L. AI: Eagles injury rate of 6% is 50% below league average. Key factors: superior training staff, injury prevention protocols, and load management. Recommend maintaining current practices.',
+                'age-profile': 'M.E.L. AI: Team age of 26.4 years is optimal for NFL performance. Peak athletic years with experience. No immediate age-related concerns across position groups.',
+                'depth-quality': 'M.E.L. AI: Depth concern at CB position. Darius Slay aging, limited proven depth behind starters. Recommend prioritizing CB in upcoming draft or free agency.',
+                'durability': 'M.E.L. AI: 91% durability score based on 5-year injury history analysis. Players averaging 14.2 games per season. Strong indicator of roster construction quality.',
+                'practice-participation': 'M.E.L. AI: 96% practice participation rate indicates excellent player health and engagement. Veterans managing load effectively while maintaining readiness.',
+                'load-management': 'M.E.L. AI: Zero overuse injuries this season. Load management protocols preventing fatigue-related injuries. GPS tracking shows optimal workload distribution.',
+                'recovery-metrics': 'M.E.L. AI: Recovery rate 89% based on HRV, sleep quality, and biomarker analysis. Advanced recovery protocols exceeding league standards.',
+                'conditioning': 'M.E.L. AI: 92% conditioning level measured through VO2 max, body composition, and performance benchmarks. Team in peak physical form.',
+                'mental-health': 'M.E.L. AI: 94% mental health index from counselor assessments and wellness surveys. Strong team culture and support systems in place.'
+            };
+            
+            alert(insights[metric] || 'M.E.L. AI: Analyzing detailed metrics for this health component...');
         }
 
         // Contract Details
@@ -1066,6 +1319,15 @@
                 'johnson-titans': 'M.E.L. AI: Simulating Johnson → Titans trade with 67% culture fit concerns and cap implications...'
             };
             alert(scenarios[scenario]);
+        }
+
+        // Report Generation Functions
+        function generateHealthReport() {
+            alert('M.E.L. AI: Generating comprehensive 47-page health analysis report with injury predictions, recovery timelines, and optimization recommendations...');
+        }
+
+        function scheduleCheckup() {
+            alert('M.E.L. AI: Scheduling team-wide medical evaluations. Coordinating with medical staff for optimal timing around practice schedule...');
         }
 
         // AI Assistant
