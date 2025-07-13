@@ -117,41 +117,11 @@
             gap: 2rem;
         }
 
-        .header-brand {
-            font-size: 1rem;
-            font-weight: 700;
-            background: linear-gradient(45deg, var(--amt-red), var(--amt-accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .team-selector {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--team-accent);
-            border-radius: 6px;
-            padding: 0.5rem 1rem;
-            font-size: 0.8rem;
-            color: var(--team-accent);
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .team-selector:hover {
-            background: var(--team-accent);
-            color: var(--amt-white);
-        }
-
         /* Leadership Team Styles */
         .leadership-team {
-            margin-left: auto;
-            margin-right: 2rem;
-            max-width: 800px;
-            overflow: hidden;
             flex: 1;
+            max-width: 100%;
+            overflow: hidden;
         }
 
         .leadership-scroll {
@@ -197,9 +167,30 @@
             height: 50px;
             border-radius: 50%;
             border: 2px solid var(--amt-gray);
-            object-fit: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.8rem;
             transition: all 0.3s ease;
         }
+
+        .leader-avatar.defensive { background: var(--amt-red); color: var(--amt-white); }
+        .leader-avatar.rush { background: #f59e0b; color: var(--amt-white); }
+        .leader-avatar.psychology { background: #8b5cf6; color: var(--amt-white); }
+        .leader-avatar.coaching { background: #10b981; color: var(--amt-white); }
+        .leader-avatar.scouting { background: #3b82f6; color: var(--amt-white); }
+        .leader-avatar.offensive { background: var(--amt-accent); color: var(--amt-black); }
+        .leader-avatar.analytics { background: #06b6d4; color: var(--amt-white); }
+        .leader-avatar.coordination { background: #f97316; color: var(--amt-white); }
+        .leader-avatar.field { background: var(--team-accent); color: var(--amt-white); }
+        .leader-avatar.strategy { background: #ec4899; color: var(--amt-white); }
+        .leader-avatar.medical { background: #22c55e; color: var(--amt-white); }
+        .leader-avatar.operations { background: #a855f7; color: var(--amt-white); }
+        .leader-avatar.research { background: #f59e0b; color: var(--amt-white); }
+        .leader-avatar.performance { background: #06b6d4; color: var(--amt-white); }
+        .leader-avatar.science { background: #8b5cf6; color: var(--amt-white); }
+        .leader-avatar.mastermind { background: linear-gradient(45deg, var(--amt-red), var(--amt-accent)); color: var(--amt-black); }
 
         .leader-card:hover .leader-avatar {
             border-color: var(--amt-accent);
@@ -229,6 +220,10 @@
         .leader-status.strategy { background: #ec4899; }
         .leader-status.medical { background: #22c55e; }
         .leader-status.operations { background: #a855f7; }
+        .leader-status.research { background: #f59e0b; }
+        .leader-status.performance { background: #06b6d4; }
+        .leader-status.science { background: #8b5cf6; }
+        .leader-status.mastermind { background: linear-gradient(45deg, var(--amt-red), var(--amt-accent)); }
 
         @keyframes pulse-status {
             0%, 100% { opacity: 1; transform: scale(1); }
@@ -327,7 +322,13 @@
             height: 32px;
             border-radius: 50%;
             border: 2px solid var(--amt-accent);
-            object-fit: cover;
+            background: var(--amt-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--amt-black);
+            font-size: 0.7rem;
         }
 
         .insight-icon {
@@ -478,6 +479,34 @@
             75% { transform: scale(1.2) translateX(1px); }
         }
 
+        .calendar-icon::before {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 6px;
+            border: 1px solid currentColor;
+            border-radius: 1px;
+            transform: translate(-50%, -40%);
+        }
+
+        .calendar-icon::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: currentColor;
+            transform: translate(-50%, 10%);
+        }
+
+        .calendar-icon:hover::before {
+            animation: calendar-bounce 0.6s ease-in-out infinite;
+        }
+
+        @keyframes calendar-bounce {
+            0%, 100% { transform: translate(-50%, -40%) scale(1); }
+            50% { transform: translate(-50%, -40%) scale(1.2); }
+        }
+
         .insight-title {
             font-size: 0.8rem;
             font-weight: 700;
@@ -519,6 +548,64 @@
 
         .market-intel {
             border-left-color: var(--team-accent);
+        }
+
+        .schedule-section {
+            border-left-color: #10b981;
+        }
+
+        /* Schedule Styles */
+        .schedule-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 2px solid transparent;
+        }
+
+        .schedule-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-left-color: var(--amt-accent);
+        }
+
+        .schedule-game {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .opponent {
+            font-weight: 700;
+            color: var(--amt-white);
+            font-size: 0.7rem;
+        }
+
+        .game-info {
+            font-size: 0.6rem;
+            color: var(--amt-light-gray);
+        }
+
+        .game-status {
+            font-size: 0.6rem;
+            font-weight: 600;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .game-status.upcoming {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+
+        .game-status.analyzing {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
         }
 
         /* Executive Intelligence Grid */
@@ -735,6 +822,10 @@
             font-weight: 700;
         }
 
+        .preview-value.green { color: #22c55e; }
+        .preview-value.yellow { color: #f59e0b; }
+        .preview-value.red { color: #ef4444; }
+
         /* Module Breakdown Styles */
         .module-breakdown {
             margin-top: 0.75rem;
@@ -868,127 +959,6 @@
         .breakdown-action-btn.secondary:hover {
             background: var(--team-accent);
             color: var(--amt-white);
-        }
-
-        /* Contract Section Styles */
-        .contract-priority {
-            margin-bottom: 1rem;
-        }
-
-        .priority-header {
-            font-size: 0.6rem;
-            font-weight: 700;
-            color: var(--amt-red);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 0.5rem;
-            border-bottom: 1px solid var(--amt-red);
-            padding-bottom: 0.25rem;
-        }
-
-        .contract-item {
-            background: rgba(255, 255, 255, 0.02);
-            border-left: 3px solid var(--amt-accent);
-            padding: 0.5rem;
-            margin-bottom: 0.5rem;
-            border-radius: 0 4px 4px 0;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .contract-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .contract-item.urgent {
-            border-left-color: #ef4444;
-            background: rgba(239, 68, 68, 0.05);
-        }
-
-        .contract-item.warning {
-            border-left-color: #f59e0b;
-            background: rgba(245, 158, 11, 0.05);
-        }
-
-        .contract-player {
-            font-weight: 700;
-            color: var(--amt-white);
-            font-size: 0.7rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .contract-details {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .deadline {
-            color: var(--amt-red);
-            font-weight: 600;
-            font-size: 0.6rem;
-        }
-
-        .risk {
-            color: var(--amt-accent);
-            font-weight: 600;
-            font-size: 0.6rem;
-        }
-
-        .agent-info {
-            color: var(--amt-light-gray);
-            font-size: 0.55rem;
-            font-style: italic;
-        }
-
-        .trade-scenarios {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 0.75rem;
-        }
-
-        .scenario-header {
-            font-size: 0.6rem;
-            font-weight: 700;
-            color: var(--amt-accent);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 0.5rem;
-            border-bottom: 1px solid var(--amt-accent);
-            padding-bottom: 0.25rem;
-        }
-
-        .scenario-item {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 0.4rem;
-            margin-bottom: 0.4rem;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .scenario-item:hover {
-            border-color: var(--amt-accent);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .scenario-title {
-            font-weight: 700;
-            color: var(--amt-white);
-            font-size: 0.65rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .scenario-value {
-            color: var(--amt-accent);
-            font-weight: 600;
-            font-size: 0.6rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .culture-fit {
-            font-size: 0.55rem;
-            font-weight: 600;
         }
 
         /* Action Operations Panel */
@@ -1136,6 +1106,11 @@
             height: 40px;
             border-radius: 50%;
             border: 2px solid var(--amt-black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--amt-white);
         }
 
         .chat-info h4 {
@@ -1293,14 +1268,12 @@
 
         <!-- Smart Header -->
         <div class="smart-header">
-            <div class="header-brand">NFL Executive Command Center</div>
-            
             <!-- Leadership Team Section -->
             <div class="leadership-team">
                 <div class="leadership-scroll">
                     <div class="leader-card" onclick="openChat('tony-rivera')">
                         <div class="leader-photo">
-                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/tony-rivera.png" alt="Tony Rivera" class="leader-avatar">
+                            <div class="leader-avatar defensive">TR</div>
                             <div class="leader-status defensive"></div>
                         </div>
                         <div class="leader-info">
@@ -1310,7 +1283,7 @@
                     </div>
                     <div class="leader-card" onclick="openChat('derek-thompson')">
                         <div class="leader-photo">
-                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/derek-thompson.png" alt="Derek Thompson" class="leader-avatar">
+                            <div class="leader-avatar rush">DT</div>
                             <div class="leader-status rush"></div>
                         </div>
                         <div class="leader-info">
@@ -1320,7 +1293,7 @@
                     </div>
                     <div class="leader-card" onclick="openChat('david-kim')">
                         <div class="leader-photo">
-                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/david-kim.png" alt="Dr. David Kim" class="leader-avatar">
+                            <div class="leader-avatar psychology">DK</div>
                             <div class="leader-status psychology"></div>
                         </div>
                         <div class="leader-info">
@@ -1330,7 +1303,7 @@
                     </div>
                     <div class="leader-card" onclick="openChat('alexandra-martinez')">
                         <div class="leader-photo">
-                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/alexandra-martinez.png" alt="Alexandra Martinez" class="leader-avatar">
+                            <div class="leader-avatar coaching">AM</div>
                             <div class="leader-status coaching"></div>
                         </div>
                         <div class="leader-info">
@@ -1340,7 +1313,7 @@
                     </div>
                     <div class="leader-card" onclick="openChat('michael-rodriguez')">
                         <div class="leader-photo">
-                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/michael-rodriguez.png" alt="Michael Rodriguez" class="leader-avatar">
+                            <div class="leader-avatar scouting">MR</div>
                             <div class="leader-status scouting"></div>
                         </div>
                         <div class="leader-info">
@@ -1350,7 +1323,7 @@
                     </div>
                     <div class="leader-card" onclick="openChat('bill-mckenzie')">
                         <div class="leader-photo">
-                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/bill-mckenzie.png" alt="Bill McKenzie" class="leader-avatar">
+                            <div class="leader-avatar offensive">BM</div>
                             <div class="leader-status offensive"></div>
                         </div>
                         <div class="leader-info">
@@ -1360,7 +1333,7 @@
                     </div>
                     <div class="leader-card" onclick="openChat('alex-chen')">
                         <div class="leader-photo">
-                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/alex-chen.png" alt="Alex Chen" class="leader-avatar">
+                            <div class="leader-avatar analytics">AC</div>
                             <div class="leader-status analytics"></div>
                         </div>
                         <div class="leader-info">
@@ -1370,7 +1343,7 @@
                     </div>
                     <div class="leader-card" onclick="openChat('darius-washington')">
                         <div class="leader-photo">
-                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/darius-washington.png" alt="Darius Washington" class="leader-avatar">
+                            <div class="leader-avatar coordination">DW</div>
                             <div class="leader-status coordination"></div>
                         </div>
                         <div class="leader-info">
@@ -1380,7 +1353,7 @@
                     </div>
                     <div class="leader-card" onclick="openChat('captain-michael-rodriguez')">
                         <div class="leader-photo">
-                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/captain-michael-rodriguez.png" alt="Captain Michael Rodriguez" class="leader-avatar">
+                            <div class="leader-avatar field">CR</div>
                             <div class="leader-status field"></div>
                         </div>
                         <div class="leader-info">
@@ -1390,7 +1363,7 @@
                     </div>
                     <div class="leader-card" onclick="openChat('patricia-williams')">
                         <div class="leader-photo">
-                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/patricia-williams.png" alt="Patricia Williams" class="leader-avatar">
+                            <div class="leader-avatar strategy">PW</div>
                             <div class="leader-status strategy"></div>
                         </div>
                         <div class="leader-info">
@@ -1400,7 +1373,7 @@
                     </div>
                     <div class="leader-card" onclick="openChat('elena-vasquez')">
                         <div class="leader-photo">
-                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/elena-vasquez.png" alt="Elena Vasquez" class="leader-avatar">
+                            <div class="leader-avatar medical">EV</div>
                             <div class="leader-status medical"></div>
                         </div>
                         <div class="leader-info">
@@ -1410,7 +1383,7 @@
                     </div>
                     <div class="leader-card" onclick="openChat('victoria-castellanos')">
                         <div class="leader-photo">
-                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/victoria-castellanos.png" alt="Victoria Castellanos" class="leader-avatar">
+                            <div class="leader-avatar operations">VC</div>
                             <div class="leader-status operations"></div>
                         </div>
                         <div class="leader-info">
@@ -1420,7 +1393,7 @@
                     </div>
                     <div class="leader-card" onclick="openChat('dr-rachel-foster')">
                         <div class="leader-photo">
-                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/dr-rachel-foster.png" alt="Dr. Rachel Foster" class="leader-avatar">
+                            <div class="leader-avatar research">RF</div>
                             <div class="leader-status research"></div>
                         </div>
                         <div class="leader-info">
@@ -1430,7 +1403,7 @@
                     </div>
                     <div class="leader-card" onclick="openChat('dr-sarah-chen')">
                         <div class="leader-photo">
-                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/dr-sarah-chen.png" alt="Dr. Sarah Chen" class="leader-avatar">
+                            <div class="leader-avatar performance">SC</div>
                             <div class="leader-status performance"></div>
                         </div>
                         <div class="leader-info">
@@ -1440,7 +1413,7 @@
                     </div>
                     <div class="leader-card" onclick="openChat('dr-wright')">
                         <div class="leader-photo">
-                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/dr-wright.png" alt="Dr. Wright" class="leader-avatar">
+                            <div class="leader-avatar science">DW</div>
                             <div class="leader-status science"></div>
                         </div>
                         <div class="leader-info">
@@ -1450,7 +1423,7 @@
                     </div>
                     <div class="leader-card" onclick="openChat('denauld-brown')">
                         <div class="leader-photo">
-                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/denauld-brown.png" alt="Denauld Brown" class="leader-avatar">
+                            <div class="leader-avatar mastermind">DB</div>
                             <div class="leader-status mastermind"></div>
                         </div>
                         <div class="leader-info">
@@ -1464,9 +1437,9 @@
             <nav class="header-nav">
                 <a href="#" class="nav-tab" onclick="switchView('hq')">← HQ</a>
                 <a href="#" class="nav-tab active" onclick="switchView('command')">Command</a>
-                <a href="#" class="nav-tab" onclick="switchView('draft')">Draft</a>
-                <a href="#" class="nav-tab" onclick="switchView('analytics')">Analytics</a>
                 <a href="#" class="nav-tab" onclick="switchView('operations')">Operations</a>
+                <a href="#" class="nav-tab" onclick="switchView('analytics')">Analytics</a>
+                <a href="#" class="nav-tab" onclick="switchView('draft')">Draft</a>
             </nav>
         </div>
 
@@ -1502,7 +1475,7 @@
                         <div class="insight-icon bulb-icon"></div>
                         <div class="insight-title">AI Suggestion</div>
                         <div class="gm-photo">
-                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/marcus-sterling.png" alt="Marcus Sterling" class="gm-avatar">
+                            <div class="gm-avatar">MS</div>
                         </div>
                     </div>
                     <div class="insight-content">
@@ -1531,6 +1504,44 @@
                         Darius Slay contract void risk if not extended by March 15th. $8.5M dead cap exposure.
                     </div>
                     <button class="insight-action" onclick="analyzeInsight('contract-analysis')">Contract Analysis</button>
+                </div>
+
+                <div class="insight-section schedule-section">
+                    <div class="insight-header">
+                        <div class="insight-icon calendar-icon"></div>
+                        <div class="insight-title">Schedule Analysis</div>
+                    </div>
+                    <div class="insight-content">
+                        Upcoming critical games require strategic planning. AI scenario modeling available.
+                    </div>
+                    
+                    <div style="margin: 0.75rem 0;">
+                        <div class="schedule-item" onclick="analyzeSchedule('dal-week10')">
+                            <div class="schedule-game">
+                                <div class="opponent">vs DAL</div>
+                                <div class="game-info">Week 10 • Sun 1:00 PM</div>
+                            </div>
+                            <div class="game-status upcoming">Upcoming</div>
+                        </div>
+                        
+                        <div class="schedule-item" onclick="analyzeSchedule('was-week11')">
+                            <div class="schedule-game">
+                                <div class="opponent">@ WAS</div>
+                                <div class="game-info">Week 11 • Thu 8:15 PM</div>
+                            </div>
+                            <div class="game-status analyzing">Analyzing</div>
+                        </div>
+                        
+                        <div class="schedule-item" onclick="analyzeSchedule('lac-week12')">
+                            <div class="schedule-game">
+                                <div class="opponent">vs LAC</div>
+                                <div class="game-info">Week 12 • Sun 4:25 PM</div>
+                            </div>
+                            <div class="game-status upcoming">Upcoming</div>
+                        </div>
+                    </div>
+                    
+                    <button class="insight-action" onclick="analyzeInsight('schedule-scenarios')">Schedule Scenarios</button>
                 </div>
             </div>
 
@@ -1756,23 +1767,15 @@
                             
                             <div class="breakdown-section">
                                 <div class="section-label">URGENT ACTIONS</div>
-                                <div class="contract-priority">
-                                    <div class="contract-item urgent" onclick="contractDetails('slay')">
-                                        <div class="contract-player">Darius Slay</div>
-                                        <div class="contract-details">
-                                            <span class="deadline">Void: Mar 15</span>
-                                            <span class="risk">$8.5M dead cap</span>
-                                        </div>
-                                        <div class="agent-info">Agent: Drew Rosenhaus (305-555-0123)</div>
-                                    </div>
-                                    <div class="contract-item warning" onclick="contractDetails('johnson')">
-                                        <div class="contract-player">Lane Johnson</div>
-                                        <div class="contract-details">
-                                            <span class="deadline">Extension Window: Jun 1</span>
-                                            <span class="risk">Cap optimization: $4.2M</span>
-                                        </div>
-                                        <div class="agent-info">Agent: David Mulugheta (310-555-0156)</div>
-                                    </div>
+                                <div class="breakdown-item" onclick="contractDetails('slay')">
+                                    <span class="breakdown-label">Darius Slay:</span>
+                                    <span class="breakdown-value red">Void: Mar 15 ($8.5M dead cap)</span>
+                                    <span class="breakdown-arrow">→</span>
+                                </div>
+                                <div class="breakdown-item" onclick="contractDetails('johnson')">
+                                    <span class="breakdown-label">Lane Johnson:</span>
+                                    <span class="breakdown-value yellow">Extension Window: Jun 1</span>
+                                    <span class="breakdown-arrow">→</span>
                                 </div>
                             </div>
                             
@@ -1792,22 +1795,6 @@
                                     <span class="breakdown-label">Salary Distribution:</span>
                                     <span class="breakdown-value green">Balanced across positions</span>
                                     <span class="breakdown-arrow">→</span>
-                                </div>
-                            </div>
-                            
-                            <div class="breakdown-section">
-                                <div class="section-label">AI TRADE SCENARIOS</div>
-                                <div class="trade-scenarios">
-                                    <div class="scenario-item" onclick="tradeScenario('slay-cardinals')">
-                                        <div class="scenario-title">Slay → Cardinals</div>
-                                        <div class="scenario-value">6th round pick + $3M savings</div>
-                                        <div class="culture-fit">89% Culture Match</div>
-                                    </div>
-                                    <div class="scenario-item" onclick="tradeScenario('johnson-titans')">
-                                        <div class="scenario-title">Johnson → Titans</div>
-                                        <div class="scenario-value">3rd + 5th round picks</div>
-                                        <div class="culture-fit">67% Culture Match</div>
-                                    </div>
                                 </div>
                             </div>
                             
@@ -1917,25 +1904,6 @@
                                 </div>
                             </div>
                             
-                            <div class="breakdown-section">
-                                <div class="section-label">AI DRAFT SCENARIOS</div>
-                                <div class="breakdown-item" onclick="drillDeeper('trade-up-scenario')">
-                                    <span class="breakdown-label">Trade Up (Cardinals):</span>
-                                    <span class="breakdown-value green">73% acceptance odds</span>
-                                    <span class="breakdown-arrow">→</span>
-                                </div>
-                                <div class="breakdown-item" onclick="drillDeeper('trade-down-scenario')">
-                                    <span class="breakdown-label">Trade Down (Broncos):</span>
-                                    <span class="breakdown-value green">67% acceptance odds</span>
-                                    <span class="breakdown-arrow">→</span>
-                                </div>
-                                <div class="breakdown-item" onclick="drillDeeper('bpa-projection')">
-                                    <span class="breakdown-label">Best Player Available:</span>
-                                    <span class="breakdown-value green">Cooper DeJean (87% odds)</span>
-                                    <span class="breakdown-arrow">→</span>
-                                </div>
-                            </div>
-                            
                             <div class="breakdown-actions">
                                 <button class="breakdown-action-btn" onclick="generateDraftReport()">Draft Strategy Report</button>
                                 <button class="breakdown-action-btn secondary" onclick="runDraftSimulator()">Run Draft Simulator</button>
@@ -2032,30 +2000,6 @@
                                 <div class="breakdown-item" onclick="drillDeeper('ol-market')">
                                     <span class="breakdown-label">OL Market Demand:</span>
                                     <span class="breakdown-value yellow">Moderate (4 teams need)</span>
-                                    <span class="breakdown-arrow">→</span>
-                                </div>
-                                <div class="breakdown-item" onclick="drillDeeper('draft-market')">
-                                    <span class="breakdown-label">Draft Pick Demand:</span>
-                                    <span class="breakdown-value green">High (trade deadline approaching)</span>
-                                    <span class="breakdown-arrow">→</span>
-                                </div>
-                            </div>
-                            
-                            <div class="breakdown-section">
-                                <div class="section-label">LEVERAGE ANALYSIS</div>
-                                <div class="breakdown-item" onclick="drillDeeper('negotiation-leverage')">
-                                    <span class="breakdown-label">Negotiation Position:</span>
-                                    <span class="breakdown-value green">Strong (multiple bidders)</span>
-                                    <span class="breakdown-arrow">→</span>
-                                </div>
-                                <div class="breakdown-item" onclick="drillDeeper('timing-leverage')">
-                                    <span class="breakdown-label">Timing Advantage:</span>
-                                    <span class="breakdown-value green">Favorable (deadline pressure)</span>
-                                    <span class="breakdown-arrow">→</span>
-                                </div>
-                                <div class="breakdown-item" onclick="drillDeeper('contract-leverage')">
-                                    <span class="breakdown-label">Contract Flexibility:</span>
-                                    <span class="breakdown-value green">89% moveable contracts</span>
                                     <span class="breakdown-arrow">→</span>
                                 </div>
                             </div>
@@ -2245,6 +2189,38 @@
             </div>
         </div>
 
+        <!-- Operations View -->
+        <div class="view-section" id="operations-view">
+            <div class="command-dashboard">
+                <div class="insights-sidebar">
+                    <div class="insight-section">
+                        <div class="insight-header">
+                            <div class="insight-icon warning-icon"></div>
+                            <div class="insight-title">Daily Operations</div>
+                        </div>
+                        <div class="insight-content">
+                            Facility management, staff coordination, and operational efficiency monitoring.
+                        </div>
+                        <button class="insight-action">View Operations</button>
+                    </div>
+                </div>
+                <div class="intelligence-grid">
+                    <div style="padding: 2rem; text-align: center; color: var(--amt-accent);">
+                        <h2>Operations Management Center</h2>
+                        <p>Comprehensive facility and operational management interface coming soon...</p>
+                    </div>
+                </div>
+                <div class="operations-panel">
+                    <div class="operation-section">
+                        <div class="section-title">Analytics Tools</div>
+                        <button class="quick-action">Player Metrics</button>
+                        <button class="quick-action">Team Analytics</button>
+                        <button class="quick-action">Predictive Models</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Draft View -->
         <div class="view-section" id="draft-view">
             <div class="command-dashboard">
@@ -2286,77 +2262,13 @@
                 </div>
             </div>
         </div>
-
-        <!-- Analytics View -->
-        <div class="view-section" id="analytics-view">
-            <div class="command-dashboard">
-                <div class="insights-sidebar">
-                    <div class="insight-section">
-                        <div class="insight-header">
-                            <div class="insight-icon chart-icon"></div>
-                            <div class="insight-title">Performance Metrics</div>
-                        </div>
-                        <div class="insight-content">
-                            Advanced analytics dashboard for player performance, team efficiency, and predictive modeling.
-                        </div>
-                        <button class="insight-action">View Analytics</button>
-                    </div>
-                </div>
-                <div class="intelligence-grid">
-                    <div style="padding: 2rem; text-align: center; color: var(--amt-accent);">
-                        <h2>Advanced Analytics Center</h2>
-                        <p>Comprehensive performance analytics and predictive modeling interface coming soon...</p>
-                    </div>
-                </div>
-                <div class="operations-panel">
-                    <div class="operation-section">
-                        <div class="section-title">Analytics Tools</div>
-                        <button class="quick-action">Player Metrics</button>
-                        <button class="quick-action">Team Analytics</button>
-                        <button class="quick-action">Predictive Models</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Operations View -->
-        <div class="view-section" id="operations-view">
-            <div class="command-dashboard">
-                <div class="insights-sidebar">
-                    <div class="insight-section">
-                        <div class="insight-header">
-                            <div class="insight-icon warning-icon"></div>
-                            <div class="insight-title">Daily Operations</div>
-                        </div>
-                        <div class="insight-content">
-                            Facility management, staff coordination, and operational efficiency monitoring.
-                        </div>
-                        <button class="insight-action">View Operations</button>
-                    </div>
-                </div>
-                <div class="intelligence-grid">
-                    <div style="padding: 2rem; text-align: center; color: var(--amt-accent);">
-                        <h2>Operations Management Center</h2>
-                        <p>Comprehensive facility and operational management interface coming soon...</p>
-                    </div>
-                </div>
-                <div class="operations-panel">
-                    <div class="operation-section">
-                        <div class="section-title">Operations Tools</div>
-                        <button class="quick-action">Facility Management</button>
-                        <button class="quick-action">Staff Coordination</button>
-                        <button class="quick-action">Resource Planning</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- Chat Modal -->
     <div class="chat-modal" id="chatModal">
         <div class="chat-container">
             <div class="chat-header">
-                <img id="chatAvatar" src="" alt="" class="chat-avatar">
+                <div id="chatAvatar" class="chat-avatar"></div>
                 <div class="chat-info">
                     <h4 id="chatName"></h4>
                     <p id="chatRole"></p>
@@ -2451,3 +2363,376 @@
             if (breakdown.style.display === 'none') {
                 breakdown.style.display = 'block';
                 preview.style.display = 'none';
+            } else {
+                breakdown.style.display = 'none';
+                preview.style.display = 'block';
+            }
+        }
+
+        // Leadership Team Chat Function
+        function openChat(leaderId) {
+            const leaders = {
+                'tony-rivera': {
+                    name: 'Tony Rivera',
+                    role: 'Triangle Specialist - Defensive Analyst',
+                    avatar: 'TR',
+                    color: 'defensive'
+                },
+                'derek-thompson': {
+                    name: 'Derek Thompson',
+                    role: 'Pressure Specialist - Pass Rush Analyst',
+                    avatar: 'DT',
+                    color: 'rush'
+                },
+                'david-kim': {
+                    name: 'Dr. David Kim',
+                    role: 'The Mind - Sports Psychology Director',
+                    avatar: 'DK',
+                    color: 'psychology'
+                },
+                'alexandra-martinez': {
+                    name: 'Alexandra Martinez',
+                    role: 'The Mentor - Director of Coach Development',
+                    avatar: 'AM',
+                    color: 'coaching'
+                },
+                'michael-rodriguez': {
+                    name: 'Michael Rodriguez',
+                    role: 'The Scout - Director of Player Personnel',
+                    avatar: 'MR',
+                    color: 'scouting'
+                },
+                'bill-mckenzie': {
+                    name: 'Bill McKenzie',
+                    role: 'The Teacher - Offensive Analyst',
+                    avatar: 'BM',
+                    color: 'offensive'
+                },
+                'alex-chen': {
+                    name: 'Alex Chen',
+                    role: 'The Optimizer - Special Teams Analyst',
+                    avatar: 'AC',
+                    color: 'analytics'
+                },
+                'darius-washington': {
+                    name: 'Darius Washington',
+                    role: 'The Coordinator - Head Analytics Coordinator',
+                    avatar: 'DW',
+                    color: 'coordination'
+                },
+                'captain-michael-rodriguez': {
+                    name: 'Captain Rodriguez',
+                    role: 'The Wall - Defensive Coordinator',
+                    avatar: 'CR',
+                    color: 'field'
+                },
+                'patricia-williams': {
+                    name: 'Patricia Williams',
+                    role: 'Strategy Chief - Strategy Planning Director',
+                    avatar: 'PW',
+                    color: 'strategy'
+                },
+                'elena-vasquez': {
+                    name: 'Elena Vasquez',
+                    role: 'Medical Director - Chief Medical Officer',
+                    avatar: 'EV',
+                    color: 'medical'
+                },
+                'victoria-castellanos': {
+                    name: 'Victoria Castellanos',
+                    role: 'Operations Chief - Director of Operations',
+                    avatar: 'VC',
+                    color: 'operations'
+                },
+                'dr-rachel-foster': {
+                    name: 'Dr. Rachel Foster',
+                    role: 'Research Director - Advanced Research',
+                    avatar: 'RF',
+                    color: 'research'
+                },
+                'dr-sarah-chen': {
+                    name: 'Dr. Sarah Chen',
+                    role: 'Performance Analyst - Athletic Performance',
+                    avatar: 'SC',
+                    color: 'performance'
+                },
+                'dr-wright': {
+                    name: 'Dr. Wright',
+                    role: 'Sports Scientist - Exercise Physiology',
+                    avatar: 'DW',
+                    color: 'science'
+                },
+                'denauld-brown': {
+                    name: 'Denauld Brown',
+                    role: 'The Mastermind - Supreme Commander',
+                    avatar: 'DB',
+                    color: 'mastermind'
+                }
+            };
+            
+            const leader = leaders[leaderId];
+            if (!leader) return;
+            
+            // Set up chat modal
+            document.getElementById('chatName').textContent = leader.name;
+            document.getElementById('chatRole').textContent = leader.role;
+            
+            const chatAvatar = document.getElementById('chatAvatar');
+            chatAvatar.textContent = leader.avatar;
+            chatAvatar.className = `chat-avatar ${leader.color}`;
+            
+            // Clear previous messages
+            const messagesContainer = document.getElementById('chatMessages');
+            messagesContainer.innerHTML = `
+                <div class="message ai">
+                    Hello! I'm ${leader.name}. ${generateChatResponse(leaderId, 'greeting')}
+                </div>
+            `;
+            
+            // Show modal
+            document.getElementById('chatModal').style.display = 'block';
+        }
+
+        function closeChat() {
+            document.getElementById('chatModal').style.display = 'none';
+        }
+
+        function handleChatKeypress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (message === '') return;
+            
+            // Add user message
+            const messagesContainer = document.getElementById('chatMessages');
+            messagesContainer.innerHTML += `
+                <div class="message user">${message}</div>
+            `;
+            
+            // Clear input
+            input.value = '';
+            
+            // Generate AI response
+            setTimeout(() => {
+                const leaderId = getCurrentChatLeader();
+                const response = generateChatResponse(leaderId, message);
+                messagesContainer.innerHTML += `
+                    <div class="message ai">${response}</div>
+                `;
+                
+                // Scroll to bottom
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 1000);
+            
+            // Scroll to bottom
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function getCurrentChatLeader() {
+            const chatName = document.getElementById('chatName').textContent;
+            const leaderMap = {
+                'Tony Rivera': 'tony-rivera',
+                'Derek Thompson': 'derek-thompson',
+                'Dr. David Kim': 'david-kim',
+                'Alexandra Martinez': 'alexandra-martinez',
+                'Michael Rodriguez': 'michael-rodriguez',
+                'Bill McKenzie': 'bill-mckenzie',
+                'Alex Chen': 'alex-chen',
+                'Darius Washington': 'darius-washington',
+                'Captain Rodriguez': 'captain-michael-rodriguez',
+                'Patricia Williams': 'patricia-williams',
+                'Elena Vasquez': 'elena-vasquez',
+                'Victoria Castellanos': 'victoria-castellanos',
+                'Dr. Rachel Foster': 'dr-rachel-foster',
+                'Dr. Sarah Chen': 'dr-sarah-chen',
+                'Dr. Wright': 'dr-wright',
+                'Denauld Brown': 'denauld-brown'
+            };
+            return leaderMap[chatName] || 'tony-rivera';
+        }
+
+        function generateChatResponse(leaderId, message) {
+            const responses = {
+                'tony-rivera': {
+                    greeting: "I specialize in Triangle Defense formations and defensive analysis. How can I help optimize our defensive strategy?",
+                    default: "From a Triangle Defense perspective, we need to focus on our pass coverage schemes. The data shows we can improve our defensive efficiency by 12% with proper formation adjustments."
+                },
+                'derek-thompson': {
+                    greeting: "My expertise is pass rush analytics and pressure generation. What aspects of our pass rush would you like to analyze?",
+                    default: "Our pass rush win rate is solid at 34%, but I've identified 3 key adjustments that could push us to elite territory. Let's discuss edge rusher positioning and timing."
+                },
+                'david-kim': {
+                    greeting: "As our sports psychologist, I focus on mental performance optimization. How can I help with player psychology or performance mindset?",
+                    default: "The mental aspect is crucial. I'm seeing some confidence patterns in our secondary that we need to address. Mental preparation can improve on-field performance by 15-20%."
+                },
+                'alexandra-martinez': {
+                    greeting: "I handle coach development and mentoring programs. What coaching strategies or development areas should we focus on?",
+                    default: "Our coaching efficiency metrics show room for improvement in situational coaching. I recommend implementing targeted development sessions for our position coaches."
+                },
+                'michael-rodriguez': {
+                    greeting: "I'm responsible for player personnel and scouting. Let's discuss talent evaluation, recruiting intelligence, or roster composition.",
+                    default: "I've been tracking 23 potential targets that fit our scheme. The cornerback market is particularly interesting right now - I have detailed reports on 8 prospects."
+                },
+                'bill-mckenzie': {
+                    greeting: "I analyze our offensive systems and teaching methodologies. How can I help optimize our offensive strategy?",
+                    default: "Our offensive efficiency is strong, but I see opportunities in red zone conversion. The data suggests we can improve by adjusting our route concepts in tight coverage."
+                },
+                'alex-chen': {
+                    greeting: "I specialize in special teams optimization and statistical analysis. What special teams or analytics questions do you have?",
+                    default: "Our special teams units are performing well, but I've identified coverage lane inefficiencies that could save us 4.2 yards per return. Let me show you the data."
+                },
+                'darius-washington': {
+                    greeting: "I coordinate our analytics efforts and integrate data across all departments. What cross-functional analysis do you need?",
+                    default: "I'm seeing interesting correlations between practice participation rates and game performance. The analytics suggest we can optimize our preparation schedules."
+                },
+                'captain-michael-rodriguez': {
+                    greeting: "I handle field operations and defensive coordination. What defensive operations or field strategy topics should we tackle?",
+                    default: "Field operations are running smoothly. I recommend focusing on our third-down defense - we can improve our conversion rate defense by 8% with tactical adjustments."
+                },
+                'patricia-williams': {
+                    greeting: "I develop strategic plans and coordinate long-term organizational strategy. What strategic planning areas need attention?",
+                    default: "From a strategic standpoint, we need to consider our 3-year roster construction plan. I have projections showing optimal cap allocation patterns."
+                },
+                'elena-vasquez': {
+                    greeting: "I oversee medical operations and player health management. How can I assist with health, injury prevention, or medical strategy?",
+                    default: "Our injury prevention protocols are yielding positive results. Player availability is up 12% compared to last season through proactive health management."
+                },
+                'victoria-castellanos': {
+                    greeting: "I manage daily operations and organizational efficiency. What operational challenges or improvements should we address?",
+                    default: "Operations are running at 96% efficiency. I've identified workflow optimizations that could save us 3.2 hours per day in administrative overhead."
+                },
+                'dr-rachel-foster': {
+                    greeting: "I lead advanced research initiatives and innovation projects. What research questions or analytical deep-dives interest you?",
+                    default: "My latest research shows fascinating correlations between sleep patterns and reaction times. We could optimize player performance through circadian rhythm management."
+                },
+                'dr-sarah-chen': {
+                    greeting: "I analyze athletic performance and biomechanics. How can I help optimize player performance or movement efficiency?",
+                    default: "Performance metrics indicate we can improve acceleration by 0.3 seconds through targeted biomechanical adjustments. The data is compelling."
+                },
+                'dr-wright': {
+                    greeting: "I focus on exercise physiology and sports science applications. What physiological or training science topics should we explore?",
+                    default: "From a sports science perspective, our training load management is excellent. I'm seeing optimal adaptation patterns across all position groups."
+                },
+                'denauld-brown': {
+                    greeting: "I oversee all strategic operations and executive decision-making. What high-level strategic challenges require my attention?",
+                    default: "Looking at the big picture, we're positioned well for sustained success. I see opportunities in competitive intelligence and organizational optimization that align with our championship objectives."
+                }
+            };
+            
+            const leaderResponses = responses[leaderId] || responses['tony-rivera'];
+            
+            if (message === 'greeting') {
+                return leaderResponses.greeting;
+            }
+            
+            return leaderResponses.default;
+        }
+
+        // Analysis and drill-down functions
+        function analyzeInsight(type) {
+            alert(`M.E.L. AI: Analyzing ${type}... Deep intelligence report generated.`);
+        }
+
+        function analyzeSchedule(game) {
+            alert(`M.E.L. AI: Analyzing ${game} matchup scenarios and strategic implications...`);
+        }
+
+        function drillDown(metric) {
+            alert(`M.E.L. AI: Deep drilling ${metric} analysis... Full breakdown available.`);
+        }
+
+        function drillDeeper(metric) {
+            alert(`M.E.L. AI: Comprehensive ${metric} analysis initiated. Generating detailed insights...`);
+        }
+
+        function quickAction(action) {
+            alert(`M.E.L. AI: Executing ${action}... Interface loading.`);
+        }
+
+        function aiRecommendation(type) {
+            alert(`M.E.L. AI: Generating ${type} recommendations based on current data...`);
+        }
+
+        // Report generation functions
+        function generateHealthReport() {
+            alert('M.E.L. AI: Generating comprehensive roster health report...');
+        }
+
+        function scheduleCheckup() {
+            alert('M.E.L. AI: Scheduling team medical checkup...');
+        }
+
+        function generateContractReport() {
+            alert('M.E.L. AI: Generating contract efficiency analysis report...');
+        }
+
+        function scheduleAgentMeetings() {
+            alert('M.E.L. AI: Scheduling agent meetings for priority contracts...');
+        }
+
+        function generateDraftReport() {
+            alert('M.E.L. AI: Generating comprehensive draft strategy report...');
+        }
+
+        function runDraftSimulator() {
+            alert('M.E.L. AI: Launching advanced draft simulator...');
+        }
+
+        function generateTradeReport() {
+            alert('M.E.L. AI: Generating trade asset valuation report...');
+        }
+
+        function openTradeSimulator() {
+            alert('M.E.L. AI: Opening trade scenario simulator...');
+        }
+
+        function contractDetails(player) {
+            alert(`M.E.L. AI: Opening detailed contract analysis for ${player}...`);
+        }
+
+        function tradeScenario(scenario) {
+            alert(`M.E.L. AI: Analyzing trade scenario: ${scenario}...`);
+        }
+
+        console.log('NFL Executive Command Center - Fully Loaded and Operational');
+    </script>
+</body>
+</html>Operations Tools</div>
+                        <button class="quick-action">Facility Management</button>
+                        <button class="quick-action">Staff Coordination</button>
+                        <button class="quick-action">Resource Planning</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics View -->
+        <div class="view-section" id="analytics-view">
+            <div class="command-dashboard">
+                <div class="insights-sidebar">
+                    <div class="insight-section">
+                        <div class="insight-header">
+                            <div class="insight-icon chart-icon"></div>
+                            <div class="insight-title">Performance Metrics</div>
+                        </div>
+                        <div class="insight-content">
+                            Advanced analytics dashboard for player performance, team efficiency, and predictive modeling.
+                        </div>
+                        <button class="insight-action">View Analytics</button>
+                    </div>
+                </div>
+                <div class="intelligence-grid">
+                    <div style="padding: 2rem; text-align: center; color: var(--amt-accent);">
+                        <h2>Advanced Analytics Center</h2>
+                        <p>Comprehensive performance analytics and predictive modeling interface coming soon...</p>
+                    </div>
+                </div>
+                <div class="operations-panel">
+                    <div class="operation-section">
+                        <div class="section-title">
