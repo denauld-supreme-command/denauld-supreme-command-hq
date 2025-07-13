@@ -1,0 +1,1602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Philadelphia Eagles - Executive Command Center</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Official Philadelphia Eagles Colors */
+            --eagles-midnight-green: #004C54;
+            --eagles-silver-jersey: #A5ACAF;
+            --eagles-silver-helmet: #ACC0C6;
+            --eagles-black: #000000;
+            --eagles-charcoal: #1C1C1C;
+            --eagles-white: #FFFFFF;
+            --eagles-gold: #FFD700;
+            --eagles-accent: #00FF88;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, 
+                var(--eagles-black) 0%, 
+                var(--eagles-charcoal) 25%, 
+                var(--eagles-midnight-green) 75%, 
+                var(--eagles-silver-jersey) 100%
+            );
+            color: var(--eagles-white);
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0, 76, 84, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(165, 172, 175, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .eagles-container {
+            display: grid;
+            grid-template-columns: 350px 1fr 280px;
+            grid-template-rows: 80px 1fr 120px;
+            height: 100vh;
+            gap: 3px;
+            background: linear-gradient(45deg, 
+                var(--eagles-midnight-green), 
+                var(--eagles-charcoal)
+            );
+        }
+
+        /* Enhanced Header with Eagles Branding */
+        .eagles-header {
+            grid-column: 1 / -1;
+            background: linear-gradient(90deg, 
+                var(--eagles-black) 0%, 
+                var(--eagles-midnight-green) 50%, 
+                var(--eagles-black) 100%
+            );
+            display: flex;
+            align-items: center;
+            padding: 0 2rem;
+            border-bottom: 4px solid;
+            border-image: linear-gradient(90deg, 
+                var(--eagles-silver-jersey), 
+                var(--eagles-gold), 
+                var(--eagles-silver-helmet)
+            ) 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .eagles-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, 
+                var(--eagles-silver-jersey) 0%, 
+                var(--eagles-gold) 25%, 
+                var(--eagles-accent) 50%, 
+                var(--eagles-gold) 75%, 
+                var(--eagles-silver-helmet) 100%
+            );
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        .header-logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, 
+                var(--eagles-silver-jersey), 
+                var(--eagles-gold), 
+                var(--eagles-accent)
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .eagles-badge {
+            margin-left: 1.5rem;
+            background: linear-gradient(135deg, 
+                var(--eagles-midnight-green), 
+                var(--eagles-silver-helmet)
+            );
+            color: var(--eagles-white);
+            padding: 0.6rem 1.5rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            border: 2px solid var(--eagles-gold);
+            box-shadow: 0 4px 15px rgba(0, 76, 84, 0.5);
+        }
+
+        .header-nav {
+            margin-left: auto;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-item {
+            color: var(--eagles-white);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+            background: rgba(0, 76, 84, 0.3);
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: linear-gradient(135deg, 
+                var(--eagles-midnight-green), 
+                var(--eagles-silver-helmet)
+            );
+            border-color: var(--eagles-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 76, 84, 0.4);
+        }
+
+        /* Complete Eagles Roster Sidebar */
+        .roster-sidebar {
+            background: linear-gradient(180deg, 
+                var(--eagles-midnight-green) 0%, 
+                var(--eagles-charcoal) 100%
+            );
+            padding: 2rem;
+            overflow-y: auto;
+            border-right: 3px solid;
+            border-image: linear-gradient(180deg, 
+                var(--eagles-gold), 
+                var(--eagles-silver-jersey)
+            ) 1;
+            position: relative;
+        }
+
+        .roster-sidebar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .roster-sidebar::-webkit-scrollbar-track {
+            background: var(--eagles-charcoal);
+        }
+
+        .roster-sidebar::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, 
+                var(--eagles-midnight-green), 
+                var(--eagles-silver-jersey)
+            );
+            border-radius: 4px;
+        }
+
+        .roster-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            color: var(--eagles-gold);
+            text-transform: uppercase;
+            border-bottom: 3px solid;
+            border-image: linear-gradient(90deg, 
+                var(--eagles-gold), 
+                var(--eagles-silver-jersey)
+            ) 1;
+            padding-bottom: 1rem;
+        }
+
+        .eagles-logo {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(45deg, 
+                var(--eagles-midnight-green), 
+                var(--eagles-gold)
+            );
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: var(--eagles-white);
+            font-size: 1rem;
+            border: 2px solid var(--eagles-silver-jersey);
+        }
+
+        .position-group {
+            margin-bottom: 2rem;
+        }
+
+        .position-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--eagles-silver-jersey);
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 76, 84, 0.3);
+            border-radius: 8px;
+            border-left: 4px solid var(--eagles-gold);
+        }
+
+        .player-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(135deg, 
+                rgba(0, 76, 84, 0.2) 0%, 
+                rgba(165, 172, 175, 0.1) 100%
+            );
+            border-radius: 12px;
+            border: 1px solid rgba(165, 172, 175, 0.3);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .player-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                var(--eagles-gold) 50%, 
+                transparent 100%
+            );
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .player-card:hover {
+            background: linear-gradient(135deg, 
+                rgba(0, 76, 84, 0.4) 0%, 
+                rgba(255, 215, 0, 0.1) 100%
+            );
+            border-color: var(--eagles-gold);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(0, 76, 84, 0.3);
+        }
+
+        .player-card:hover::before {
+            opacity: 1;
+        }
+
+        .player-card.starter {
+            border-left: 4px solid var(--eagles-gold);
+            background: linear-gradient(135deg, 
+                rgba(255, 215, 0, 0.15) 0%, 
+                rgba(0, 76, 84, 0.2) 100%
+            );
+        }
+
+        .player-card.selected {
+            background: linear-gradient(135deg, 
+                rgba(0, 255, 136, 0.2) 0%, 
+                rgba(0, 76, 84, 0.3) 100%
+            );
+            border-color: var(--eagles-accent);
+            transform: scale(1.05);
+        }
+
+        .player-avatar {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, 
+                var(--eagles-midnight-green), 
+                var(--eagles-silver-helmet)
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.9rem;
+            color: var(--eagles-white);
+            border: 3px solid var(--eagles-gold);
+            box-shadow: 0 4px 15px rgba(0, 76, 84, 0.4);
+        }
+
+        .player-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .player-name {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            color: var(--eagles-white);
+        }
+
+        .player-details {
+            font-size: 0.8rem;
+            color: var(--eagles-silver-jersey);
+            margin-bottom: 0.4rem;
+        }
+
+        .player-salary {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--eagles-accent);
+            background: rgba(0, 255, 136, 0.1);
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            display: inline-block;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+        }
+
+        /* Enhanced Main Content */
+        .main-content {
+            background: linear-gradient(135deg, 
+                var(--eagles-charcoal) 0%, 
+                var(--eagles-midnight-green) 100%
+            );
+            padding: 2.5rem;
+            overflow-y: auto;
+            display: grid;
+            grid-template-rows: auto auto 1fr;
+            gap: 2.5rem;
+            position: relative;
+        }
+
+        .main-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .main-content::-webkit-scrollbar-track {
+            background: var(--eagles-charcoal);
+        }
+
+        .main-content::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, 
+                var(--eagles-midnight-green), 
+                var(--eagles-silver-jersey)
+            );
+            border-radius: 4px;
+        }
+
+        /* Executive Summary Enhancement */
+        .executive-summary {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+        }
+
+        .summary-card {
+            background: linear-gradient(135deg, 
+                rgba(0, 76, 84, 0.3) 0%, 
+                rgba(165, 172, 175, 0.1) 100%
+            );
+            border: 2px solid;
+            border-image: linear-gradient(135deg, 
+                var(--eagles-gold), 
+                var(--eagles-silver-helmet)
+            ) 1;
+            border-radius: 20px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .summary-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, 
+                var(--eagles-gold) 0%, 
+                var(--eagles-accent) 50%, 
+                var(--eagles-silver-helmet) 100%
+            );
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            color: var(--eagles-gold);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-transform: uppercase;
+        }
+
+        .card-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(45deg, 
+                var(--eagles-midnight-green), 
+                var(--eagles-gold)
+            );
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--eagles-white);
+            font-size: 1rem;
+            font-weight: 800;
+            border: 2px solid var(--eagles-silver-jersey);
+        }
+
+        .cap-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .cap-item {
+            background: linear-gradient(135deg, 
+                rgba(0, 0, 0, 0.4) 0%, 
+                rgba(0, 76, 84, 0.2) 100%
+            );
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid rgba(165, 172, 175, 0.3);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .cap-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 76, 84, 0.3);
+            border-color: var(--eagles-gold);
+        }
+
+        .cap-label {
+            font-size: 0.9rem;
+            color: var(--eagles-silver-jersey);
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .cap-value {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--eagles-white);
+        }
+
+        .cap-value.positive { color: var(--eagles-accent); }
+        .cap-value.negative { color: #ff4444; }
+        .cap-value.warning { color: var(--eagles-gold); }
+
+        /* Interactive Performance Ratings */
+        .performance-section {
+            background: linear-gradient(135deg, 
+                rgba(255, 215, 0, 0.1) 0%, 
+                rgba(0, 76, 84, 0.2) 100%
+            );
+            border: 2px solid;
+            border-image: linear-gradient(135deg, 
+                var(--eagles-silver-jersey), 
+                var(--eagles-gold)
+            ) 1;
+            border-radius: 20px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .performance-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, 
+                var(--eagles-silver-jersey) 0%, 
+                var(--eagles-gold) 50%, 
+                var(--eagles-accent) 100%
+            );
+        }
+
+        .rating-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(135deg, 
+                rgba(0, 0, 0, 0.3) 0%, 
+                rgba(0, 76, 84, 0.2) 100%
+            );
+            border-radius: 12px;
+            border: 1px solid rgba(165, 172, 175, 0.2);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .rating-item:hover {
+            background: linear-gradient(135deg, 
+                rgba(0, 76, 84, 0.3) 0%, 
+                rgba(255, 215, 0, 0.1) 100%
+            );
+            border-color: var(--eagles-gold);
+            transform: translateX(5px);
+        }
+
+        .rating-label {
+            font-size: 0.95rem;
+            color: var(--eagles-silver-jersey);
+            font-weight: 600;
+        }
+
+        .rating-display {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .rating-bar {
+            width: 140px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            overflow: hidden;
+            border: 1px solid var(--eagles-silver-jersey);
+        }
+
+        .rating-fill {
+            height: 100%;
+            background: linear-gradient(90deg, 
+                var(--eagles-midnight-green), 
+                var(--eagles-gold), 
+                var(--eagles-accent)
+            );
+            border-radius: 5px;
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .rating-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 255, 255, 0.3) 50%, 
+                transparent 100%
+            );
+            animation: shine 2s ease-in-out infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .rating-value {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--eagles-accent);
+            min-width: 50px;
+            text-align: right;
+        }
+
+        /* Enhanced Navigation Sidebar */
+        .nav-sidebar {
+            background: linear-gradient(180deg, 
+                var(--eagles-midnight-green) 0%, 
+                var(--eagles-charcoal) 100%
+            );
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            border-left: 3px solid;
+            border-image: linear-gradient(180deg, 
+                var(--eagles-gold), 
+                var(--eagles-silver-jersey)
+            ) 1;
+            overflow-y: auto;
+        }
+
+        .nav-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .nav-section-title {
+            font-size: 0.9rem;
+            color: var(--eagles-gold);
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--eagles-silver-jersey);
+            padding-bottom: 0.5rem;
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, 
+                var(--eagles-midnight-green) 0%, 
+                var(--eagles-charcoal) 100%
+            );
+            color: var(--eagles-white);
+            border: 2px solid var(--eagles-silver-jersey);
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 215, 0, 0.3), 
+                transparent
+            );
+            transition: left 0.5s;
+        }
+
+        .nav-button:hover {
+            background: linear-gradient(135deg, 
+                var(--eagles-gold) 0%, 
+                var(--eagles-midnight-green) 100%
+            );
+            border-color: var(--eagles-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 76, 84, 0.4);
+            color: var(--eagles-black);
+        }
+
+        .nav-button:hover::before {
+            left: 100%;
+        }
+
+        .nav-button.active {
+            background: linear-gradient(135deg, 
+                var(--eagles-accent) 0%, 
+                var(--eagles-midnight-green) 100%
+            );
+            border-color: var(--eagles-accent);
+            color: var(--eagles-black);
+        }
+
+        /* Enhanced Financial Summary */
+        .financial-summary {
+            grid-column: 1 / -1;
+            background: linear-gradient(90deg, 
+                var(--eagles-midnight-green) 0%, 
+                var(--eagles-charcoal) 50%, 
+                var(--eagles-midnight-green) 100%
+            );
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 2rem;
+            border-top: 4px solid;
+            border-image: linear-gradient(90deg, 
+                var(--eagles-gold) 0%, 
+                var(--eagles-accent) 50%, 
+                var(--eagles-silver-helmet) 100%
+            ) 1;
+            position: relative;
+        }
+
+        .financial-summary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, 
+                var(--eagles-gold) 0%, 
+                var(--eagles-accent) 25%, 
+                var(--eagles-silver-helmet) 50%, 
+                var(--eagles-accent) 75%, 
+                var(--eagles-gold) 100%
+            );
+            animation: flow 4s ease-in-out infinite;
+        }
+
+        @keyframes flow {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
+        .financial-item {
+            text-align: center;
+            background: linear-gradient(135deg, 
+                rgba(0, 76, 84, 0.3) 0%, 
+                rgba(165, 172, 175, 0.1) 100%
+            );
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 2px solid rgba(165, 172, 175, 0.3);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .financial-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--eagles-gold);
+            box-shadow: 0 10px 30px rgba(0, 76, 84, 0.3);
+        }
+
+        .financial-label {
+            font-size: 0.85rem;
+            color: var(--eagles-silver-jersey);
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .financial-value {
+            font-size: 1.2rem;
+            font-weight: 800;
+        }
+
+        .financial-value.positive { color: var(--eagles-accent); }
+        .financial-value.negative { color: #ff4444; }
+        .financial-value.neutral { color: var(--eagles-gold); }
+
+        /* M.E.L. AI Enhancement */
+        .mel-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, 
+                var(--eagles-midnight-green) 0%, 
+                var(--eagles-charcoal) 100%
+            );
+            color: var(--eagles-gold);
+            padding: 1rem 1.5rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            border: 3px solid var(--eagles-silver-jersey);
+            box-shadow: 0 8px 25px rgba(0, 76, 84, 0.5);
+            animation: pulse 3s ease-in-out infinite;
+            z-index: 1000;
+        }
+
+        @keyframes pulse {
+            0%, 100% { 
+                box-shadow: 0 8px 25px rgba(0, 76, 84, 0.5);
+                border-color: var(--eagles-silver-jersey);
+            }
+            50% { 
+                box-shadow: 0 12px 35px rgba(255, 215, 0, 0.6);
+                border-color: var(--eagles-gold);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1400px) {
+            .eagles-container {
+                grid-template-columns: 320px 1fr 250px;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .eagles-container {
+                grid-template-columns: 300px 1fr 220px;
+            }
+            
+            .executive-summary {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .eagles-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto 1fr auto;
+            }
+            
+            .roster-sidebar,
+            .nav-sidebar {
+                display: none;
+            }
+            
+            .financial-summary {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="eagles-container">
+        <!-- Enhanced Header -->
+        <header class="eagles-header">
+            <div class="header-logo">Philadelphia Eagles Executive Platform</div>
+            <div class="eagles-badge">🦅 FLY EAGLES FLY</div>
+            <nav class="header-nav">
+                <a href="#" class="nav-item active">Executive Summary</a>
+                <a href="#" class="nav-item">Analytics</a>
+                <a href="#" class="nav-item">Reports</a>
+                <a href="../index.html" class="nav-item">← HQ Dashboard</a>
+            </nav>
+        </header>
+
+        <!-- Complete Eagles Roster Sidebar -->
+        <aside class="roster-sidebar">
+            <div class="roster-header">
+                <div class="eagles-logo">🦅</div>
+                Philadelphia Eagles Roster
+            </div>
+            
+            <!-- Offense -->
+            <div class="position-group">
+                <div class="position-title">🎯 Offense</div>
+                
+                <div class="player-card starter" data-player="jalen-hurts">
+                    <div class="player-avatar">QB</div>
+                    <div class="player-info">
+                        <div class="player-name">Jalen Hurts</div>
+                        <div class="player-details">6-1 223 25 OKLA/ALA 5</div>
+                        <div class="player-salary">$51,055,000</div>
+                    </div>
+                </div>
+
+                <div class="player-card" data-player="kenny-pickett">
+                    <div class="player-avatar">QB</div>
+                    <div class="player-info">
+                        <div class="player-name">Kenny Pickett</div>
+                        <div class="player-details">6-3 220 26 PITT 3</div>
+                        <div class="player-salary">$1,085,000</div>
+                    </div>
+                </div>
+
+                <div class="player-card starter" data-player="saquon-barkley">
+                    <div class="player-avatar">RB</div>
+                    <div class="player-info">
+                        <div class="player-name">Saquon Barkley</div>
+                        <div class="player-details">6-0 233 27 PSU 7</div>
+                        <div class="player-salary">$12,600,000</div>
+                    </div>
+                </div>
+
+                <div class="player-card" data-player="kenneth-gainwell">
+                    <div class="player-avatar">RB</div>
+                    <div class="player-info">
+                        <div class="player-name">Kenneth Gainwell</div>
+                        <div class="player-details">5-9 201 25 MEM 4</div>
+                        <div class="player-salary">$1,125,000</div>
+                    </div>
+                </div>
+
+                <div class="player-card starter" data-player="aj-brown">
+                    <div class="player-avatar">WR</div>
+                    <div class="player-info">
+                        <div class="player-name">A.J. Brown</div>
+                        <div class="player-details">6-1 226 27 OLE 6</div>
+                        <div class="player-salary">$25,000,000</div>
+                    </div>
+                </div>
+
+                <div class="player-card starter" data-player="devonta-smith">
+                    <div class="player-avatar">WR</div>
+                    <div class="player-info">
+                        <div class="player-name">DeVonta Smith</div>
+                        <div class="player-details">6-0 170 26 ALA 4</div>
+                        <div class="player-salary">$25,000,000</div>
+                    </div>
+                </div>
+
+                <div class="player-card" data-player="jahan-dotson">
+                    <div class="player-avatar">WR</div>
+                    <div class="player-info">
+                        <div class="player-name">Jahan Dotson</div>
+                        <div class="player-details">5-11 178 25 PSU 3</div>
+                        <div class="player-salary">$2,800,000</div>
+                    </div>
+                </div>
+
+                <div class="player-card starter" data-player="dallas-goedert">
+                    <div class="player-avatar">TE</div>
+                    <div class="player-info">
+                        <div class="player-name">Dallas Goedert</div>
+                        <div class="player-details">6-5 256 30 SDST 7</div>
+                        <div class="player-salary">$14,250,000</div>
+                    </div>
+                </div>
+
+                <div class="player-card" data-player="grant-calcaterra">
+                    <div class="player-avatar">TE</div>
+                    <div class="player-info">
+                        <div class="player-name">Grant Calcaterra</div>
+                        <div class="player-details">6-4 241 26 SMU 3</div>
+                        <div class="player-salary">$915,000</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Offensive Line -->
+            <div class="position-group">
+                <div class="position-title">🛡️ Offensive Line</div>
+                
+                <div class="player-card starter" data-player="jordan-mailata">
+                    <div class="player-avatar">LT</div>
+                    <div class="player-info">
+                        <div class="player-name">Jordan Mailata</div>
+                        <div class="player-details">6-8 365 27 - 7</div>
+                        <div class="player-salary">$16,000,000</div>
+                    </div>
+                </div>
+
+                <div class="player-card starter" data-player="landon-dickerson">
+                    <div class="player-avatar">LG</div>
+                    <div class="player-info">
+                        <div class="player-name">Landon Dickerson</div>
+                        <div class="player-details">6-6 333 26 ALA 4</div>
+                        <div class="player-salary">$4,200,000</div>
+                    </div>
+                </div>
+
+                <div class="player-card starter" data-player="cam-jurgens">
+                    <div class="player-avatar">C</div>
+                    <div class="player-info">
+                        <div class="player-name">Cam Jurgens</div>
+                        <div class="player-details">6-3 303 25 NEB 3</div>
+                        <div class="player-salary">$2,100,000</div>
+                    </div>
+                </div>
+
+                <div class="player-card starter" data-player="mekhi-becton">
+                    <div class="player-avatar">RG</div>
+                    <div class="player-info">
+                        <div class="player-name">Mekhi Becton</div>
+                        <div class="player-details">6-7 363 26 LOU 5</div>
+                        <div class="player-salary">$7,500,000</div>
+                    </div>
+                </div>
+
+                <div class="player-card starter" data-player="lane-johnson">
+                    <div class="player-avatar">RT</div>
+                    <div class="player-info">
+                        <div class="player-name">Lane Johnson</div>
+                        <div class="player-details">6-6 317 35 OKLA 13</div>
+                        <div class="player-salary">$18,000,000</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Defense -->
+            <div class="position-group">
+                <div class="position-title">🛡️ Defense</div>
+                
+                <div class="player-card starter" data-player="josh-sweat">
+                    <div class="player-avatar">EDGE</div>
+                    <div class="player-info">
+                        <div class="player-name">Josh Sweat</div>
+                        <div class="player-details">6-5 251 27 FSU 7</div>
+                        <div class="player-salary">$13,000,000</div>
+                    </div>
+                </div>
+
+                <div class="player-card starter" data-player="jalen-carter">
+                    <div class="player-avatar">DT</div>
+                    <div class="player-info">
+                        <div class="player-name">Jalen Carter</div>
+                        <div class="player-details">6-3 314 23 UGA 2</div>
+                        <div class="player-salary">$6,700,000</div>
+                    </div>
+                </div>
+
+                <div class="player-card starter" data-player="jordan-davis">
+                    <div class="player-avatar">DT</div>
+                    <div class="player-info">
+                        <div class="player-name">Jordan Davis</div>
+                        <div class="player-details">6-6 341 25 UGA 3</div>
+                        <div class="player-salary">$3,200,000</div>
+                    </div>
+                </div>
+
+                <div class="player-card starter" data-player="haason-reddick">
+                    <div class="player-avatar">EDGE</div>
+                    <div class="player-info">
+                        <div class="player-name">Haason Reddick</div>
+                        <div class="player-details">6-1 235 30 TEM 8</div>
+                        <div class="player-salary">$14,250,000</div>
+                    </div>
+                </div>
+
+                <div class="player-card starter" data-player="nakobe-dean">
+                    <div class="player-avatar">LB</div>
+                    <div class="player-info">
+                        <div class="player-name">Nakobe Dean</div>
+                        <div class="player-details">5-11 229 24 UGA 3</div>
+                        <div class="player-salary">$1,850,000</div>
+                    </div>
+                </div>
+
+                <div class="player-card starter" data-player="zack-baun">
+                    <div class="player-avatar">LB</div>
+                    <div class="player-info">
+                        <div class="player-name">Zack Baun</div>
+                        <div class="player-details">6-2 238 28 WIS 5</div>
+                        <div class="player-salary">$3,500,000</div>
+                    </div>
+                </div>
+
+                <div class="player-card starter" data-player="darius-slay">
+                    <div class="player-avatar">CB</div>
+                    <div class="player-info">
+                        <div class="player-name">Darius Slay</div>
+                        <div class="player-details">6-0 190 34 MSU 14</div>
+                        <div class="player-salary">$8,500,000</div>
+                    </div>
+                </div>
+
+                <div class="player-card starter" data-player="quinyon-mitchell">
+                    <div class="player-avatar">CB</div>
+                    <div class="player-info">
+                        <div class="player-name">Quinyon Mitchell</div>
+                        <div class="player-details">5-11 195 23 TOL 1</div>
+                        <div class="player-salary">$2,400,000</div>
+                    </div>
+                </div>
+
+                <div class="player-card starter" data-player="cj-gardner-johnson">
+                    <div class="player-avatar">S</div>
+                    <div class="player-info">
+                        <div class="player-name">C.J. Gardner-Johnson</div>
+                        <div class="player-details">5-11 210 27 UF 6</div>
+                        <div class="player-salary">$8,250,000</div>
+                    </div>
+                </div>
+
+                <div class="player-card starter" data-player="reed-blankenship">
+                    <div class="player-avatar">S</div>
+                    <div class="player-info">
+                        <div class="player-name">Reed Blankenship</div>
+                        <div class="player-details">6-1 204 25 MTSU 3</div>
+                        <div class="player-salary">$915,000</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Special Teams -->
+            <div class="position-group">
+                <div class="position-title">⚡ Special Teams</div>
+                
+                <div class="player-card" data-player="jake-elliott">
+                    <div class="player-avatar">K</div>
+                    <div class="player-info">
+                        <div class="player-name">Jake Elliott</div>
+                        <div class="player-details">5-9 167 30 MEM 8</div>
+                        <div class="player-salary">$6,000,000</div>
+                    </div>
+                </div>
+
+                <div class="player-card" data-player="braden-mann">
+                    <div class="player-avatar">P</div>
+                    <div class="player-info">
+                        <div class="player-name">Braden Mann</div>
+                        <div class="player-details">6-1 204 27 TT 5</div>
+                        <div class="player-salary">$2,750,000</div>
+                    </div>
+                </div>
+
+                <div class="player-card" data-player="rick-lovato">
+                    <div class="player-avatar">LS</div>
+                    <div class="player-info">
+                        <div class="player-name">Rick Lovato</div>
+                        <div class="player-details">6-2 251 32 ODU 10</div>
+                        <div class="player-salary">$1,210,000</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Enhanced Main Content -->
+        <main class="main-content">
+            <!-- Interactive Executive Summary -->
+            <section class="executive-summary">
+                <div class="summary-card">
+                    <h2 class="card-title">
+                        <div class="card-icon">💰</div>
+                        Salary Cap Analysis
+                    </h2>
+                    <div class="cap-grid">
+                        <div class="cap-item" onclick="showCapDetails('ceiling')">
+                            <div class="cap-label">Cap Ceiling</div>
+                            <div class="cap-value">$255,400,000</div>
+                        </div>
+                        <div class="cap-item" onclick="showCapDetails('rollover')">
+                            <div class="cap-label">Cap Rollover</div>
+                            <div class="cap-value positive">$6,744,249</div>
+                        </div>
+                        <div class="cap-item" onclick="showCapDetails('adjusted')">
+                            <div class="cap-label">Adjusted Cap</div>
+                            <div class="cap-value">$262,144,249</div>
+                        </div>
+                        <div class="cap-item" onclick="showCapDetails('floor')">
+                            <div class="cap-label">Cap Floor</div>
+                            <div class="cap-value warning">$227,306,000</div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 2rem; padding: 1.5rem; background: linear-gradient(135deg, rgba(255, 68, 68, 0.2) 0%, rgba(0, 76, 84, 0.3) 100%); border-radius: 15px; border: 2px solid var(--eagles-gold);">
+                        <div style="color: var(--eagles-gold); font-weight: 700; font-size: 1.1rem; margin-bottom: 1rem; text-transform: uppercase;">Featured Contract Analysis</div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div style="text-align: center;">
+                                <div style="color: var(--eagles-silver-jersey); font-size: 0.9rem; margin-bottom: 0.3rem;">Cap Percentage</div>
+                                <div style="color: #ff4444; font-weight: 700; font-size: 1.2rem;">19.5%</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="color: var(--eagles-silver-jersey); font-size: 0.9rem; margin-bottom: 0.3rem;">Cap Hit</div>
+                                <div style="color: var(--eagles-gold); font-weight: 700; font-size: 1.2rem;">$51,055,000</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="color: var(--eagles-silver-jersey); font-size: 0.9rem; margin-bottom: 0.3rem;">Dead Cap</div>
+                                <div style="color: #ff4444; font-weight: 700; font-size: 1.2rem;">$73,000,000</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="color: var(--eagles-silver-jersey); font-size: 0.9rem; margin-bottom: 0.3rem;">Years Left</div>
+                                <div style="color: var(--eagles-accent); font-weight: 700; font-size: 1.2rem;">4 Years</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="performance-section">
+                    <h2 class="card-title">
+                        <div class="card-icon">📊</div>
+                        Performance Analytics
+                    </h2>
+                    
+                    <div class="rating-item" onclick="analyzeMetric('offense')">
+                        <span class="rating-label">Offensive Efficiency</span>
+                        <div class="rating-display">
+                            <div class="rating-bar"><div class="rating-fill" style="width: 94%;"></div></div>
+                            <span class="rating-value">9.4</span>
+                        </div>
+                    </div>
+
+                    <div class="rating-item" onclick="analyzeMetric('defense')">
+                        <span class="rating-label">Defensive Performance</span>
+                        <div class="rating-display">
+                            <div class="rating-bar"><div class="rating-fill" style="width: 83%;"></div></div>
+                            <span class="rating-value">8.3</span>
+                        </div>
+                    </div>
+
+                    <div class="rating-item" onclick="analyzeMetric('redzone')">
+                        <span class="rating-label">Red Zone Efficiency</span>
+                        <div class="rating-display">
+                            <div class="rating-bar"><div class="rating-fill" style="width: 91%;"></div></div>
+                            <span class="rating-value">9.1</span>
+                        </div>
+                    </div>
+
+                    <div class="rating-item" onclick="analyzeMetric('thirddown')">
+                        <span class="rating-label">Third Down Conversion</span>
+                        <div class="rating-display">
+                            <div class="rating-bar"><div class="rating-fill" style="width: 87%;"></div></div>
+                            <span class="rating-value">8.7</span>
+                        </div>
+                    </div>
+
+                    <div class="rating-item" onclick="analyzeMetric('turnover')">
+                        <span class="rating-label">Turnover Differential</span>
+                        <div class="rating-display">
+                            <div class="rating-bar"><div class="rating-fill" style="width: 92%;"></div></div>
+                            <span class="rating-value">9.2</span>
+                        </div>
+                    </div>
+
+                    <div class="rating-item" onclick="analyzeMetric('special')">
+                        <span class="rating-label">Special Teams</span>
+                        <div class="rating-display">
+                            <div class="rating-bar"><div class="rating-fill" style="width: 78%;"></div></div>
+                            <span class="rating-value">7.8</span>
+                        </div>
+                    </div>
+
+                    <div class="rating-item" onclick="analyzeMetric('overall')">
+                        <span class="rating-label">Overall Team Rating</span>
+                        <div class="rating-display">
+                            <div class="rating-bar"><div class="rating-fill" style="width: 89%;"></div></div>
+                            <span class="rating-value">8.9</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Dynamic Player Analysis Display -->
+            <section id="player-analysis" style="background: linear-gradient(135deg, rgba(0, 76, 84, 0.2) 0%, rgba(255, 215, 0, 0.1) 100%); border: 2px solid var(--eagles-gold); border-radius: 20px; padding: 2.5rem; margin-top: 2rem;">
+                <h3 style="color: var(--eagles-gold); margin-bottom: 2rem; font-size: 1.4rem; text-transform: uppercase; font-weight: 800;">Player Analysis Dashboard</h3>
+                
+                <div id="selected-player-info">
+                    <div style="text-align: center; color: var(--eagles-silver-jersey); font-size: 1.1rem;">
+                        Click on any player from the roster to view detailed analysis
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Enhanced Navigation Sidebar -->
+        <aside class="nav-sidebar">
+            <div class="nav-section">
+                <div class="nav-section-title">Team Management</div>
+                <button class="nav-button active" onclick="switchView('roster')">ROSTER</button>
+                <button class="nav-button" onclick="switchView('contracts')">CONTRACTS</button>
+                <button class="nav-button" onclick="switchView('coaches')">COACHES</button>
+                <button class="nav-button" onclick="switchView('staff')">STAFF</button>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Analytics Hub</div>
+                <button class="nav-button" onclick="switchView('scouting')">SCOUTING</button>
+                <button class="nav-button" onclick="switchView('matchups')">MATCH-UPS</button>
+                <button class="nav-button" onclick="switchView('gameplans')">GAME PLANS</button>
+                <button class="nav-button" onclick="switchView('analytics')">ANALYTICS</button>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Financial Operations</div>
+                <button class="nav-button" onclick="switchView('capspace')">CAP SPACE</button>
+                <button class="nav-button" onclick="switchView('trades')">TRADES</button>
+                <button class="nav-button" onclick="switchView('draft')">DRAFT</button>
+                <button class="nav-button" onclick="switchView('freeagency')">FREE AGENCY</button>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">Strategic Intelligence</div>
+                <button class="nav-button" onclick="switchView('projections')">PROJECTIONS</button>
+                <button class="nav-button" onclick="switchView('simulations')">SIMULATIONS</button>
+                <button class="nav-button" onclick="switchView('reports')">REPORTS</button>
+            </div>
+        </aside>
+
+        <!-- Interactive Financial Summary -->
+        <footer class="financial-summary">
+            <div class="financial-item" onclick="showFinancialDetail('totalcap')">
+                <div class="financial-label">Total Salary Cap</div>
+                <div class="financial-value neutral">$255,400,000</div>
+            </div>
+            <div class="financial-item" onclick="showFinancialDetail('active')">
+                <div class="financial-label">Active Contracts</div>
+                <div class="financial-value positive">$251,200,000</div>
+            </div>
+            <div class="financial-item" onclick="showFinancialDetail('dead')">
+                <div class="financial-label">Dead Money</div>
+                <div class="financial-value negative">$19,685,000</div>
+            </div>
+            <div class="financial-item" onclick="showFinancialDetail('space')">
+                <div class="financial-label">Cap Space</div>
+                <div class="financial-value positive">$4,200,000</div>
+            </div>
+            <div class="financial-item" onclick="showFinancialDetail('cash')">
+                <div class="financial-label">2025 Cash</div>
+                <div class="financial-value neutral">$306,744,249</div>
+            </div>
+            <div class="financial-item" onclick="showFinancialDetail('playoffs')">
+                <div class="financial-label">Playoff Odds</div>
+                <div class="financial-value positive">91%</div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Enhanced M.E.L. AI Indicator -->
+    <div class="mel-indicator">
+        🦅 Powered by M.E.L. AI - Philadelphia Eagles Intelligence Platform
+    </div>
+
+    <script>
+        // Comprehensive Eagles player database
+        const eaglesPlayerData = {
+            'jalen-hurts': {
+                name: 'Jalen Hurts',
+                position: 'QB',
+                number: '1',
+                salary: '$51,055,000',
+                stats: {
+                    passYards: 3858,
+                    passTds: 15,
+                    rushYards: 605,
+                    rushTds: 15,
+                    rating: 89.1
+                },
+                analysis: 'Elite dual-threat quarterback with MVP potential. Contract represents premium investment in franchise cornerstone.',
+                grade: 'A+'
+            },
+            'saquon-barkley': {
+                name: 'Saquon Barkley',
+                position: 'RB',
+                number: '26',
+                salary: '$12,600,000',
+                stats: {
+                    rushYards: 2005,
+                    rushTds: 13,
+                    recYards: 462,
+                    recTds: 3,
+                    rating: 94.2
+                },
+                analysis: 'Elite running back acquisition transforming Eagles ground game. Exceptional value on current contract.',
+                grade: 'A+'
+            },
+            'aj-brown': {
+                name: 'A.J. Brown',
+                position: 'WR',
+                number: '11',
+                salary: '$25,000,000',
+                stats: {
+                    receptions: 106,
+                    recYards: 1456,
+                    recTds: 11,
+                    rating: 91.3
+                },
+                analysis: 'Physical receiver with elite route-running. Perfect complement to Eagles offensive system.',
+                grade: 'A'
+            },
+            'devonta-smith': {
+                name: 'DeVonta Smith',
+                position: 'WR',
+                number: '6',
+                salary: '$25,000,000',
+                stats: {
+                    receptions: 81,
+                    recYards: 1066,
+                    recTds: 7,
+                    rating: 88.7
+                },
+                analysis: 'Precise route-runner with reliable hands. Excellent chemistry with Jalen Hurts.',
+                grade: 'A-'
+            },
+            'dallas-goedert': {
+                name: 'Dallas Goedert',
+                position: 'TE',
+                number: '88',
+                salary: '$14,250,000',
+                stats: {
+                    receptions: 59,
+                    recYards: 592,
+                    recTds: 3,
+                    rating: 85.4
+                },
+                analysis: 'Versatile tight end providing blocking and receiving threats. Key component of Eagles offense.',
+                grade: 'B+'
+            },
+            'lane-johnson': {
+                name: 'Lane Johnson',
+                position: 'RT',
+                number: '65',
+                salary: '$18,000,000',
+                stats: {
+                    pressureRate: 4.2,
+                    penaltiesRank: 12,
+                    gradeRank: 8
+                },
+                analysis: 'Elite right tackle providing consistent protection. Veteran leadership on offensive line.',
+                grade: 'A-'
+            },
+            'jalen-carter': {
+                name: 'Jalen Carter',
+                position: 'DT',
+                number: '98',
+                salary: '$6,700,000',
+                stats: {
+                    tackles: 42,
+                    sacks: 6.5,
+                    pressures: 31,
+                    rating: 91.8
+                },
+                analysis: 'Emerging superstar defensive tackle with elite pass rush ability. Excellent value on rookie contract.',
+                grade: 'A+'
+            }
+        };
+
+        // Interactive Functions
+        function selectPlayer(playerCard, playerId) {
+            // Remove previous selections
+            document.querySelectorAll('.player-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Add selection to clicked card
+            playerCard.classList.add('selected');
+            
+            // Update player analysis
+            updatePlayerAnalysis(playerId);
+            
+            // Visual feedback
+            playerCard.style.transform = 'scale(1.05)';
+            setTimeout(() => {
+                playerCard.style.transform = '';
+            }, 300);
+        }
+
+        function updatePlayerAnalysis(playerId) {
+            const player = eaglesPlayerData[playerId];
+            if (!player) return;
+            
+            const analysisSection = document.getElementById('selected-player-info');
+            
+            analysisSection.innerHTML = `
+                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 2rem;">
+                    <div style="text-align: center;">
+                        <div style="width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(45deg, var(--eagles-midnight-green), var(--eagles-gold)); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.5rem; color: var(--eagles-white); margin: 0 auto 1rem auto; border: 3px solid var(--eagles-silver-jersey);">#${player.number}</div>
+                        <h3 style="color: var(--eagles-white); font-size: 1.3rem; margin-bottom: 0.5rem;">${player.name}</h3>
+                        <div style="color: var(--eagles-gold); font-weight: 600; margin-bottom: 1rem;">${player.position} • ${player.salary}</div>
+                        <div style="background: linear-gradient(135deg, var(--eagles-accent) 0%, var(--eagles-midnight-green) 100%); color: var(--eagles-black); padding: 0.5rem 1rem; border-radius: 20px; font-weight: 700; display: inline-block;">Grade: ${player.grade}</div>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--eagles-gold); margin-bottom: 1rem; font-size: 1.1rem;">Performance Analysis</h4>
+                        <p style="color: var(--eagles-silver-jersey); line-height: 1.6; margin-bottom: 1.5rem;">${player.analysis}</p>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem;">
+                            ${Object.entries(player.stats).map(([key, value]) => `
+                                <div style="background: rgba(0, 76, 84, 0.3); padding: 1rem; border-radius: 8px; text-align: center; border: 1px solid var(--eagles-silver-jersey);">
+                                    <div style="color: var(--eagles-silver-jersey); font-size: 0.8rem; margin-bottom: 0.3rem; text-transform: uppercase;">${key.replace(/([A-Z])/g, ' $1').trim()}</div>
+                                    <div style="color: var(--eagles-accent); font-weight: 700; font-size: 1.1rem;">${value}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showCapDetails(type) {
+            const details = {
+                ceiling: 'NFL salary cap ceiling set by league for 2025 season',
+                rollover: 'Unused cap space carried over from previous season',
+                adjusted: 'Total available cap space including rollover',
+                floor: 'Minimum spending requirement (89% of cap)'
+            };
+            
+            console.log(`Cap Detail - ${type}: ${details[type]}`);
+            
+            // Visual feedback
+            event.target.style.background = 'linear-gradient(135deg, rgba(255, 215, 0, 0.3) 0%, rgba(0, 76, 84, 0.4) 100%)';
+            setTimeout(() => {
+                event.target.style.background = '';
+            }, 1000);
+        }
+
+        function analyzeMetric(metric) {
+            const analyses = {
+                offense: 'Eagles offense ranks #2 in NFL with explosive play capability',
+                defense: 'Improved defensive performance with young talent development',
+                redzone: 'Elite red zone efficiency led by Jalen Hurts rushing ability',
+                thirddown: 'Strong third down conversion rate through diverse offensive weapons',
+                turnover: 'Positive turnover differential creating scoring opportunities',
+                special: 'Consistent special teams with room for improvement',
+                overall: 'Championship-caliber team with elite offensive foundation'
+            };
+            
+            console.log(`Performance Analysis - ${metric}: ${analyses[metric]}`);
+            
+            // Visual feedback
+            event.target.style.background = 'linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 76, 84, 0.3) 100%)';
+            setTimeout(() => {
+                event.target.style.background = '';
+            }, 1500);
+        }
+
+        function switchView(view) {
+            console.log(`Switching to Eagles ${view.toUpperCase()} view`);
+            
+            // Update nav button states
+            document.querySelectorAll('.nav-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Visual feedback
+            event.target.style.background = 'linear-gradient(135deg, var(--eagles-accent) 0%, var(--eagles-midnight-green) 100%)';
+            event.target.style.color = 'var(--eagles-black)';
+        }
+
+        function showFinancialDetail(type) {
+            const details = {
+                totalcap: 'Total NFL salary cap allocation for Philadelphia Eagles',
+                active: 'Combined value of all active player contracts',
+                dead: 'Dead money from released/traded players counting against cap',
+                space: 'Remaining cap space available for transactions',
+                cash: 'Total cash commitments for 2025 season',
+                playoffs: 'Statistical probability of making playoffs based on current performance'
+            };
+            
+            console.log(`Financial Detail - ${type}: ${details[type]}`);
+            
+            // Visual feedback
+            event.target.style.transform = 'translateY(-8px)';
+            event.target.style.borderColor = 'var(--eagles-gold)';
+            setTimeout(() => {
+                event.target.style.transform = '';
+                event.target.style.borderColor = '';
+            }, 1000);
+        }
+
+        // Initialize Eagles Platform
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🦅 Philadelphia Eagles Executive Platform - Initialized');
+            
+            // Add click handlers to all player cards
+            document.querySelectorAll('.player-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const playerId = this.getAttribute('data-player');
+                    if (playerId) {
+                        selectPlayer(this, playerId);
+                    }
+                });
+            });
+            
+            // Simulate real-time data updates
+            setInterval(() => {
+                const randomRating = document.querySelectorAll('.rating-value')[Math.floor(Math.random() * document.querySelectorAll('.rating-value').length)];
+                if (randomRating) {
+                    const currentValue = parseFloat(randomRating.textContent);
+                    const newValue = (currentValue + (Math.random() * 0.2 - 0.1)).toFixed(1);
+                    
+                    randomRating.style.color = 'var(--eagles-gold)';
+                    setTimeout(() => {
+                        randomRating.textContent = newValue;
+                        randomRating.style.color = 'var(--eagles-accent)';
+                    }, 500);
+                }
+            }, 25000);
+            
+            // Initialize with Jalen Hurts selected
+            setTimeout(() => {
+                const jalenhurtsCard = document.querySelector('[data-player="jalen-hurts"]');
+                if (jalenhurtsCard) {
+                    selectPlayer(jalenhurtsCard, 'jalen-hurts');
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
