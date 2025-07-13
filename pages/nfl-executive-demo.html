@@ -37,8 +37,7 @@
             background: linear-gradient(135deg, var(--amt-very-dark) 0%, var(--amt-dark) 100%);
             color: var(--amt-white);
             min-height: 100vh;
-            overflow-x: auto;
-            min-width: 1600px;
+            overflow-x: hidden;
         }
 
         .command-center {
@@ -113,9 +112,69 @@
             background: var(--amt-dark);
             display: flex;
             align-items: center;
-            justify-content: flex-end;
             padding: 0 1.5rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            gap: 2rem;
+        }
+
+        /* Leadership Team Styles */
+        .leadership-team {
+            flex: 1;
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        .leadership-scroll {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            padding: 0.5rem 0;
+        }
+
+        .leadership-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .leader-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 0.75rem;
+            min-width: 120px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .leader-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--amt-accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 219, 105, 0.2);
+        }
+
+        .leader-info {
+            text-align: center;
+        }
+
+        .leader-name {
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: var(--amt-white);
+            line-height: 1.1;
+            margin-bottom: 0.25rem;
+        }
+
+        .leader-role {
+            font-size: 0.55rem;
+            color: var(--amt-accent);
+            font-weight: 500;
+            line-height: 1.1;
         }
 
         .header-nav {
@@ -150,8 +209,6 @@
             min-height: calc(100vh - 100px);
             gap: 1px;
             background: var(--amt-gray);
-            min-width: 1600px;
-            overflow-x: auto;
         }
 
         /* AI-Powered Insights Sidebar */
@@ -486,14 +543,34 @@
             display: grid;
             grid-template-rows: auto auto;
             gap: 1rem;
-            min-width: 1200px;
-            overflow-x: auto;
         }
 
         .command-overview {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
+            display: flex;
             gap: 1rem;
+            overflow-x: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--amt-red) var(--amt-dark);
+            padding-bottom: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .command-overview::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .command-overview::-webkit-scrollbar-track {
+            background: var(--amt-dark);
+            border-radius: 4px;
+        }
+
+        .command-overview::-webkit-scrollbar-thumb {
+            background: var(--amt-red);
+            border-radius: 4px;
+        }
+
+        .command-overview::-webkit-scrollbar-thumb:hover {
+            background: var(--amt-accent);
         }
 
         .intel-card {
@@ -505,6 +582,8 @@
             overflow: hidden;
             cursor: pointer;
             transition: all 0.2s;
+            min-width: 280px;
+            flex-shrink: 0;
         }
 
         .intel-card:hover {
@@ -592,11 +671,30 @@
 
         /* Deep Intelligence Panel */
         .deep-intel {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            display: flex;
             gap: 1rem;
             overflow-x: auto;
-            min-width: 1400px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--amt-accent) var(--amt-dark);
+            padding-bottom: 10px;
+        }
+
+        .deep-intel::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .deep-intel::-webkit-scrollbar-track {
+            background: var(--amt-dark);
+            border-radius: 4px;
+        }
+
+        .deep-intel::-webkit-scrollbar-thumb {
+            background: var(--amt-accent);
+            border-radius: 4px;
+        }
+
+        .deep-intel::-webkit-scrollbar-thumb:hover {
+            background: var(--amt-red);
         }
 
         .intel-module {
@@ -606,6 +704,8 @@
             padding: 1rem;
             cursor: pointer;
             transition: all 0.2s;
+            min-width: 320px;
+            flex-shrink: 0;
         }
 
         .intel-module:hover {
@@ -1143,6 +1243,108 @@
 
         <!-- Smart Header -->
         <div class="smart-header">
+            <!-- Leadership Team Section -->
+            <div class="leadership-team">
+                <div class="leadership-scroll">
+                    <div class="leader-card" onclick="openChat('tony-rivera')">
+                        <div class="leader-info">
+                            <div class="leader-name">Tony Rivera</div>
+                            <div class="leader-role">Triangle Specialist</div>
+                        </div>
+                    </div>
+                    <div class="leader-card" onclick="openChat('derek-thompson')">
+                        <div class="leader-info">
+                            <div class="leader-name">Derek Thompson</div>
+                            <div class="leader-role">Pressure Specialist</div>
+                        </div>
+                    </div>
+                    <div class="leader-card" onclick="openChat('david-kim')">
+                        <div class="leader-info">
+                            <div class="leader-name">Dr. David Kim</div>
+                            <div class="leader-role">The Mind</div>
+                        </div>
+                    </div>
+                    <div class="leader-card" onclick="openChat('alexandra-martinez')">
+                        <div class="leader-info">
+                            <div class="leader-name">Alexandra Martinez</div>
+                            <div class="leader-role">The Mentor</div>
+                        </div>
+                    </div>
+                    <div class="leader-card" onclick="openChat('michael-rodriguez')">
+                        <div class="leader-info">
+                            <div class="leader-name">Michael Rodriguez</div>
+                            <div class="leader-role">The Scout</div>
+                        </div>
+                    </div>
+                    <div class="leader-card" onclick="openChat('bill-mckenzie')">
+                        <div class="leader-info">
+                            <div class="leader-name">Bill McKenzie</div>
+                            <div class="leader-role">The Teacher</div>
+                        </div>
+                    </div>
+                    <div class="leader-card" onclick="openChat('alex-chen')">
+                        <div class="leader-info">
+                            <div class="leader-name">Alex Chen</div>
+                            <div class="leader-role">The Optimizer</div>
+                        </div>
+                    </div>
+                    <div class="leader-card" onclick="openChat('darius-washington')">
+                        <div class="leader-info">
+                            <div class="leader-name">Darius Washington</div>
+                            <div class="leader-role">The Coordinator</div>
+                        </div>
+                    </div>
+                    <div class="leader-card" onclick="openChat('captain-michael-rodriguez')">
+                        <div class="leader-info">
+                            <div class="leader-name">Captain Rodriguez</div>
+                            <div class="leader-role">The Wall</div>
+                        </div>
+                    </div>
+                    <div class="leader-card" onclick="openChat('patricia-williams')">
+                        <div class="leader-info">
+                            <div class="leader-name">Patricia Williams</div>
+                            <div class="leader-role">Strategy Chief</div>
+                        </div>
+                    </div>
+                    <div class="leader-card" onclick="openChat('elena-vasquez')">
+                        <div class="leader-info">
+                            <div class="leader-name">Elena Vasquez</div>
+                            <div class="leader-role">Medical Director</div>
+                        </div>
+                    </div>
+                    <div class="leader-card" onclick="openChat('victoria-castellanos')">
+                        <div class="leader-info">
+                            <div class="leader-name">Victoria Castellanos</div>
+                            <div class="leader-role">Operations Chief</div>
+                        </div>
+                    </div>
+                    <div class="leader-card" onclick="openChat('dr-rachel-foster')">
+                        <div class="leader-info">
+                            <div class="leader-name">Dr. Rachel Foster</div>
+                            <div class="leader-role">Research Director</div>
+                        </div>
+                    </div>
+                    <div class="leader-card" onclick="openChat('dr-sarah-chen')">
+                        <div class="leader-info">
+                            <div class="leader-name">Dr. Sarah Chen</div>
+                            <div class="leader-role">Performance Analyst</div>
+                        </div>
+                    </div>
+                    <div class="leader-card" onclick="openChat('dr-wright')">
+                        <div class="leader-info">
+                            <div class="leader-name">Dr. Wright</div>
+                            <div class="leader-role">Sports Scientist</div>
+                        </div>
+                    </div>
+                    <div class="leader-card" onclick="openChat('denauld-brown')">
+                        <div class="leader-info">
+                            <div class="leader-name">Denauld Brown</div>
+                            <div class="leader-role">The Mastermind</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <nav class="header-nav">
                 <a href="#" class="nav-tab" onclick="switchView('hq')">← HQ</a>
                 <a href="#" class="nav-tab active" onclick="switchView('command')">Command</a>
