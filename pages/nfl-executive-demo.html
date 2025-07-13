@@ -36,14 +36,14 @@
             font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, var(--amt-very-dark) 0%, var(--amt-dark) 100%);
             color: var(--amt-white);
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
         .command-center {
             display: grid;
             grid-template-rows: 40px 60px 1fr;
-            height: 100vh;
+            min-height: 100vh;
             gap: 1px;
             background: var(--amt-gray);
         }
@@ -194,7 +194,7 @@
         .command-dashboard {
             display: grid;
             grid-template-columns: 320px 1fr 300px;
-            height: 100%;
+            min-height: calc(100vh - 100px);
             gap: 1px;
             background: var(--amt-gray);
         }
@@ -227,6 +227,18 @@
             align-items: center;
             gap: 0.5rem;
             margin-bottom: 0.75rem;
+        }
+
+        .gm-photo {
+            margin-left: auto;
+        }
+
+        .gm-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid var(--amt-accent);
+            object-fit: cover;
         }
 
         .insight-icon {
@@ -288,9 +300,8 @@
         .intelligence-grid {
             background: var(--amt-very-dark);
             padding: 1rem;
-            overflow-y: auto;
             display: grid;
-            grid-template-rows: auto 1fr;
+            grid-template-rows: auto auto;
             gap: 1rem;
         }
 
@@ -397,7 +408,7 @@
         /* Deep Intelligence Panel */
         .deep-intel {
             display: grid;
-            grid-template-rows: repeat(4, 1fr);
+            grid-template-columns: 1fr 1fr;
             gap: 1rem;
         }
 
@@ -848,6 +859,15 @@
             border-radius: 2px;
         }
 
+        /* View Management */
+        .view-section {
+            display: none;
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
         @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
@@ -908,16 +928,17 @@
             <div class="team-selector" onclick="selectTeam()">🦅 Philadelphia Eagles</div>
             <div class="ai-assistant" onclick="activateAI()">🤖 M.E.L. AI Active</div>
             <nav class="header-nav">
-                <a href="#" class="nav-tab">← HQ</a>
-                <a href="#" class="nav-tab active">Command</a>
-                <a href="#" class="nav-tab">Draft</a>
-                <a href="#" class="nav-tab">Analytics</a>
-                <a href="#" class="nav-tab">Operations</a>
+                <a href="#" class="nav-tab" onclick="switchView('hq')">← HQ</a>
+                <a href="#" class="nav-tab active" onclick="switchView('command')">Command</a>
+                <a href="#" class="nav-tab" onclick="switchView('draft')">Draft</a>
+                <a href="#" class="nav-tab" onclick="switchView('analytics')">Analytics</a>
+                <a href="#" class="nav-tab" onclick="switchView('operations')">Operations</a>
             </nav>
         </div>
 
         <!-- Dynamic Command Dashboard -->
-        <div class="command-dashboard">
+        <div class="view-section active" id="command-view">
+            <div class="command-dashboard">
             <!-- AI-Powered Insights Sidebar -->
             <div class="insights-sidebar">
                 <div class="insight-section priority-alerts">
@@ -946,6 +967,9 @@
                     <div class="insight-header">
                         <div class="insight-icon">💡</div>
                         <div class="insight-title">AI Suggestion</div>
+                        <div class="gm-photo">
+                            <img src="images/staff/marcus-sterling.png" alt="Marcus Sterling" class="gm-avatar" onerror="this.style.display='none';">
+                        </div>
                     </div>
                     <div class="insight-content">
                         Cap space optimization: Restructure Lane Johnson contract to free $4.2M for mid-season moves.
@@ -1062,6 +1086,10 @@
                                     <span class="preview-label">Conditioning</span>
                                     <span class="preview-value green">92%</span>
                                 </div>
+                                <div class="preview-item" onclick="drillDeeper('roster-composition')">
+                                    <span class="preview-label">Roster</span>
+                                    <span class="preview-value green">53/53</span>
+                                </div>
                             </div>
                         </div>
                         
@@ -1136,7 +1164,7 @@
                         </div>
                     </div>
 
-                    <!-- Contract Efficiency Module -->
+                    <!-- Enhanced Contract Efficiency Module -->
                     <div class="intel-module" onclick="toggleContractEfficiency()">
                         <div class="module-header">
                             <div class="module-title">Contract Efficiency</div>
@@ -1146,43 +1174,118 @@
                             <div class="data-value">87%</div>
                             <div class="data-change">-1%</div>
                         </div>
-                        <div class="module-breakdown" id="contract-breakdown">
-                            <div class="contract-priority">
-                                <div class="priority-header">🚨 UPCOMING DEADLINES</div>
-                                <div class="contract-item urgent" onclick="contractDetails('slay')">
-                                    <div class="contract-player">Darius Slay</div>
-                                    <div class="contract-details">
-                                        <span class="deadline">Void: Mar 15</span>
-                                        <span class="risk">$8.5M dead cap</span>
-                                    </div>
-                                    <div class="agent-info">Agent: Drew Rosenhaus (📞 305-555-0123)</div>
+                        
+                        <!-- Scrollable Preview Panel (Collapsed State) -->
+                        <div class="module-preview" id="contract-preview">
+                            <div class="preview-scroll">
+                                <div class="preview-item" onclick="drillDeeper('cap-efficiency')">
+                                    <span class="preview-label">Cap Efficiency</span>
+                                    <span class="preview-value green">94%</span>
                                 </div>
-                                <div class="contract-item warning" onclick="contractDetails('johnson')">
-                                    <div class="contract-player">Lane Johnson</div>
-                                    <div class="contract-details">
-                                        <span class="deadline">Extension Window: Jun 1</span>
-                                        <span class="risk">Cap optimization: $4.2M</span>
-                                    </div>
-                                    <div class="agent-info">Agent: David Mulugheta (📞 310-555-0156)</div>
+                                <div class="preview-item" onclick="drillDeeper('contract-deadlines')">
+                                    <span class="preview-label">Deadlines</span>
+                                    <span class="preview-value red">2 urgent</span>
+                                </div>
+                                <div class="preview-item" onclick="drillDeeper('restructure-opportunities')">
+                                    <span class="preview-label">Restructures</span>
+                                    <span class="preview-value yellow">$4.2M</span>
+                                </div>
+                                <div class="preview-item" onclick="drillDeeper('performance-value')">
+                                    <span class="preview-label">Performance</span>
+                                    <span class="preview-value green">89%</span>
+                                </div>
+                                <div class="preview-item" onclick="drillDeeper('agent-relations')">
+                                    <span class="preview-label">Agent Relations</span>
+                                    <span class="preview-value green">92%</span>
+                                </div>
+                                <div class="preview-item" onclick="drillDeeper('trade-scenarios')">
+                                    <span class="preview-label">Trade Value</span>
+                                    <span class="preview-value yellow">$47M</span>
+                                </div>
+                                <div class="preview-item" onclick="drillDeeper('extension-targets')">
+                                    <span class="preview-label">Extensions</span>
+                                    <span class="preview-value green">3 priority</span>
+                                </div>
+                                <div class="preview-item" onclick="drillDeeper('salary-distribution')">
+                                    <span class="preview-label">Distribution</span>
+                                    <span class="preview-value green">Balanced</span>
                                 </div>
                             </div>
-                            <div class="trade-scenarios">
-                                <div class="scenario-header">🎯 AI TRADE SCENARIOS</div>
-                                <div class="scenario-item" onclick="tradeScenario('slay-cardinals')">
-                                    <div class="scenario-title">Slay → Cardinals</div>
-                                    <div class="scenario-value">6th round pick + $3M savings</div>
-                                    <div class="culture-fit">✅ 89% Culture Match</div>
+                        </div>
+                        
+                        <!-- Enhanced Detailed Breakdown (Expanded State) -->
+                        <div class="module-breakdown" id="contract-breakdown">
+                            <div class="breakdown-header">
+                                <span class="breakdown-title">💰 CONTRACT INTELLIGENCE ANALYSIS</span>
+                                <span class="breakdown-updated">Updated 5 min ago</span>
+                            </div>
+                            
+                            <div class="breakdown-section">
+                                <div class="section-label">URGENT ACTIONS</div>
+                                <div class="contract-priority">
+                                    <div class="contract-item urgent" onclick="contractDetails('slay')">
+                                        <div class="contract-player">Darius Slay</div>
+                                        <div class="contract-details">
+                                            <span class="deadline">Void: Mar 15</span>
+                                            <span class="risk">$8.5M dead cap</span>
+                                        </div>
+                                        <div class="agent-info">Agent: Drew Rosenhaus (📞 305-555-0123)</div>
+                                    </div>
+                                    <div class="contract-item warning" onclick="contractDetails('johnson')">
+                                        <div class="contract-player">Lane Johnson</div>
+                                        <div class="contract-details">
+                                            <span class="deadline">Extension Window: Jun 1</span>
+                                            <span class="risk">Cap optimization: $4.2M</span>
+                                        </div>
+                                        <div class="agent-info">Agent: David Mulugheta (📞 310-555-0156)</div>
+                                    </div>
                                 </div>
-                                <div class="scenario-item" onclick="tradeScenario('johnson-titans')">
-                                    <div class="scenario-title">Johnson → Titans</div>
-                                    <div class="scenario-value">3rd + 5th round picks</div>
-                                    <div class="culture-fit">⚠️ 67% Culture Match</div>
+                            </div>
+                            
+                            <div class="breakdown-section">
+                                <div class="section-label">EFFICIENCY METRICS</div>
+                                <div class="breakdown-item" onclick="drillDeeper('cap-efficiency')">
+                                    <span class="breakdown-label">Cap Efficiency:</span>
+                                    <span class="breakdown-value green">94% (Top 5 NFL)</span>
+                                    <span class="breakdown-arrow">→</span>
                                 </div>
+                                <div class="breakdown-item" onclick="drillDeeper('performance-value')">
+                                    <span class="breakdown-label">Performance Value:</span>
+                                    <span class="breakdown-value green">89% vs contract</span>
+                                    <span class="breakdown-arrow">→</span>
+                                </div>
+                                <div class="breakdown-item" onclick="drillDeeper('salary-distribution')">
+                                    <span class="breakdown-label">Salary Distribution:</span>
+                                    <span class="breakdown-value green">Balanced across positions</span>
+                                    <span class="breakdown-arrow">→</span>
+                                </div>
+                            </div>
+                            
+                            <div class="breakdown-section">
+                                <div class="section-label">AI TRADE SCENARIOS</div>
+                                <div class="trade-scenarios">
+                                    <div class="scenario-item" onclick="tradeScenario('slay-cardinals')">
+                                        <div class="scenario-title">Slay → Cardinals</div>
+                                        <div class="scenario-value">6th round pick + $3M savings</div>
+                                        <div class="culture-fit">✅ 89% Culture Match</div>
+                                    </div>
+                                    <div class="scenario-item" onclick="tradeScenario('johnson-titans')">
+                                        <div class="scenario-title">Johnson → Titans</div>
+                                        <div class="scenario-value">3rd + 5th round picks</div>
+                                        <div class="culture-fit">⚠️ 67% Culture Match</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="breakdown-actions">
+                                <button class="breakdown-action-btn" onclick="generateContractReport()">📊 Contract Analysis Report</button>
+                                <button class="breakdown-action-btn secondary" onclick="scheduleAgentMeetings()">📞 Schedule Agent Meetings</button>
                             </div>
                         </div>
                     </div>
 
-                    <div class="intel-module" onclick="drillDown('draft-capital')">
+                    <!-- Enhanced Draft Capital Module -->
+                    <div class="intel-module" onclick="toggleDraftCapital()">
                         <div class="module-header">
                             <div class="module-title">Draft Capital</div>
                             <div class="module-indicator"></div>
@@ -1190,6 +1293,119 @@
                         <div class="module-data">
                             <div class="data-value">7 Picks</div>
                             <div class="data-change">+1</div>
+                        </div>
+                        
+                        <!-- Scrollable Preview Panel (Collapsed State) -->
+                        <div class="module-preview" id="draft-preview">
+                            <div class="preview-scroll">
+                                <div class="preview-item" onclick="drillDeeper('draft-value')">
+                                    <span class="preview-label">Total Value</span>
+                                    <span class="preview-value green">1,848 pts</span>
+                                </div>
+                                <div class="preview-item" onclick="drillDeeper('round-1')">
+                                    <span class="preview-label">Round 1</span>
+                                    <span class="preview-value green">#22</span>
+                                </div>
+                                <div class="preview-item" onclick="drillDeeper('round-2')">
+                                    <span class="preview-label">Round 2</span>
+                                    <span class="preview-value green">#54</span>
+                                </div>
+                                <div class="preview-item" onclick="drillDeeper('position-needs')">
+                                    <span class="preview-label">Position Needs</span>
+                                    <span class="preview-value yellow">CB priority</span>
+                                </div>
+                                <div class="preview-item" onclick="drillDeeper('trade-opportunities')">
+                                    <span class="preview-label">Trade Ops</span>
+                                    <span class="preview-value green">3 active</span>
+                                </div>
+                                <div class="preview-item" onclick="drillDeeper('draft-strategy')">
+                                    <span class="preview-label">Strategy</span>
+                                    <span class="preview-value green">BPA 67%</span>
+                                </div>
+                                <div class="preview-item" onclick="drillDeeper('board-rankings')">
+                                    <span class="preview-label">Big Board</span>
+                                    <span class="preview-value green">Updated</span>
+                                </div>
+                                <div class="preview-item" onclick="drillDeeper('compensatory')">
+                                    <span class="preview-label">Comp Picks</span>
+                                    <span class="preview-value green">2 expected</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Enhanced Detailed Breakdown (Expanded State) -->
+                        <div class="module-breakdown" id="draft-breakdown" style="display: none;">
+                            <div class="breakdown-header">
+                                <span class="breakdown-title">🎯 DRAFT CAPITAL ANALYSIS</span>
+                                <span class="breakdown-updated">Updated 1 min ago</span>
+                            </div>
+                            
+                            <div class="breakdown-section">
+                                <div class="section-label">DRAFT PICKS INVENTORY</div>
+                                <div class="breakdown-item" onclick="drillDeeper('round-1')">
+                                    <span class="breakdown-label">Round 1 (#22):</span>
+                                    <span class="breakdown-value green">1,240 points</span>
+                                    <span class="breakdown-arrow">→</span>
+                                </div>
+                                <div class="breakdown-item" onclick="drillDeeper('round-2')">
+                                    <span class="breakdown-label">Round 2 (#54):</span>
+                                    <span class="breakdown-value green">380 points</span>
+                                    <span class="breakdown-arrow">→</span>
+                                </div>
+                                <div class="breakdown-item" onclick="drillDeeper('round-3')">
+                                    <span class="breakdown-label">Round 3 (#87):</span>
+                                    <span class="breakdown-value green">136 points</span>
+                                    <span class="breakdown-arrow">→</span>
+                                </div>
+                                <div class="breakdown-item" onclick="drillDeeper('later-rounds')">
+                                    <span class="breakdown-label">Rounds 4-7:</span>
+                                    <span class="breakdown-value green">92 points (4 picks)</span>
+                                    <span class="breakdown-arrow">→</span>
+                                </div>
+                            </div>
+                            
+                            <div class="breakdown-section">
+                                <div class="section-label">POSITION PRIORITIES</div>
+                                <div class="breakdown-item" onclick="drillDeeper('cb-need')">
+                                    <span class="breakdown-label">Cornerback:</span>
+                                    <span class="breakdown-value red">High Priority</span>
+                                    <span class="breakdown-arrow">→</span>
+                                </div>
+                                <div class="breakdown-item" onclick="drillDeeper('safety-need')">
+                                    <span class="breakdown-label">Safety:</span>
+                                    <span class="breakdown-value red">High Priority</span>
+                                    <span class="breakdown-arrow">→</span>
+                                </div>
+                                <div class="breakdown-item" onclick="drillDeeper('lb-need')">
+                                    <span class="breakdown-label">Linebacker:</span>
+                                    <span class="breakdown-value yellow">Medium Priority</span>
+                                    <span class="breakdown-arrow">→</span>
+                                </div>
+                            </div>
+                            
+                            <div class="breakdown-section">
+                                <div class="section-label">AI DRAFT SCENARIOS</div>
+                                <div class="breakdown-item" onclick="drillDeeper('trade-up-scenario')">
+                                    <span class="breakdown-label">Trade Up (Cardinals):</span>
+                                    <span class="breakdown-value green">73% acceptance odds</span>
+                                    <span class="breakdown-arrow">→</span>
+                                </div>
+                                <div class="breakdown-item" onclick="drillDeeper('trade-down-scenario')">
+                                    <span class="breakdown-label">Trade Down (Broncos):</span>
+                                    <span class="breakdown-value green">67% acceptance odds</span>
+                                    <span class="breakdown-arrow">→</span>
+                                </div>
+                                <div class="breakdown-item" onclick="drillDeeper('bpa-projection')">
+                                    <span class="breakdown-label">Best Player Available:</span>
+                                    <span class="breakdown-value green">Cooper DeJean (87% odds)</span>
+                                    <span class="breakdown-arrow">→</span>
+                                </div>
+                            </div>
+                            
+                            <div class="breakdown-actions">
+                                <button class="breakdown-action-btn" onclick="generateDraftReport()">📊 Draft Strategy Report</button>
+                                <button class="breakdown-action-btn secondary" onclick="runDraftSimulator()">🎯 Run Draft Simulator</button>
+                            </div>
                         </div>
                     </div>
 
@@ -1201,6 +1417,128 @@
                         <div class="module-data">
                             <div class="data-value">$47M</div>
                             <div class="data-change">↗</div>
+                        </div>
+                    </div>
+
+                    <!-- Additional Concept Modules -->
+                    <div class="intel-module" onclick="drillDown('free-agency')">
+                        <div class="module-header">
+                            <div class="module-title">Free Agency</div>
+                            <div class="module-indicator"></div>
+                        </div>
+                        <div class="module-data">
+                            <div class="data-value">12 Targets</div>
+                            <div class="data-change">+3</div>
+                        </div>
+                    </div>
+
+                    <div class="intel-module" onclick="drillDown('injury-management')">
+                        <div class="module-header">
+                            <div class="module-title">Injury Management</div>
+                            <div class="module-indicator"></div>
+                        </div>
+                        <div class="module-data">
+                            <div class="data-value">3 Active</div>
+                            <div class="data-change">-2</div>
+                        </div>
+                    </div>
+
+                    <div class="intel-module" onclick="drillDown('performance-analytics')">
+                        <div class="module-header">
+                            <div class="module-title">Performance Analytics</div>
+                            <div class="module-indicator"></div>
+                        </div>
+                        <div class="module-data">
+                            <div class="data-value">89.3%</div>
+                            <div class="data-change">+1.2%</div>
+                        </div>
+                    </div>
+
+                    <div class="intel-module" onclick="drillDown('opponent-analysis')">
+                        <div class="module-header">
+                            <div class="module-title">Opponent Analysis</div>
+                            <div class="module-indicator"></div>
+                        </div>
+                        <div class="module-data">
+                            <div class="data-value">Next: DAL</div>
+                            <div class="data-change">Week 10</div>
+                        </div>
+                    </div>
+
+                    <div class="intel-module" onclick="drillDown('practice-squad')">
+                        <div class="module-header">
+                            <div class="module-title">Practice Squad</div>
+                            <div class="module-indicator"></div>
+                        </div>
+                        <div class="module-data">
+                            <div class="data-value">16/16</div>
+                            <div class="data-change">Full</div>
+                        </div>
+                    </div>
+
+                    <div class="intel-module" onclick="drillDown('coaching-staff')">
+                        <div class="module-header">
+                            <div class="module-title">Coaching Staff</div>
+                            <div class="module-indicator"></div>
+                        </div>
+                        <div class="module-data">
+                            <div class="data-value">24 Active</div>
+                            <div class="data-change">+1</div>
+                        </div>
+                    </div>
+
+                    <div class="intel-module" onclick="drillDown('scouting-reports')">
+                        <div class="module-header">
+                            <div class="module-title">Scouting Reports</div>
+                            <div class="module-indicator"></div>
+                        </div>
+                        <div class="module-data">
+                            <div class="data-value">247 Active</div>
+                            <div class="data-change">+15</div>
+                        </div>
+                    </div>
+
+                    <div class="intel-module" onclick="drillDown('facilities')">
+                        <div class="module-header">
+                            <div class="module-title">Facilities</div>
+                            <div class="module-indicator"></div>
+                        </div>
+                        <div class="module-data">
+                            <div class="data-value">95% Util</div>
+                            <div class="data-change">+3%</div>
+                        </div>
+                    </div>
+
+                    <div class="intel-module" onclick="drillDown('fan-engagement')">
+                        <div class="module-header">
+                            <div class="module-title">Fan Engagement</div>
+                            <div class="module-indicator"></div>
+                        </div>
+                        <div class="module-data">
+                            <div class="data-value">92.7%</div>
+                            <div class="data-change">+2.1%</div>
+                        </div>
+                    </div>
+
+                    <div class="intel-module" onclick="drillDown('revenue-streams')">
+                        <div class="module-header">
+                            <div class="module-title">Revenue Streams</div>
+                            <div class="module-indicator"></div>
+                        </div>
+                        <div class="module-data">
+                            <div class="data-value">$847M</div>
+                            <div class="data-change">+12%</div>
+                        </div>
+                    </div>
+
+                    <div class="intel-module" onclick="drillDown('compliance')">
+                        <div class="module-header">
+                            <div class="module-title">Compliance</div>
+                            <div class="module-indicator"></div>
+                        </div>
+                        <div class="module-data">
+                            <div class="data-value">100%</div>
+                            <div class="data-change">✓</div>
                         </div>
                     </div>
                 </div>
@@ -1259,10 +1597,146 @@
                 </div>
             </div>
         </div>
+
+        <!-- Draft View -->
+        <div class="view-section" id="draft-view">
+            <div class="command-dashboard">
+                <div class="insights-sidebar">
+                    <div class="insight-section">
+                        <div class="insight-header">
+                            <div class="insight-icon">🎯</div>
+                            <div class="insight-title">Draft Strategy</div>
+                        </div>
+                        <div class="insight-content">
+                            2025 NFL Draft approaching. Focus on CB and Safety positions for defensive secondary upgrade.
+                        </div>
+                        <button class="insight-action">View Draft Board</button>
+                    </div>
+                    <div class="insight-section">
+                        <div class="insight-header">
+                            <div class="insight-icon">📊</div>
+                            <div class="insight-title">Trade Opportunities</div>
+                        </div>
+                        <div class="insight-content">
+                            Cardinals interested in trading up. Potential to gain additional 3rd round pick.
+                        </div>
+                        <button class="insight-action">Calculate Trade</button>
+                    </div>
+                </div>
+                <div class="intelligence-grid">
+                    <div style="padding: 2rem; text-align: center; color: var(--amt-accent);">
+                        <h2>🏈 2025 NFL Draft War Room</h2>
+                        <p>Comprehensive draft analysis and strategy planning interface coming soon...</p>
+                    </div>
+                </div>
+                <div class="operations-panel">
+                    <div class="operation-section">
+                        <div class="section-title">Draft Tools</div>
+                        <button class="quick-action">Big Board</button>
+                        <button class="quick-action">Mock Simulator</button>
+                        <button class="quick-action">Trade Calculator</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics View -->
+        <div class="view-section" id="analytics-view">
+            <div class="command-dashboard">
+                <div class="insights-sidebar">
+                    <div class="insight-section">
+                        <div class="insight-header">
+                            <div class="insight-icon">📈</div>
+                            <div class="insight-title">Performance Metrics</div>
+                        </div>
+                        <div class="insight-content">
+                            Advanced analytics dashboard for player performance, team efficiency, and predictive modeling.
+                        </div>
+                        <button class="insight-action">View Analytics</button>
+                    </div>
+                </div>
+                <div class="intelligence-grid">
+                    <div style="padding: 2rem; text-align: center; color: var(--amt-accent);">
+                        <h2>📊 Advanced Analytics Center</h2>
+                        <p>Comprehensive performance analytics and predictive modeling interface coming soon...</p>
+                    </div>
+                </div>
+                <div class="operations-panel">
+                    <div class="operation-section">
+                        <div class="section-title">Analytics Tools</div>
+                        <button class="quick-action">Player Metrics</button>
+                        <button class="quick-action">Team Analytics</button>
+                        <button class="quick-action">Predictive Models</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Operations View -->
+        <div class="view-section" id="operations-view">
+            <div class="command-dashboard">
+                <div class="insights-sidebar">
+                    <div class="insight-section">
+                        <div class="insight-header">
+                            <div class="insight-icon">⚙️</div>
+                            <div class="insight-title">Daily Operations</div>
+                        </div>
+                        <div class="insight-content">
+                            Facility management, staff coordination, and operational efficiency monitoring.
+                        </div>
+                        <button class="insight-action">View Operations</button>
+                    </div>
+                </div>
+                <div class="intelligence-grid">
+                    <div style="padding: 2rem; text-align: center; color: var(--amt-accent);">
+                        <h2>⚙️ Operations Management Center</h2>
+                        <p>Comprehensive facility and operational management interface coming soon...</p>
+                    </div>
+                </div>
+                <div class="operations-panel">
+                    <div class="operation-section">
+                        <div class="section-title">Operations Tools</div>
+                        <button class="quick-action">Facility Management</button>
+                        <button class="quick-action">Staff Coordination</button>
+                        <button class="quick-action">Resource Planning</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
-        // Enhanced Roster Health Toggle
+        // View Management
+        function switchView(viewName) {
+            // Handle HQ navigation
+            if (viewName === 'hq') {
+                alert('M.E.L. AI: Returning to Denauld Supreme Command HQ...');
+                return;
+            }
+            
+            // Hide all views
+            document.querySelectorAll('.view-section').forEach(view => {
+                view.classList.remove('active');
+            });
+            
+            // Show selected view
+            const targetView = document.getElementById(viewName + '-view');
+            if (targetView) {
+                targetView.classList.add('active');
+            }
+            
+            // Update navigation
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Set active tab
+            event.target.classList.add('active');
+            
+            console.log(`🎯 Switched to ${viewName.toUpperCase()} view`);
+        }
+
+        // Enhanced Toggle Functions
         function toggleRosterHealth() {
             const breakdown = document.getElementById('roster-breakdown');
             const preview = document.getElementById('roster-preview');
@@ -1276,10 +1750,30 @@
             }
         }
 
-        // Toggle Contract Efficiency Breakdown
         function toggleContractEfficiency() {
             const breakdown = document.getElementById('contract-breakdown');
-            breakdown.style.display = breakdown.style.display === 'none' ? 'block' : 'none';
+            const preview = document.getElementById('contract-preview');
+            
+            if (breakdown.style.display === 'none') {
+                breakdown.style.display = 'block';
+                preview.style.display = 'none';
+            } else {
+                breakdown.style.display = 'none';
+                preview.style.display = 'block';
+            }
+        }
+
+        function toggleDraftCapital() {
+            const breakdown = document.getElementById('draft-breakdown');
+            const preview = document.getElementById('draft-preview');
+            
+            if (breakdown.style.display === 'none') {
+                breakdown.style.display = 'block';
+                preview.style.display = 'none';
+            } else {
+                breakdown.style.display = 'none';
+                preview.style.display = 'block';
+            }
         }
 
         // Deep Drill Down Function
@@ -1287,6 +1781,7 @@
             event.stopPropagation();
             
             const insights = {
+                // Roster Health Insights
                 'injury-rate': 'M.E.L. AI: Eagles injury rate of 6% is 50% below league average. Key factors: superior training staff, injury prevention protocols, and load management. Recommend maintaining current practices.',
                 'age-profile': 'M.E.L. AI: Team age of 26.4 years is optimal for NFL performance. Peak athletic years with experience. No immediate age-related concerns across position groups.',
                 'depth-quality': 'M.E.L. AI: Depth concern at CB position. Darius Slay aging, limited proven depth behind starters. Recommend prioritizing CB in upcoming draft or free agency.',
@@ -1295,10 +1790,30 @@
                 'load-management': 'M.E.L. AI: Zero overuse injuries this season. Load management protocols preventing fatigue-related injuries. GPS tracking shows optimal workload distribution.',
                 'recovery-metrics': 'M.E.L. AI: Recovery rate 89% based on HRV, sleep quality, and biomarker analysis. Advanced recovery protocols exceeding league standards.',
                 'conditioning': 'M.E.L. AI: 92% conditioning level measured through VO2 max, body composition, and performance benchmarks. Team in peak physical form.',
-                'mental-health': 'M.E.L. AI: 94% mental health index from counselor assessments and wellness surveys. Strong team culture and support systems in place.'
+                'mental-health': 'M.E.L. AI: 94% mental health index from counselor assessments and wellness surveys. Strong team culture and support systems in place.',
+                'roster-composition': 'M.E.L. AI: Full 53-man roster optimally constructed. Strong balance across position groups with 89% of players in preferred roles.',
+                
+                // Contract Efficiency Insights
+                'cap-efficiency': 'M.E.L. AI: 94% cap efficiency ranks top 5 in NFL. Excellent value contracts with minimal dead money. Strategic restructures have maximized flexibility.',
+                'contract-deadlines': 'M.E.L. AI: 2 urgent deadlines require immediate attention. Darius Slay void date and Lane Johnson extension window both critical for cap management.',
+                'restructure-opportunities': 'M.E.L. AI: $4.2M available through restructures. Lane Johnson and Brandon Graham contracts offer best optimization potential.',
+                'performance-value': 'M.E.L. AI: 89% of players outperforming contract value. Exceptional value in rookie contracts and veteran leadership deals.',
+                'agent-relations': 'M.E.L. AI: 92% positive agent relationship rating. Strong collaboration with representatives facilitating smooth negotiations.',
+                'extension-targets': 'M.E.L. AI: 3 priority extensions identified. Jalen Hurts, A.J. Brown, and Lane Johnson require proactive engagement.',
+                'salary-distribution': 'M.E.L. AI: Balanced salary distribution across position groups. No single position consuming excessive cap space.',
+                
+                // Draft Capital Insights
+                'draft-value': 'M.E.L. AI: 1,848 total draft points rank 18th in NFL. Strong value with early picks, compensatory selections boost overall capital.',
+                'round-1': 'M.E.L. AI: Pick #22 offers excellent value. Historical analysis shows 78% hit rate for impact players at this position.',
+                'round-2': 'M.E.L. AI: Pick #54 historically produces starting-caliber players 67% of the time. Strong value for addressing position needs.',
+                'position-needs': 'M.E.L. AI: CB and Safety identified as highest priorities. Defensive secondary requires immediate upgrade for championship contention.',
+                'trade-opportunities': 'M.E.L. AI: 3 active trade scenarios with Cardinals, Broncos, and Titans. Best value appears to be Cardinals trade-up proposal.',
+                'draft-strategy': 'M.E.L. AI: 67% Best Player Available strategy balances talent acquisition with positional needs. Historically most successful approach.',
+                'board-rankings': 'M.E.L. AI: Big Board updated with combine results. Cooper DeJean and Terrion Arnold top CB prospects within range.',
+                'compensatory': 'M.E.L. AI: 2 compensatory picks expected in rounds 6-7 based on free agent losses. Additional value for depth building.'
             };
             
-            alert(insights[metric] || 'M.E.L. AI: Analyzing detailed metrics for this health component...');
+            alert(insights[metric] || 'M.E.L. AI: Analyzing detailed metrics for this component...');
         }
 
         // Contract Details
@@ -1330,6 +1845,22 @@
             alert('M.E.L. AI: Scheduling team-wide medical evaluations. Coordinating with medical staff for optimal timing around practice schedule...');
         }
 
+        function generateContractReport() {
+            alert('M.E.L. AI: Generating comprehensive contract analysis report with restructure recommendations, extension priorities, and cap optimization strategies...');
+        }
+
+        function scheduleAgentMeetings() {
+            alert('M.E.L. AI: Scheduling meetings with player agents. Coordinating availability for Rosenhaus, Mulugheta, and 3 other representatives...');
+        }
+
+        function generateDraftReport() {
+            alert('M.E.L. AI: Generating comprehensive draft strategy report with positional rankings, trade scenarios, and value analysis...');
+        }
+
+        function runDraftSimulator() {
+            alert('M.E.L. AI: Running 1,000 draft simulations based on current big board and trade scenarios. Results will show optimal strategies...');
+        }
+
         // AI Assistant
         function activateAI() {
             alert('🤖 M.E.L. AI: Ready to assist with Eagles operations. How can I help optimize your decision-making today?');
@@ -1346,8 +1877,18 @@
                 'salary-cap': 'M.E.L. AI: Analyzing cap space optimization with 15 restructure scenarios...',
                 'performance': 'M.E.L. AI: Generating performance trends with player efficiency metrics...',
                 'playoff-odds': 'M.E.L. AI: Calculating championship scenarios based on 10,000 simulations...',
-                'draft-capital': 'M.E.L. AI: Assessing draft pick trade value with historical success rates...',
-                'trade-value': 'M.E.L. AI: Calculating tradeable asset valuations with culture fit analysis...'
+                'trade-value': 'M.E.L. AI: Calculating tradeable asset valuations with culture fit analysis...',
+                'free-agency': 'M.E.L. AI: Analyzing 12 free agent targets with fit scores and contract projections...',
+                'injury-management': 'M.E.L. AI: Monitoring 3 active injuries with recovery timelines and return projections...',
+                'performance-analytics': 'M.E.L. AI: Deep-diving into player performance metrics with advanced analytics...',
+                'opponent-analysis': 'M.E.L. AI: Comprehensive analysis of Dallas Cowboys weaknesses and game plan recommendations...',
+                'practice-squad': 'M.E.L. AI: Evaluating practice squad talent for potential elevations and development...',
+                'coaching-staff': 'M.E.L. AI: Analyzing coaching performance metrics and development opportunities...',
+                'scouting-reports': 'M.E.L. AI: Processing 247 active scouting reports with AI-powered player projections...',
+                'facilities': 'M.E.L. AI: Optimizing facility utilization and identifying upgrade opportunities...',
+                'fan-engagement': 'M.E.L. AI: Analyzing fan satisfaction metrics and engagement improvement strategies...',
+                'revenue-streams': 'M.E.L. AI: Comprehensive revenue analysis with growth opportunity identification...',
+                'compliance': 'M.E.L. AI: Monitoring all NFL compliance requirements with zero violations maintained...'
             };
             alert(analyses[category] || 'M.E.L. AI: Preparing deep intelligence analysis...');
         }
