@@ -192,8 +192,8 @@
         }
 
         .leader-avatar {
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             border: 2px solid var(--amt-gray);
             object-fit: cover;
@@ -1089,6 +1089,150 @@
             display: block;
         }
 
+        /* Chat Modal Styles */
+        .chat-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .chat-container {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 400px;
+            height: 600px;
+            background: var(--amt-dark);
+            border: 1px solid var(--amt-red);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(226, 2, 26, 0.3);
+        }
+
+        .chat-header {
+            background: linear-gradient(45deg, var(--amt-red), var(--amt-accent));
+            color: var(--amt-black);
+            padding: 1rem;
+            border-radius: 12px 12px 0 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .chat-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--amt-black);
+        }
+
+        .chat-info h4 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .chat-info p {
+            font-size: 0.7rem;
+            opacity: 0.8;
+        }
+
+        .chat-close {
+            margin-left: auto;
+            background: none;
+            border: none;
+            color: var(--amt-black);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .chat-close:hover {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 0.75rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+
+        .message.ai {
+            background: var(--amt-red);
+            color: var(--amt-white);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        .message.user {
+            background: var(--amt-accent);
+            color: var(--amt-black);
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-input-area {
+            padding: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .chat-input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 0.75rem 1rem;
+            color: var(--amt-white);
+            font-size: 0.8rem;
+            outline: none;
+        }
+
+        .chat-input:focus {
+            border-color: var(--amt-accent);
+        }
+
+        .chat-send {
+            background: var(--amt-red);
+            color: var(--amt-white);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .chat-send:hover {
+            background: var(--amt-accent);
+            color: var(--amt-black);
+        }
+
         @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
@@ -1153,7 +1297,7 @@
                 <div class="leadership-scroll">
                     <div class="leader-card" onclick="openChat('tony-rivera')">
                         <div class="leader-photo">
-                            <img src="https://via.placeholder.com/40x40/e2021a/ffffff?text=TR" alt="Tony Rivera" class="leader-avatar">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face&auto=format" alt="Tony Rivera" class="leader-avatar">
                             <div class="leader-status defensive"></div>
                         </div>
                         <div class="leader-info">
@@ -1163,7 +1307,7 @@
                     </div>
                     <div class="leader-card" onclick="openChat('derek-thompson')">
                         <div class="leader-photo">
-                            <img src="https://via.placeholder.com/40x40/d4db69/000000?text=DT" alt="Derek Thompson" class="leader-avatar">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face&auto=format" alt="Derek Thompson" class="leader-avatar">
                             <div class="leader-status rush"></div>
                         </div>
                         <div class="leader-info">
@@ -1173,7 +1317,7 @@
                     </div>
                     <div class="leader-card" onclick="openChat('marcus-johnson')">
                         <div class="leader-photo">
-                            <img src="https://via.placeholder.com/40x40/004C54/ffffff?text=MJ" alt="Dr. Marcus Johnson" class="leader-avatar">
+                            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=60&h=60&fit=crop&crop=face&auto=format" alt="Dr. Marcus Johnson" class="leader-avatar">
                             <div class="leader-status psychology"></div>
                         </div>
                         <div class="leader-info">
@@ -1183,7 +1327,7 @@
                     </div>
                     <div class="leader-card" onclick="openChat('amanda-thompson')">
                         <div class="leader-photo">
-                            <img src="https://via.placeholder.com/40x40/a1a1a1/000000?text=AT" alt="Coach Amanda Thompson" class="leader-avatar">
+                            <img src="https://images.unsplash.com/photo-1494790108755-2616c76c99a8?w=60&h=60&fit=crop&crop=face&auto=format" alt="Coach Amanda Thompson" class="leader-avatar">
                             <div class="leader-status coaching"></div>
                         </div>
                         <div class="leader-info">
@@ -1193,7 +1337,7 @@
                     </div>
                     <div class="leader-card" onclick="openChat('roberto-gutierrez')">
                         <div class="leader-photo">
-                            <img src="https://via.placeholder.com/40x40/818284/ffffff?text=RG" alt="Roberto Gutierrez" class="leader-avatar">
+                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=60&h=60&fit=crop&crop=face&auto=format" alt="Roberto Gutierrez" class="leader-avatar">
                             <div class="leader-status scouting"></div>
                         </div>
                         <div class="leader-info">
@@ -1203,7 +1347,7 @@
                     </div>
                     <div class="leader-card" onclick="openChat('sam-williams')">
                         <div class="leader-photo">
-                            <img src="https://via.placeholder.com/40x40/e2021a/ffffff?text=SW" alt="Sam Williams" class="leader-avatar">
+                            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=60&h=60&fit=crop&crop=face&auto=format" alt="Sam Williams" class="leader-avatar">
                             <div class="leader-status offensive"></div>
                         </div>
                         <div class="leader-info">
@@ -1213,7 +1357,7 @@
                     </div>
                     <div class="leader-card" onclick="openChat('alex-chen')">
                         <div class="leader-photo">
-                            <img src="https://via.placeholder.com/40x40/d4db69/000000?text=AC" alt="Alex Chen" class="leader-avatar">
+                            <img src="https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=60&h=60&fit=crop&crop=face&auto=format" alt="Alex Chen" class="leader-avatar">
                             <div class="leader-status analytics"></div>
                         </div>
                         <div class="leader-info">
@@ -1223,7 +1367,7 @@
                     </div>
                     <div class="leader-card" onclick="openChat('marcus-lewis')">
                         <div class="leader-photo">
-                            <img src="https://via.placeholder.com/40x40/004C54/ffffff?text=ML" alt="Marcus Lewis" class="leader-avatar">
+                            <img src="https://images.unsplash.com/photo-1463453091185-61582044d556?w=60&h=60&fit=crop&crop=face&auto=format" alt="Marcus Lewis" class="leader-avatar">
                             <div class="leader-status coordination"></div>
                         </div>
                         <div class="leader-info">
@@ -1233,7 +1377,7 @@
                     </div>
                     <div class="leader-card" onclick="openChat('michael-rodriguez')">
                         <div class="leader-photo">
-                            <img src="https://via.placeholder.com/40x40/e2021a/ffffff?text=MR" alt="Michael Rodriguez" class="leader-avatar">
+                            <img src="https://images.unsplash.com/photo-1531123414780-f74242c2b052?w=60&h=60&fit=crop&crop=face&auto=format" alt="Michael Rodriguez" class="leader-avatar">
                             <div class="leader-status field"></div>
                         </div>
                         <div class="leader-info">
@@ -1411,7 +1555,7 @@
                         </div>
                         
                         <!-- Detailed Breakdown (Expanded State) -->
-                        <div class="module-breakdown" id="roster-breakdown">
+                        <div class="module-breakdown" id="roster-breakdown" style="display: none;">
                             <div class="breakdown-header">
                                 <span class="breakdown-title">COMPREHENSIVE HEALTH ANALYSIS</span>
                                 <span class="breakdown-updated">Updated 3 min ago</span>
@@ -1531,7 +1675,7 @@
                         </div>
                         
                         <!-- Enhanced Detailed Breakdown (Expanded State) -->
-                        <div class="module-breakdown" id="contract-breakdown">
+                        <div class="module-breakdown" id="contract-breakdown" style="display: none;">
                             <div class="breakdown-header">
                                 <span class="breakdown-title">CONTRACT INTELLIGENCE ANALYSIS</span>
                                 <span class="breakdown-updated">Updated 5 min ago</span>
@@ -2131,6 +2275,27 @@
                         <button class="quick-action">Resource Planning</button>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Modal -->
+    <div class="chat-modal" id="chatModal">
+        <div class="chat-container">
+            <div class="chat-header">
+                <img id="chatAvatar" src="" alt="" class="chat-avatar">
+                <div class="chat-info">
+                    <h4 id="chatName"></h4>
+                    <p id="chatRole"></p>
+                </div>
+                <button class="chat-close" onclick="closeChat()">×</button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <!-- Messages will be populated here -->
+            </div>
+            <div class="chat-input-area">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Ask about strategy, analysis, or operations..." onkeypress="handleChatKeypress(event)">
+                <button class="chat-send" onclick="sendMessage()">→</button>
             </div>
         </div>
     </div>
