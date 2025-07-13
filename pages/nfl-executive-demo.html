@@ -149,8 +149,9 @@
         .leadership-team {
             margin-left: auto;
             margin-right: 2rem;
-            max-width: 600px;
+            max-width: 800px;
             overflow: hidden;
+            flex: 1;
         }
 
         .leadership-scroll {
@@ -225,6 +226,9 @@
         .leader-status.analytics { background: #06b6d4; }
         .leader-status.coordination { background: #f97316; }
         .leader-status.field { background: var(--team-accent); }
+        .leader-status.strategy { background: #ec4899; }
+        .leader-status.medical { background: #22c55e; }
+        .leader-status.operations { background: #a855f7; }
 
         @keyframes pulse-status {
             0%, 100% { opacity: 1; transform: scale(1); }
@@ -1290,14 +1294,13 @@
         <!-- Smart Header -->
         <div class="smart-header">
             <div class="header-brand">NFL Executive Command Center</div>
-            <div class="team-selector" onclick="selectTeam()">Philadelphia Eagles</div>
             
             <!-- Leadership Team Section -->
             <div class="leadership-team">
                 <div class="leadership-scroll">
                     <div class="leader-card" onclick="openChat('tony-rivera')">
                         <div class="leader-photo">
-                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face&auto=format" alt="Tony Rivera" class="leader-avatar">
+                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/tony-rivera.png" alt="Tony Rivera" class="leader-avatar">
                             <div class="leader-status defensive"></div>
                         </div>
                         <div class="leader-info">
@@ -1307,7 +1310,7 @@
                     </div>
                     <div class="leader-card" onclick="openChat('derek-thompson')">
                         <div class="leader-photo">
-                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face&auto=format" alt="Derek Thompson" class="leader-avatar">
+                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/derek-thompson.png" alt="Derek Thompson" class="leader-avatar">
                             <div class="leader-status rush"></div>
                         </div>
                         <div class="leader-info">
@@ -1315,49 +1318,49 @@
                             <div class="leader-role">Pressure Specialist</div>
                         </div>
                     </div>
-                    <div class="leader-card" onclick="openChat('marcus-johnson')">
+                    <div class="leader-card" onclick="openChat('david-kim')">
                         <div class="leader-photo">
-                            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=60&h=60&fit=crop&crop=face&auto=format" alt="Dr. Marcus Johnson" class="leader-avatar">
+                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/david-kim.png" alt="Dr. David Kim" class="leader-avatar">
                             <div class="leader-status psychology"></div>
                         </div>
                         <div class="leader-info">
-                            <div class="leader-name">Dr. Marcus Johnson</div>
+                            <div class="leader-name">Dr. David Kim</div>
                             <div class="leader-role">The Mind</div>
                         </div>
                     </div>
-                    <div class="leader-card" onclick="openChat('amanda-thompson')">
+                    <div class="leader-card" onclick="openChat('alexandra-martinez')">
                         <div class="leader-photo">
-                            <img src="https://images.unsplash.com/photo-1494790108755-2616c76c99a8?w=60&h=60&fit=crop&crop=face&auto=format" alt="Coach Amanda Thompson" class="leader-avatar">
+                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/alexandra-martinez.png" alt="Alexandra Martinez" class="leader-avatar">
                             <div class="leader-status coaching"></div>
                         </div>
                         <div class="leader-info">
-                            <div class="leader-name">Amanda Thompson</div>
+                            <div class="leader-name">Alexandra Martinez</div>
                             <div class="leader-role">The Mentor</div>
                         </div>
                     </div>
-                    <div class="leader-card" onclick="openChat('roberto-gutierrez')">
+                    <div class="leader-card" onclick="openChat('michael-rodriguez')">
                         <div class="leader-photo">
-                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=60&h=60&fit=crop&crop=face&auto=format" alt="Roberto Gutierrez" class="leader-avatar">
+                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/michael-rodriguez.png" alt="Michael Rodriguez" class="leader-avatar">
                             <div class="leader-status scouting"></div>
                         </div>
                         <div class="leader-info">
-                            <div class="leader-name">Roberto Gutierrez</div>
+                            <div class="leader-name">Michael Rodriguez</div>
                             <div class="leader-role">The Scout</div>
                         </div>
                     </div>
-                    <div class="leader-card" onclick="openChat('sam-williams')">
+                    <div class="leader-card" onclick="openChat('bill-mckenzie')">
                         <div class="leader-photo">
-                            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=60&h=60&fit=crop&crop=face&auto=format" alt="Sam Williams" class="leader-avatar">
+                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/bill-mckenzie.png" alt="Bill McKenzie" class="leader-avatar">
                             <div class="leader-status offensive"></div>
                         </div>
                         <div class="leader-info">
-                            <div class="leader-name">Sam Williams</div>
+                            <div class="leader-name">Bill McKenzie</div>
                             <div class="leader-role">The Teacher</div>
                         </div>
                     </div>
                     <div class="leader-card" onclick="openChat('alex-chen')">
                         <div class="leader-photo">
-                            <img src="https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=60&h=60&fit=crop&crop=face&auto=format" alt="Alex Chen" class="leader-avatar">
+                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/alex-chen.png" alt="Alex Chen" class="leader-avatar">
                             <div class="leader-status analytics"></div>
                         </div>
                         <div class="leader-info">
@@ -1365,24 +1368,94 @@
                             <div class="leader-role">The Optimizer</div>
                         </div>
                     </div>
-                    <div class="leader-card" onclick="openChat('marcus-lewis')">
+                    <div class="leader-card" onclick="openChat('darius-washington')">
                         <div class="leader-photo">
-                            <img src="https://images.unsplash.com/photo-1463453091185-61582044d556?w=60&h=60&fit=crop&crop=face&auto=format" alt="Marcus Lewis" class="leader-avatar">
+                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/darius-washington.png" alt="Darius Washington" class="leader-avatar">
                             <div class="leader-status coordination"></div>
                         </div>
                         <div class="leader-info">
-                            <div class="leader-name">Marcus Lewis</div>
+                            <div class="leader-name">Darius Washington</div>
                             <div class="leader-role">The Coordinator</div>
                         </div>
                     </div>
-                    <div class="leader-card" onclick="openChat('michael-rodriguez')">
+                    <div class="leader-card" onclick="openChat('captain-michael-rodriguez')">
                         <div class="leader-photo">
-                            <img src="https://images.unsplash.com/photo-1531123414780-f74242c2b052?w=60&h=60&fit=crop&crop=face&auto=format" alt="Michael Rodriguez" class="leader-avatar">
+                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/captain-michael-rodriguez.png" alt="Captain Michael Rodriguez" class="leader-avatar">
                             <div class="leader-status field"></div>
                         </div>
                         <div class="leader-info">
-                            <div class="leader-name">Michael Rodriguez</div>
+                            <div class="leader-name">Captain Rodriguez</div>
                             <div class="leader-role">The Wall</div>
+                        </div>
+                    </div>
+                    <div class="leader-card" onclick="openChat('patricia-williams')">
+                        <div class="leader-photo">
+                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/patricia-williams.png" alt="Patricia Williams" class="leader-avatar">
+                            <div class="leader-status strategy"></div>
+                        </div>
+                        <div class="leader-info">
+                            <div class="leader-name">Patricia Williams</div>
+                            <div class="leader-role">Strategy Chief</div>
+                        </div>
+                    </div>
+                    <div class="leader-card" onclick="openChat('elena-vasquez')">
+                        <div class="leader-photo">
+                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/elena-vasquez.png" alt="Elena Vasquez" class="leader-avatar">
+                            <div class="leader-status medical"></div>
+                        </div>
+                        <div class="leader-info">
+                            <div class="leader-name">Elena Vasquez</div>
+                            <div class="leader-role">Medical Director</div>
+                        </div>
+                    </div>
+                    <div class="leader-card" onclick="openChat('victoria-castellanos')">
+                        <div class="leader-photo">
+                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/victoria-castellanos.png" alt="Victoria Castellanos" class="leader-avatar">
+                            <div class="leader-status operations"></div>
+                        </div>
+                        <div class="leader-info">
+                            <div class="leader-name">Victoria Castellanos</div>
+                            <div class="leader-role">Operations Chief</div>
+                        </div>
+                    </div>
+                    <div class="leader-card" onclick="openChat('dr-rachel-foster')">
+                        <div class="leader-photo">
+                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/dr-rachel-foster.png" alt="Dr. Rachel Foster" class="leader-avatar">
+                            <div class="leader-status research"></div>
+                        </div>
+                        <div class="leader-info">
+                            <div class="leader-name">Dr. Rachel Foster</div>
+                            <div class="leader-role">Research Director</div>
+                        </div>
+                    </div>
+                    <div class="leader-card" onclick="openChat('dr-sarah-chen')">
+                        <div class="leader-photo">
+                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/dr-sarah-chen.png" alt="Dr. Sarah Chen" class="leader-avatar">
+                            <div class="leader-status performance"></div>
+                        </div>
+                        <div class="leader-info">
+                            <div class="leader-name">Dr. Sarah Chen</div>
+                            <div class="leader-role">Performance Analyst</div>
+                        </div>
+                    </div>
+                    <div class="leader-card" onclick="openChat('dr-wright')">
+                        <div class="leader-photo">
+                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/dr-wright.png" alt="Dr. Wright" class="leader-avatar">
+                            <div class="leader-status science"></div>
+                        </div>
+                        <div class="leader-info">
+                            <div class="leader-name">Dr. Wright</div>
+                            <div class="leader-role">Sports Scientist</div>
+                        </div>
+                    </div>
+                    <div class="leader-card" onclick="openChat('denauld-brown')">
+                        <div class="leader-photo">
+                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/denauld-brown.png" alt="Denauld Brown" class="leader-avatar">
+                            <div class="leader-status mastermind"></div>
+                        </div>
+                        <div class="leader-info">
+                            <div class="leader-name">Denauld Brown</div>
+                            <div class="leader-role">The Mastermind</div>
                         </div>
                     </div>
                 </div>
@@ -1429,7 +1502,7 @@
                         <div class="insight-icon bulb-icon"></div>
                         <div class="insight-title">AI Suggestion</div>
                         <div class="gm-photo">
-                            <img src="https://via.placeholder.com/32x32/d4db69/000000?text=MS" alt="Marcus Sterling" class="gm-avatar">
+                            <img src="https://raw.githubusercontent.com/denauld/denauld-supreme-command-hq/main/images/staff/marcus-sterling.png" alt="Marcus Sterling" class="gm-avatar">
                         </div>
                     </div>
                     <div class="insight-content">
