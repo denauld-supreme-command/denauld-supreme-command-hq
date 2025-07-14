@@ -1514,14 +1514,14 @@
                 <div class="intelligence-grid">
                     <!-- Command Overview -->
                     <div class="command-overview">
-                        <div class="intel-card" onclick="drillDown('salary-cap')">
+                        <div class="intel-card" onclick="toggleNFLCapIntel()">
                             <div class="card-header">
-                                <div class="card-title">Salary Cap</div>
+                                <div class="card-title">NFL Salary Cap Intel</div>
                                 <div class="card-status"></div>
                             </div>
-                            <div class="card-metric">$4.2M</div>
-                            <div class="card-label">Available Space</div>
-                            <div class="card-trend">↗ +$1.2M this week</div>
+                            <div class="card-metric">32 Teams</div>
+                            <div class="card-label">League-Wide Analysis</div>
+                            <div class="card-trend">PHI: $4.2M Available</div>
                             <button class="drill-down-btn">→</button>
                         </div>
 
@@ -1972,6 +1972,269 @@
                                 <div class="breakdown-actions">
                                     <button class="breakdown-action-btn" onclick="generateTradeReport()">Trade Valuation Report</button>
                                     <button class="breakdown-action-btn secondary" onclick="openTradeSimulator()">Trade Simulator</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Enhanced NFL Salary Cap Intelligence Module -->
+                        <div class="intel-module" onclick="toggleNFLCapIntel()">
+                            <div class="module-header">
+                                <div class="module-title">NFL Salary Cap Intel</div>
+                                <div class="module-indicator"></div>
+                            </div>
+                            <div class="module-data">
+                                <div class="data-value">32 Teams</div>
+                                <div class="data-change">Live Data</div>
+                            </div>
+                            
+                            <!-- NFL Teams Preview Panel (Collapsed State) -->
+                            <div class="module-preview" id="nfl-cap-preview">
+                                <div class="preview-scroll">
+                                    <div class="preview-item" onclick="viewTeamCap('PHI')" style="border-left-color: #004C54; background: rgba(0, 76, 84, 0.1);">
+                                        <span class="preview-label">🦅 Philadelphia Eagles</span>
+                                        <span class="preview-value green">$4.2M</span>
+                                    </div>
+                                    <div class="preview-item" onclick="viewTeamCap('DAL')">
+                                        <span class="preview-label">⭐ Dallas Cowboys</span>
+                                        <span class="preview-value red">-$2.1M</span>
+                                    </div>
+                                    <div class="preview-item" onclick="viewTeamCap('NYG')">
+                                        <span class="preview-label">🏟️ New York Giants</span>
+                                        <span class="preview-value yellow">$8.7M</span>
+                                    </div>
+                                    <div class="preview-item" onclick="viewTeamCap('WAS')">
+                                        <span class="preview-label">🏛️ Washington Commanders</span>
+                                        <span class="preview-value green">$12.4M</span>
+                                    </div>
+                                    <div class="preview-item" onclick="viewTeamCap('BUF')">
+                                        <span class="preview-label">🦬 Buffalo Bills</span>
+                                        <span class="preview-value yellow">$6.8M</span>
+                                    </div>
+                                    <div class="preview-item" onclick="viewTeamCap('MIA')">
+                                        <span class="preview-label">🐬 Miami Dolphins</span>
+                                        <span class="preview-value red">-$1.3M</span>
+                                    </div>
+                                    <div class="preview-item" onclick="viewTeamCap('NE')">
+                                        <span class="preview-label">🏆 New England Patriots</span>
+                                        <span class="preview-value green">$15.2M</span>
+                                    </div>
+                                    <div class="preview-item" onclick="viewTeamCap('NYJ')">
+                                        <span class="preview-label">✈️ New York Jets</span>
+                                        <span class="preview-value yellow">$3.9M</span>
+                                    </div>
+                                    <div class="preview-item" onclick="viewTeamCap('KC')">
+                                        <span class="preview-label">👑 Kansas City Chiefs</span>
+                                        <span class="preview-value red">-$3.4M</span>
+                                    </div>
+                                    <div class="preview-item" onclick="viewTeamCap('LV')">
+                                        <span class="preview-label">🏴‍☠️ Las Vegas Raiders</span>
+                                        <span class="preview-value green">$11.7M</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- NFL Teams Detailed Breakdown (Expanded State) -->
+                            <div class="module-breakdown" id="nfl-cap-breakdown" style="display: none;">
+                                <div class="breakdown-header">
+                                    <span class="breakdown-title">NFL SALARY CAP INTELLIGENCE</span>
+                                    <span class="breakdown-updated">Live Data • Updated 30 sec ago</span>
+                                </div>
+                                
+                                <div class="breakdown-section">
+                                    <div class="section-label">AFC EAST</div>
+                                    <div class="breakdown-item" onclick="viewTeamCap('BUF')" style="background: rgba(0, 51, 141, 0.1);">
+                                        <span class="breakdown-label">🦬 Buffalo Bills:</span>
+                                        <span class="breakdown-value yellow">$6.8M available</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="viewTeamCap('MIA')" style="background: rgba(0, 142, 151, 0.1);">
+                                        <span class="breakdown-label">🐬 Miami Dolphins:</span>
+                                        <span class="breakdown-value red">-$1.3M over cap</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="viewTeamCap('NE')" style="background: rgba(0, 34, 68, 0.1);">
+                                        <span class="breakdown-label">🏆 New England Patriots:</span>
+                                        <span class="breakdown-value green">$15.2M available</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="viewTeamCap('NYJ')" style="background: rgba(18, 87, 64, 0.1);">
+                                        <span class="breakdown-label">✈️ New York Jets:</span>
+                                        <span class="breakdown-value yellow">$3.9M available</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="breakdown-section">
+                                    <div class="section-label">AFC NORTH</div>
+                                    <div class="breakdown-item" onclick="viewTeamCap('BAL')" style="background: rgba(26, 25, 95, 0.1);">
+                                        <span class="breakdown-label">🐦‍⬛ Baltimore Ravens:</span>
+                                        <span class="breakdown-value yellow">$2.7M available</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="viewTeamCap('CIN')" style="background: rgba(251, 79, 20, 0.1);">
+                                        <span class="breakdown-label">🐅 Cincinnati Bengals:</span>
+                                        <span class="breakdown-value green">$9.4M available</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="viewTeamCap('CLE')" style="background: rgba(49, 29, 0, 0.1);">
+                                        <span class="breakdown-label">🐶 Cleveland Browns:</span>
+                                        <span class="breakdown-value red">-$4.6M over cap</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="viewTeamCap('PIT')" style="background: rgba(255, 182, 18, 0.1);">
+                                        <span class="breakdown-label">🟡 Pittsburgh Steelers:</span>
+                                        <span class="breakdown-value yellow">$5.1M available</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="breakdown-section">
+                                    <div class="section-label">AFC SOUTH</div>
+                                    <div class="breakdown-item" onclick="viewTeamCap('HOU')" style="background: rgba(3, 32, 47, 0.1);">
+                                        <span class="breakdown-label">🤠 Houston Texans:</span>
+                                        <span class="breakdown-value green">$18.3M available</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="viewTeamCap('IND')" style="background: rgba(0, 44, 95, 0.1);">
+                                        <span class="breakdown-label">🐎 Indianapolis Colts:</span>
+                                        <span class="breakdown-value green">$13.7M available</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="viewTeamCap('JAX')" style="background: rgba(215, 162, 42, 0.1);">
+                                        <span class="breakdown-label">🐆 Jacksonville Jaguars:</span>
+                                        <span class="breakdown-value yellow">$7.9M available</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="viewTeamCap('TEN')" style="background: rgba(12, 35, 64, 0.1);">
+                                        <span class="breakdown-label">⚔️ Tennessee Titans:</span>
+                                        <span class="breakdown-value green">$22.1M available</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="breakdown-section">
+                                    <div class="section-label">AFC WEST</div>
+                                    <div class="breakdown-item" onclick="viewTeamCap('DEN')" style="background: rgba(251, 79, 20, 0.1);">
+                                        <span class="breakdown-label">🐴 Denver Broncos:</span>
+                                        <span class="breakdown-value green">$16.8M available</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="viewTeamCap('KC')" style="background: rgba(227, 24, 55, 0.1);">
+                                        <span class="breakdown-label">👑 Kansas City Chiefs:</span>
+                                        <span class="breakdown-value red">-$3.4M over cap</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="viewTeamCap('LV')" style="background: rgba(165, 172, 175, 0.1);">
+                                        <span class="breakdown-label">🏴‍☠️ Las Vegas Raiders:</span>
+                                        <span class="breakdown-value green">$11.7M available</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="viewTeamCap('LAC')" style="background: rgba(0, 128, 198, 0.1);">
+                                        <span class="breakdown-label">⚡ Los Angeles Chargers:</span>
+                                        <span class="breakdown-value yellow">$4.3M available</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="breakdown-section">
+                                    <div class="section-label">NFC EAST</div>
+                                    <div class="breakdown-item" onclick="viewTeamCap('DAL')" style="background: rgba(0, 53, 148, 0.1);">
+                                        <span class="breakdown-label">⭐ Dallas Cowboys:</span>
+                                        <span class="breakdown-value red">-$2.1M over cap</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="viewTeamCap('NYG')" style="background: rgba(1, 35, 82, 0.1);">
+                                        <span class="breakdown-label">🏟️ New York Giants:</span>
+                                        <span class="breakdown-value yellow">$8.7M available</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="viewTeamCap('PHI')" style="background: rgba(0, 76, 84, 0.2); border: 2px solid var(--team-accent);">
+                                        <span class="breakdown-label">🦅 Philadelphia Eagles (YOUR TEAM):</span>
+                                        <span class="breakdown-value green">$4.2M available (+$1.2M)</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="viewTeamCap('WAS')" style="background: rgba(90, 20, 20, 0.1);">
+                                        <span class="breakdown-label">🏛️ Washington Commanders:</span>
+                                        <span class="breakdown-value green">$12.4M available</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="breakdown-section">
+                                    <div class="section-label">NFC NORTH</div>
+                                    <div class="breakdown-item" onclick="viewTeamCap('CHI')" style="background: rgba(11, 22, 42, 0.1);">
+                                        <span class="breakdown-label">🐻 Chicago Bears:</span>
+                                        <span class="breakdown-value green">$19.6M available</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="viewTeamCap('DET')" style="background: rgba(0, 118, 182, 0.1);">
+                                        <span class="breakdown-label">🦁 Detroit Lions:</span>
+                                        <span class="breakdown-value yellow">$1.8M available</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="viewTeamCap('GB')" style="background: rgba(24, 48, 40, 0.1);">
+                                        <span class="breakdown-label">🧀 Green Bay Packers:</span>
+                                        <span class="breakdown-value yellow">$6.2M available</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="viewTeamCap('MIN')" style="background: rgba(79, 38, 131, 0.1);">
+                                        <span class="breakdown-label">⚔️ Minnesota Vikings:</span>
+                                        <span class="breakdown-value green">$14.9M available</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="breakdown-section">
+                                    <div class="section-label">NFC SOUTH</div>
+                                    <div class="breakdown-item" onclick="viewTeamCap('ATL')" style="background: rgba(167, 25, 48, 0.1);">
+                                        <span class="breakdown-label">🦅 Atlanta Falcons:</span>
+                                        <span class="breakdown-value yellow">$3.5M available</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="viewTeamCap('CAR')" style="background: rgba(0, 133, 202, 0.1);">
+                                        <span class="breakdown-label">🐾 Carolina Panthers:</span>
+                                        <span class="breakdown-value green">$25.7M available</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="viewTeamCap('NO')" style="background: rgba(211, 188, 141, 0.1);">
+                                        <span class="breakdown-label">⚜️ New Orleans Saints:</span>
+                                        <span class="breakdown-value red">-$6.8M over cap</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="viewTeamCap('TB')" style="background: rgba(213, 10, 10, 0.1);">
+                                        <span class="breakdown-label">🏴‍☠️ Tampa Bay Buccaneers:</span>
+                                        <span class="breakdown-value yellow">$7.1M available</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="breakdown-section">
+                                    <div class="section-label">NFC WEST</div>
+                                    <div class="breakdown-item" onclick="viewTeamCap('ARI')" style="background: rgba(151, 35, 63, 0.1);">
+                                        <span class="breakdown-label">🦅 Arizona Cardinals:</span>
+                                        <span class="breakdown-value green">$21.3M available</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="viewTeamCap('LAR')" style="background: rgba(0, 53, 148, 0.1);">
+                                        <span class="breakdown-label">🐏 Los Angeles Rams:</span>
+                                        <span class="breakdown-value red">-$1.9M over cap</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="viewTeamCap('SF')" style="background: rgba(170, 0, 0, 0.1);">
+                                        <span class="breakdown-label">🌉 San Francisco 49ers:</span>
+                                        <span class="breakdown-value yellow">$2.9M available</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="viewTeamCap('SEA')" style="background: rgba(0, 21, 50, 0.1);">
+                                        <span class="breakdown-label">🦅 Seattle Seahawks:</span>
+                                        <span class="breakdown-value green">$10.4M available</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="breakdown-actions">
+                                    <button class="breakdown-action-btn" onclick="generateLeagueCapReport()">League Cap Report</button>
+                                    <button class="breakdown-action-btn secondary" onclick="openCapComparison()">Team Comparison</button>
                                 </div>
                             </div>
                         </div>
@@ -2533,6 +2796,78 @@
             }
         }
 
+        // NEW FUNCTION: Toggle NFL Salary Cap Intelligence
+        function toggleNFLCapIntel() {
+            const breakdown = document.getElementById('nfl-cap-breakdown');
+            const preview = document.getElementById('nfl-cap-preview');
+            
+            if (breakdown && preview) {
+                if (breakdown.style.display === 'none') {
+                    breakdown.style.display = 'block';
+                    preview.style.display = 'none';
+                } else {
+                    breakdown.style.display = 'none';
+                    preview.style.display = 'block';
+                }
+            }
+        }
+
+        // NEW FUNCTION: View individual team salary cap details
+        function viewTeamCap(teamCode) {
+            const teamNames = {
+                'PHI': 'Philadelphia Eagles',
+                'DAL': 'Dallas Cowboys',
+                'NYG': 'New York Giants',
+                'WAS': 'Washington Commanders',
+                'BUF': 'Buffalo Bills',
+                'MIA': 'Miami Dolphins',
+                'NE': 'New England Patriots',
+                'NYJ': 'New York Jets',
+                'BAL': 'Baltimore Ravens',
+                'CIN': 'Cincinnati Bengals',
+                'CLE': 'Cleveland Browns',
+                'PIT': 'Pittsburgh Steelers',
+                'HOU': 'Houston Texans',
+                'IND': 'Indianapolis Colts',
+                'JAX': 'Jacksonville Jaguars',
+                'TEN': 'Tennessee Titans',
+                'DEN': 'Denver Broncos',
+                'KC': 'Kansas City Chiefs',
+                'LV': 'Las Vegas Raiders',
+                'LAC': 'Los Angeles Chargers',
+                'CHI': 'Chicago Bears',
+                'DET': 'Detroit Lions',
+                'GB': 'Green Bay Packers',
+                'MIN': 'Minnesota Vikings',
+                'ATL': 'Atlanta Falcons',
+                'CAR': 'Carolina Panthers',
+                'NO': 'New Orleans Saints',
+                'TB': 'Tampa Bay Buccaneers',
+                'ARI': 'Arizona Cardinals',
+                'LAR': 'Los Angeles Rams',
+                'SF': 'San Francisco 49ers',
+                'SEA': 'Seattle Seahawks'
+            };
+            
+            const teamName = teamNames[teamCode] || teamCode;
+            
+            if (teamCode === 'PHI') {
+                alert(`M.E.L. AI: Loading ${teamName} salary cap details... This is YOUR team - accessing full organizational data including contracts, extensions, and restructure opportunities.`);
+            } else {
+                alert(`M.E.L. AI: Loading ${teamName} salary cap intelligence... Analyzing competitive data, trade opportunities, and cap space availability for strategic planning.`);
+            }
+        }
+
+        // NEW FUNCTION: Generate league-wide cap report
+        function generateLeagueCapReport() {
+            alert('M.E.L. AI: Generating comprehensive NFL salary cap landscape report... Analyzing all 32 teams for strategic opportunities.');
+        }
+
+        // NEW FUNCTION: Open cap comparison tool
+        function openCapComparison() {
+            alert('M.E.L. AI: Opening team-by-team salary cap comparison tool... Select multiple teams to analyze competitive positioning.');
+        }
+
         // Leadership Team Chat Function
         function openChat(leaderId) {
             const leaders = {
@@ -2795,7 +3130,7 @@
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 NFL Executive Command Center - Fixed with Live Data Integration initialized');
+            console.log('🚀 NFL Executive Command Center - Complete with NFL Salary Cap Intelligence initialized');
         });
     </script>
 </body>
