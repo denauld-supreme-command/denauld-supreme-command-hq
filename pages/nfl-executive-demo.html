@@ -2597,9 +2597,10 @@
 
         // View Management
         function switchView(viewName) {
-            // Handle HQ navigation
+            // Handle HQ navigation - ACTUALLY GO BACK TO MAIN DASHBOARD
             if (viewName === 'hq') {
-                alert('M.E.L. AI: Returning to Denauld Supreme Command HQ...');
+                // Navigate back to the main DENAULD SUPREME COMMAND HQ page
+                window.location.href = 'index.html'; // or whatever your main dashboard file is named
                 return;
             }
             
