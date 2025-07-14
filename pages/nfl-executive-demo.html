@@ -738,32 +738,52 @@
             transform: scale(1.1);
         }
 
+        /* Horizontal Scroll Control */
+        .scroll-control-container {
+            padding: 0 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .scroll-control-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--amt-dark);
+            border-radius: 4px;
+            position: relative;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .scroll-thumb {
+            height: 100%;
+            background: var(--amt-red);
+            border-radius: 4px;
+            position: absolute;
+            cursor: grab;
+            transition: background 0.2s;
+        }
+
+        .scroll-thumb:hover {
+            background: var(--amt-accent);
+        }
+
+        .scroll-thumb:active {
+            cursor: grabbing;
+            background: var(--amt-accent);
+        }
+
         /* Deep Intelligence Panel */
         .deep-intel {
             display: flex;
             gap: 1rem;
             overflow-x: auto;
-            scrollbar-width: thin;
-            scrollbar-color: var(--amt-accent) var(--amt-dark);
-            padding-bottom: 10px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            padding-bottom: 0;
         }
 
         .deep-intel::-webkit-scrollbar {
-            height: 8px;
-        }
-
-        .deep-intel::-webkit-scrollbar-track {
-            background: var(--amt-dark);
-            border-radius: 4px;
-        }
-
-        .deep-intel::-webkit-scrollbar-thumb {
-            background: var(--amt-accent);
-            border-radius: 4px;
-        }
-
-        .deep-intel::-webkit-scrollbar-thumb:hover {
-            background: var(--amt-red);
+            display: none;
         }
 
         .intel-module {
@@ -1548,8 +1568,15 @@
                         </div>
                     </div>
 
+                    <!-- Horizontal Scroll Control -->
+                    <div class="scroll-control-container">
+                        <div class="scroll-control-bar" id="horizontalScrollBar">
+                            <div class="scroll-thumb" id="scrollThumb"></div>
+                        </div>
+                    </div>
+
                     <!-- Deep Intelligence Panel -->
-                    <div class="deep-intel">
+                    <div class="deep-intel" id="deepIntelPanel">
                         <!-- Enhanced Roster Health Module -->
                         <div class="intel-module" onclick="toggleRosterHealth()">
                             <div class="module-header">
@@ -3131,7 +3158,105 @@
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🚀 NFL Executive Command Center - Complete with NFL Salary Cap Intelligence initialized');
+            initializeScrollControl();
         });
+
+        // Initialize custom horizontal scroll control
+        function initializeScrollControl() {
+            const deepIntelPanel = document.getElementById('deepIntelPanel');
+            const scrollBar = document.getElementById('horizontalScrollBar');
+            const scrollThumb = document.getElementById('scrollThumb');
+            
+            if (!deepIntelPanel || !scrollBar || !scrollThumb) return;
+            
+            let isDragging = false;
+            let dragStartX = 0;
+            let thumbStartX = 0;
+            
+            // Update scroll thumb position and size based on content
+            function updateScrollThumb() {
+                const panelWidth = deepIntelPanel.clientWidth;
+                const contentWidth = deepIntelPanel.scrollWidth;
+                const scrollLeft = deepIntelPanel.scrollLeft;
+                
+                if (contentWidth <= panelWidth) {
+                    scrollThumb.style.display = 'none';
+                    return;
+                }
+                
+                scrollThumb.style.display = 'block';
+                
+                const thumbWidth = (panelWidth / contentWidth) * 100;
+                const thumbPosition = (scrollLeft / (contentWidth - panelWidth)) * (100 - thumbWidth);
+                
+                scrollThumb.style.width = thumbWidth + '%';
+                scrollThumb.style.left = thumbPosition + '%';
+            }
+            
+            // Sync scroll position when panel is scrolled
+            deepIntelPanel.addEventListener('scroll', updateScrollThumb);
+            
+            // Handle scroll bar click
+            scrollBar.addEventListener('click', function(e) {
+                if (e.target === scrollThumb) return;
+                
+                const rect = scrollBar.getBoundingClientRect();
+                const clickX = e.clientX - rect.left;
+                const barWidth = rect.width;
+                const thumbWidth = scrollThumb.offsetWidth;
+                
+                const newThumbX = Math.max(0, Math.min(clickX - thumbWidth / 2, barWidth - thumbWidth));
+                const scrollRatio = newThumbX / (barWidth - thumbWidth);
+                
+                const maxScroll = deepIntelPanel.scrollWidth - deepIntelPanel.clientWidth;
+                deepIntelPanel.scrollLeft = scrollRatio * maxScroll;
+            });
+            
+            // Handle thumb drag start
+            scrollThumb.addEventListener('mousedown', function(e) {
+                isDragging = true;
+                dragStartX = e.clientX;
+                thumbStartX = scrollThumb.offsetLeft;
+                
+                document.addEventListener('mousemove', handleThumbDrag);
+                document.addEventListener('mouseup', handleThumbDragEnd);
+                
+                e.preventDefault();
+            });
+            
+            // Handle thumb dragging
+            function handleThumbDrag(e) {
+                if (!isDragging) return;
+                
+                const deltaX = e.clientX - dragStartX;
+                const newThumbX = thumbStartX + deltaX;
+                
+                const barWidth = scrollBar.clientWidth;
+                const thumbWidth = scrollThumb.offsetWidth;
+                const maxThumbX = barWidth - thumbWidth;
+                
+                const clampedThumbX = Math.max(0, Math.min(newThumbX, maxThumbX));
+                const scrollRatio = clampedThumbX / maxThumbX;
+                
+                const maxScroll = deepIntelPanel.scrollWidth - deepIntelPanel.clientWidth;
+                deepIntelPanel.scrollLeft = scrollRatio * maxScroll;
+                
+                e.preventDefault();
+            }
+            
+            // Handle thumb drag end
+            function handleThumbDragEnd() {
+                isDragging = false;
+                document.removeEventListener('mousemove', handleThumbDrag);
+                document.removeEventListener('mouseup', handleThumbDragEnd);
+            }
+            
+            // Handle window resize
+            window.addEventListener('resize', updateScrollThumb);
+            
+            // Initial update
+            setTimeout(updateScrollThumb, 100);
+        }
     </script>
 </body>
 </html>
