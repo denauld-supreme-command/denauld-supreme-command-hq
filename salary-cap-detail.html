@@ -632,7 +632,7 @@
         <div class="header-content">
             <div class="cap-title">
                 <h1 class="title-main">Salary Cap Management</h1>
-                <p class="title-sub">Philadelphia Eagles • 2025 Season • Real-Time Intelligence</p>
+                <p class="title-sub">Philadelphia Eagles • 2025 Season • Live Spotrac Data</p>
             </div>
             
             <div class="live-indicator">
@@ -654,30 +654,30 @@
         <div class="cap-overview">
             <div class="overview-header">
                 <h2 class="overview-title">2025 Salary Cap Overview</h2>
-                <div class="cap-status" id="capStatus">Healthy</div>
+                <div class="cap-status" id="capStatus">Loading...</div>
             </div>
             
             <div class="cap-metrics">
                 <div class="metric-card" onclick="drillDownMetric('total-cap')">
-                    <div class="metric-value positive" id="totalCap">$255.0M</div>
+                    <div class="metric-value positive" id="totalCap">Loading...</div>
                     <div class="metric-label">Total Cap Space</div>
                     <div class="metric-change up" id="totalCapChange">+$5.0M vs 2024</div>
                 </div>
                 
                 <div class="metric-card" onclick="drillDownMetric('used-cap')">
-                    <div class="metric-value warning" id="usedCap">$250.8M</div>
+                    <div class="metric-value warning" id="usedCap">Loading...</div>
                     <div class="metric-label">Cap Used</div>
                     <div class="metric-change down" id="usedCapChange">98.4% of total</div>
                 </div>
                 
                 <div class="metric-card" onclick="drillDownMetric('available-cap')">
-                    <div class="metric-value positive" id="availableCap">$4.2M</div>
+                    <div class="metric-value positive" id="availableCap">Loading...</div>
                     <div class="metric-label">Available Space</div>
                     <div class="metric-change up" id="availableCapChange">+$1.2M this week</div>
                 </div>
                 
                 <div class="metric-card" onclick="drillDownMetric('dead-money')">
-                    <div class="metric-value negative" id="deadMoney">$8.5M</div>
+                    <div class="metric-value negative" id="deadMoney">Loading...</div>
                     <div class="metric-label">Dead Money</div>
                     <div class="metric-change down" id="deadMoneyChange">3.3% of cap</div>
                 </div>
@@ -716,44 +716,20 @@
         <div class="contract-analysis">
             <div class="analysis-header">
                 <h3 class="analysis-title">Top Contracts</h3>
-                <p class="analysis-subtitle">Highest cap hits • Real-time from Spotrac</p>
+                <p class="analysis-subtitle">Live data from Spotrac • Auto-updated every 5 minutes</p>
             </div>
             
             <div class="contract-list" id="contractList">
-                <!-- Contract items will be populated by JavaScript -->
+                <!-- Contract items will be populated by JavaScript from live data -->
                 <div class="contract-item">
                     <div class="contract-player">
-                        <span class="player-name">Jalen Hurts</span>
-                        <span class="player-position">QB</span>
+                        <span class="player-name">Loading...</span>
+                        <span class="player-position">--</span>
                     </div>
                     <div class="contract-details">
-                        <div class="detail-item">Cap Hit: <span class="detail-value">$13.0M</span></div>
-                        <div class="detail-item">Guaranteed: <span class="detail-value">$110M</span></div>
-                        <div class="detail-item">Years Left: <span class="detail-value">4</span></div>
-                    </div>
-                </div>
-                
-                <div class="contract-item">
-                    <div class="contract-player">
-                        <span class="player-name">A.J. Brown</span>
-                        <span class="player-position">WR</span>
-                    </div>
-                    <div class="contract-details">
-                        <div class="detail-item">Cap Hit: <span class="detail-value">$10.2M</span></div>
-                        <div class="detail-item">Guaranteed: <span class="detail-value">$57M</span></div>
-                        <div class="detail-item">Years Left: <span class="detail-value">3</span></div>
-                    </div>
-                </div>
-                
-                <div class="contract-item">
-                    <div class="contract-player">
-                        <span class="player-name">Lane Johnson</span>
-                        <span class="player-position">OT</span>
-                    </div>
-                    <div class="contract-details">
-                        <div class="detail-item">Cap Hit: <span class="detail-value">$8.7M</span></div>
-                        <div class="detail-item">Guaranteed: <span class="detail-value">$0M</span></div>
-                        <div class="detail-item">Years Left: <span class="detail-value">1</span></div>
+                        <div class="detail-item">Cap Hit: <span class="detail-value">Loading...</span></div>
+                        <div class="detail-item">Guaranteed: <span class="detail-value">Loading...</span></div>
+                        <div class="detail-item">Years Left: <span class="detail-value">--</span></div>
                     </div>
                 </div>
             </div>
@@ -801,105 +777,10 @@
         <button class="action-btn secondary" onclick="goBack()">← Back to Command</button>
     </div>
 
+    <!-- Live Data Integration -->
+    <script src="salary-cap-data-integration.js"></script>
     <script>
-        // Initialize data on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeSalaryCapModule();
-            startAutoRefresh();
-            updateLastRefreshTime();
-        });
-
-        // Initialize the salary cap module
-        function initializeSalaryCapModule() {
-            console.log('Salary Cap Module: Initializing...');
-            loadSpotracData();
-            setupEventListeners();
-        }
-
-        // Auto-refresh data every 5 minutes
-        function startAutoRefresh() {
-            setInterval(() => {
-                refreshData();
-            }, 5 * 60 * 1000); // 5 minutes
-        }
-
-        // Update last refresh time
-        function updateLastRefreshTime() {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString('en-US', {
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: true
-            });
-            document.getElementById('lastUpdateTime').textContent = timeString;
-        }
-
-        // Load data from Spotrac (simulated for demo)
-        async function loadSpotracData() {
-            console.log('Loading Spotrac data...');
-            
-            // Simulate API calls to Spotrac endpoints
-            const endpoints = [
-                'https://www.spotrac.com/nfl/contracts',
-                'https://www.spotrac.com/nfl/contracts/extensions',
-                'https://www.spotrac.com/nfl/contracts/remaining',
-                'https://www.spotrac.com/nfl/contracts/incentives/_/year/2025',
-                'https://www.spotrac.com/nfl/contracts/franchise-tag',
-                'https://www.spotrac.com/nfl/contracts/transition-tag',
-                'https://www.spotrac.com/nfl/market-value'
-            ];
-
-            // In a real implementation, you would fetch from these endpoints
-            // For now, we'll update the UI with placeholder data
-            updateCapMetrics();
-            updateContractList();
-        }
-
-        // Update cap metrics display
-        function updateCapMetrics() {
-            // This would be populated with real Spotrac data
-            const metrics = {
-                totalCap: 255000000,
-                usedCap: 250800000,
-                availableCap: 4200000,
-                deadMoney: 8500000
-            };
-
-            document.getElementById('totalCap').textContent = formatCurrency(metrics.totalCap);
-            document.getElementById('usedCap').textContent = formatCurrency(metrics.usedCap);
-            document.getElementById('availableCap').textContent = formatCurrency(metrics.availableCap);
-            document.getElementById('deadMoney').textContent = formatCurrency(metrics.deadMoney);
-
-            // Update cap status
-            const capPercentage = (metrics.usedCap / metrics.totalCap) * 100;
-            const statusElement = document.getElementById('capStatus');
-            
-            if (capPercentage < 85) {
-                statusElement.textContent = 'Healthy';
-                statusElement.style.background = 'var(--cap-healthy)';
-            } else if (capPercentage < 95) {
-                statusElement.textContent = 'Warning';
-                statusElement.style.background = 'var(--cap-warning)';
-            } else {
-                statusElement.textContent = 'Critical';
-                statusElement.style.background = 'var(--cap-danger)';
-            }
-        }
-
-        // Update contract list
-        function updateContractList() {
-            // This would be populated with real Spotrac contract data
-            console.log('Contract list updated with latest Spotrac data');
-        }
-
-        // Format currency values
-        function formatCurrency(amount) {
-            const millions = amount / 1000000;
-            return `$${millions.toFixed(1)}M`;
-        }
-
-        // Calculator functions
+        // Calculator functions (keeping original functionality)
         function calculateImpact() {
             const player = document.getElementById('calcPlayer').value;
             const amount = parseFloat(document.getElementById('calcAmount').value);
@@ -912,7 +793,12 @@
             }
 
             let impact = 0;
-            const currentAvailable = 4.2; // Current available cap space
+            
+            // Get current available cap space from live data
+            let currentAvailable = 4.2; // Default fallback
+            if (window.salaryCapManager && window.salaryCapManager.getCurrentData()) {
+                currentAvailable = window.salaryCapManager.getCurrentData().salary_cap.available_cap / 1000000;
+            }
 
             switch(type) {
                 case 'sign':
@@ -948,33 +834,21 @@
 
         // Scenario functions
         function runScenario(scenarioId) {
-            alert(`Running scenario: ${scenarioId}. Full scenario analysis would be displayed here.`);
+            alert(`Running scenario: ${scenarioId}. Full scenario analysis would be displayed here with live data integration.`);
         }
 
         function addNewScenario() {
-            alert('New scenario builder would open here. Users could create custom scenarios.');
+            alert('New scenario builder would open here. Users could create custom scenarios using live salary cap data.');
         }
 
         // Drill down functions
         function drillDownMetric(metric) {
-            alert(`Detailed ${metric} analysis would open here with historical data and projections.`);
+            alert(`Detailed ${metric} analysis would open here with live Spotrac data and historical trends.`);
         }
 
-        // Action functions
-        function refreshData() {
-            console.log('Refreshing salary cap data from Spotrac...');
-            document.body.classList.add('loading');
-            
-            setTimeout(() => {
-                loadSpotracData();
-                updateLastRefreshTime();
-                document.body.classList.remove('loading');
-                console.log('Data refresh complete');
-            }, 2000);
-        }
-
+        // Action functions - now integrated with live data
         function exportReport() {
-            alert('Salary cap report would be generated and exported as PDF/Excel.');
+            alert('Salary cap report with live Spotrac data would be generated and exported as PDF/Excel.');
         }
 
         function goBack() {
@@ -986,10 +860,28 @@
             }
         }
 
-        function setupEventListeners() {
-            // Additional event listeners would be set up here
-            console.log('Event listeners configured');
+        // Format currency helper function
+        function formatCurrency(amount) {
+            if (amount === 0) return '$0';
+            
+            const millions = amount / 1000000;
+            if (millions >= 1) {
+                return `$${millions.toFixed(1)}M`;
+            } else {
+                const thousands = amount / 1000;
+                return `$${thousands.toFixed(0)}K`;
+            }
         }
+
+        // Initialize when everything is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Salary Cap Module with Live Data Integration - Initializing...');
+            
+            // The live data integration will be handled by salary-cap-data-integration.js
+            // This ensures the UI loads live Eagles salary cap data from Spotrac automatically
+            
+            console.log('✅ Salary Cap Module ready - Live data loading...');
+        });
 
         // Error handling for data fetching
         window.addEventListener('error', function(e) {
