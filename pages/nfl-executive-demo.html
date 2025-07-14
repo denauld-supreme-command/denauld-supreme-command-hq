@@ -203,6 +203,74 @@
             border-color: var(--amt-red);
         }
 
+        /* Module Detail View Styles - NEW ADDITION */
+        .module-detail-view {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--amt-very-dark);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .module-detail-view.active {
+            display: block;
+        }
+
+        .detail-header {
+            background: var(--amt-dark);
+            padding: 1rem 2rem;
+            border-bottom: 2px solid var(--amt-red);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1001;
+        }
+
+        .detail-nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .back-btn {
+            background: var(--amt-red);
+            color: var(--amt-white);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .back-btn:hover {
+            background: var(--amt-accent);
+            color: var(--amt-black);
+        }
+
+        .breadcrumb {
+            font-size: 0.8rem;
+            color: var(--amt-light-gray);
+        }
+
+        .breadcrumb-current {
+            color: var(--amt-accent);
+            font-weight: 600;
+        }
+
+        .detail-content {
+            min-height: calc(100vh - 80px);
+            overflow-y: auto;
+        }
+
         /* Dynamic Command Dashboard */
         .command-dashboard {
             display: grid;
@@ -1192,6 +1260,31 @@
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
         }
+
+        /* Loading States */
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--amt-accent);
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
     </style>
 </head>
 <body>
@@ -1313,823 +1406,874 @@
             </nav>
         </div>
 
-        <!-- Dynamic Command Dashboard -->
-        <div class="view-section active" id="command-view">
-            <div class="command-dashboard">
-            <!-- AI-Powered Insights Sidebar -->
-            <div class="insights-sidebar">
-                <div class="insight-section priority-alerts">
-                    <div class="insight-header">
-                        <div class="insight-icon alert-icon"></div>
-                        <div class="insight-title">Priority Alert</div>
-                    </div>
-                    <div class="insight-content">
-                        Jalen Carter injury concern - monitoring practice participation. Consider backup DT options.
-                    </div>
-                    <button class="insight-action" onclick="analyzeInsight('depth-chart')">Analyze Depth Chart</button>
-                </div>
-
-                <div class="insight-section market-intel">
-                    <div class="insight-header">
-                        <div class="insight-icon chart-icon"></div>
-                        <div class="insight-title">Market Intel</div>
-                    </div>
-                    <div class="insight-content">
-                        3 teams showing interest in available WR Calvin Ridley. Potential opportunity for depth.
-                    </div>
-                    <button class="insight-action" onclick="analyzeInsight('scout-report')">Scout Report</button>
-                </div>
-
-                <div class="insight-section">
-                    <div class="insight-header">
-                        <div class="insight-icon bulb-icon"></div>
-                        <div class="insight-title">AI Suggestion</div>
-                        <div class="gm-photo">
-                            <div class="gm-avatar">MS</div>
-                        </div>
-                    </div>
-                    <div class="insight-content">
-                        Cap space optimization: Restructure Lane Johnson contract to free $4.2M for mid-season moves.
-                    </div>
-                    <button class="insight-action" onclick="analyzeInsight('scenarios')">Run Scenarios</button>
-                </div>
-
-                <div class="insight-section">
-                    <div class="insight-header">
-                        <div class="insight-icon target-icon"></div>
-                        <div class="insight-title">Opportunity</div>
-                    </div>
-                    <div class="insight-content">
-                        Cardinals releasing LB Zaven Collins. Perfect fit for Eagles linebacker needs.
-                    </div>
-                    <button class="insight-action" onclick="analyzeInsight('evaluate-fit')">Evaluate Fit</button>
-                </div>
-
-                <div class="insight-section">
-                    <div class="insight-header">
-                        <div class="insight-icon warning-icon"></div>
-                        <div class="insight-title">Risk Monitor</div>
-                    </div>
-                    <div class="insight-content">
-                        Darius Slay contract void risk if not extended by March 15th. $8.5M dead cap exposure.
-                    </div>
-                    <button class="insight-action" onclick="analyzeInsight('contract-analysis')">Contract Analysis</button>
-                </div>
-
-                <div class="insight-section schedule-section">
-                    <div class="insight-header">
-                        <div class="insight-icon calendar-icon"></div>
-                        <div class="insight-title">Schedule Analysis</div>
-                    </div>
-                    <div class="insight-content">
-                        Upcoming critical games require strategic planning. AI scenario modeling available.
-                    </div>
-                    
-                    <div style="margin: 0.75rem 0;">
-                        <div class="schedule-item" onclick="analyzeSchedule('dal-week10')">
-                            <div class="schedule-game">
-                                <div class="opponent">vs DAL</div>
-                                <div class="game-info">Week 10 • Sun 1:00 PM</div>
-                            </div>
-                            <div class="game-status upcoming">Upcoming</div>
-                        </div>
-                        
-                        <div class="schedule-item" onclick="analyzeSchedule('was-week11')">
-                            <div class="schedule-game">
-                                <div class="opponent">@ WAS</div>
-                                <div class="game-info">Week 11 • Thu 8:15 PM</div>
-                            </div>
-                            <div class="game-status analyzing">Analyzing</div>
-                        </div>
-                        
-                        <div class="schedule-item" onclick="analyzeSchedule('lac-week12')">
-                            <div class="schedule-game">
-                                <div class="opponent">vs LAC</div>
-                                <div class="game-info">Week 12 • Sun 4:25 PM</div>
-                            </div>
-                            <div class="game-status upcoming">Upcoming</div>
-                        </div>
-                    </div>
-                    
-                    <button class="insight-action" onclick="analyzeInsight('schedule-scenarios')">Schedule Scenarios</button>
-                </div>
-            </div>
-
-            <!-- Executive Intelligence Grid -->
-            <div class="intelligence-grid">
-                <!-- Command Overview -->
-                <div class="command-overview">
-                    <div class="intel-card" onclick="drillDown('salary-cap')">
-                        <div class="card-header">
-                            <div class="card-title">Salary Cap</div>
-                            <div class="card-status"></div>
-                        </div>
-                        <div class="card-metric">$4.2M</div>
-                        <div class="card-label">Available Space</div>
-                        <div class="card-trend">↗ +$1.2M this week</div>
-                        <button class="drill-down-btn">→</button>
-                    </div>
-
-                    <div class="intel-card" onclick="drillDown('performance')">
-                        <div class="card-header">
-                            <div class="card-title">Team Performance</div>
-                            <div class="card-status"></div>
-                        </div>
-                        <div class="card-metric">8.9</div>
-                        <div class="card-label">Overall Rating</div>
-                        <div class="card-trend">↗ +0.3 vs last week</div>
-                        <button class="drill-down-btn">→</button>
-                    </div>
-
-                    <div class="intel-card" onclick="drillDown('playoff-odds')">
-                        <div class="card-header">
-                            <div class="card-title">Playoff Odds</div>
-                            <div class="card-status"></div>
-                        </div>
-                        <div class="card-metric">91%</div>
-                        <div class="card-label">Championship Path</div>
-                        <div class="card-trend">↗ +5% this week</div>
-                        <button class="drill-down-btn">→</button>
-                    </div>
-                </div>
-
-                <!-- Deep Intelligence Panel -->
-                <div class="deep-intel">
-                    <!-- Enhanced Roster Health Module -->
-                    <div class="intel-module" onclick="toggleRosterHealth()">
-                        <div class="module-header">
-                            <div class="module-title">Roster Health</div>
-                            <div class="module-indicator"></div>
-                        </div>
-                        <div class="module-data">
-                            <div class="data-value">94%</div>
-                            <div class="data-change">+2%</div>
-                        </div>
-                        
-                        <!-- Scrollable Preview Panel (Collapsed State) -->
-                        <div class="module-preview" id="roster-preview">
-                            <div class="preview-scroll">
-                                <div class="preview-item" onclick="drillDeeper('injury-rate')">
-                                    <span class="preview-label">Injury Rate</span>
-                                    <span class="preview-value green">6%</span>
-                                </div>
-                                <div class="preview-item" onclick="drillDeeper('age-profile')">
-                                    <span class="preview-label">Age Profile</span>
-                                    <span class="preview-value green">26.4y</span>
-                                </div>
-                                <div class="preview-item" onclick="drillDeeper('depth-quality')">
-                                    <span class="preview-label">Depth Quality</span>
-                                    <span class="preview-value yellow">78%</span>
-                                </div>
-                                <div class="preview-item" onclick="drillDeeper('durability')">
-                                    <span class="preview-label">Durability</span>
-                                    <span class="preview-value green">91%</span>
-                                </div>
-                                <div class="preview-item" onclick="drillDeeper('practice-participation')">
-                                    <span class="preview-label">Practice</span>
-                                    <span class="preview-value green">96%</span>
-                                </div>
-                                <div class="preview-item" onclick="drillDeeper('load-management')">
-                                    <span class="preview-label">Load Mgmt</span>
-                                    <span class="preview-value green">100%</span>
-                                </div>
-                                <div class="preview-item" onclick="drillDeeper('recovery-metrics')">
-                                    <span class="preview-label">Recovery</span>
-                                    <span class="preview-value green">89%</span>
-                                </div>
-                                <div class="preview-item" onclick="drillDeeper('conditioning')">
-                                    <span class="preview-label">Conditioning</span>
-                                    <span class="preview-value green">92%</span>
-                                </div>
-                                <div class="preview-item" onclick="drillDeeper('roster-composition')">
-                                    <span class="preview-label">Roster</span>
-                                    <span class="preview-value green">53/53</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Detailed Breakdown (Expanded State) -->
-                        <div class="module-breakdown" id="roster-breakdown" style="display: none;">
-                            <div class="breakdown-header">
-                                <span class="breakdown-title">COMPREHENSIVE HEALTH ANALYSIS</span>
-                                <span class="breakdown-updated">Updated 3 min ago</span>
-                            </div>
-                            
-                            <div class="breakdown-section">
-                                <div class="section-label">PHYSICAL METRICS</div>
-                                <div class="breakdown-item" onclick="drillDeeper('injury-rate')">
-                                    <span class="breakdown-label">Injury Rate:</span>
-                                    <span class="breakdown-value green">6% (League Avg: 12%)</span>
-                                    <span class="breakdown-arrow">→</span>
-                                </div>
-                                <div class="breakdown-item" onclick="drillDeeper('age-profile')">
-                                    <span class="breakdown-label">Age Profile:</span>
-                                    <span class="breakdown-value green">26.4 yrs (Optimal)</span>
-                                    <span class="breakdown-arrow">→</span>
-                                </div>
-                                <div class="breakdown-item" onclick="drillDeeper('durability')">
-                                    <span class="breakdown-label">Durability Score:</span>
-                                    <span class="breakdown-value green">91% (5-yr avg)</span>
-                                    <span class="breakdown-arrow">→</span>
-                                </div>
-                            </div>
-                            
-                            <div class="breakdown-section">
-                                <div class="section-label">OPERATIONAL METRICS</div>
-                                <div class="breakdown-item" onclick="drillDeeper('practice-participation')">
-                                    <span class="breakdown-label">Practice Participation:</span>
-                                    <span class="breakdown-value green">96% (Full speed)</span>
-                                    <span class="breakdown-arrow">→</span>
-                                </div>
-                                <div class="breakdown-item" onclick="drillDeeper('load-management')">
-                                    <span class="breakdown-label">Load Management:</span>
-                                    <span class="breakdown-value green">Optimized (0 overuse)</span>
-                                    <span class="breakdown-arrow">→</span>
-                                </div>
-                                <div class="breakdown-item" onclick="drillDeeper('depth-quality')">
-                                    <span class="breakdown-label">Depth Quality:</span>
-                                    <span class="breakdown-value yellow">78% (CB concern)</span>
-                                    <span class="breakdown-arrow">→</span>
-                                </div>
-                            </div>
-                            
-                            <div class="breakdown-section">
-                                <div class="section-label">PERFORMANCE METRICS</div>
-                                <div class="breakdown-item" onclick="drillDeeper('recovery-metrics')">
-                                    <span class="breakdown-label">Recovery Rate:</span>
-                                    <span class="breakdown-value green">89% (Above target)</span>
-                                    <span class="breakdown-arrow">→</span>
-                                </div>
-                                <div class="breakdown-item" onclick="drillDeeper('conditioning')">
-                                    <span class="breakdown-label">Conditioning Level:</span>
-                                    <span class="breakdown-value green">92% (Peak form)</span>
-                                    <span class="breakdown-arrow">→</span>
-                                </div>
-                                <div class="breakdown-item" onclick="drillDeeper('mental-health')">
-                                    <span class="breakdown-label">Mental Health Index:</span>
-                                    <span class="breakdown-value green">94% (Excellent)</span>
-                                    <span class="breakdown-arrow">→</span>
-                                </div>
-                            </div>
-                            
-                            <div class="breakdown-actions">
-                                <button class="breakdown-action-btn" onclick="generateHealthReport()">Full Health Report</button>
-                                <button class="breakdown-action-btn secondary" onclick="scheduleCheckup()">Schedule Team Checkup</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Enhanced Contract Efficiency Module -->
-                    <div class="intel-module" onclick="toggleContractEfficiency()">
-                        <div class="module-header">
-                            <div class="module-title">Contract Efficiency</div>
-                            <div class="module-indicator"></div>
-                        </div>
-                        <div class="module-data">
-                            <div class="data-value">87%</div>
-                            <div class="data-change">-1%</div>
-                        </div>
-                        
-                        <!-- Scrollable Preview Panel (Collapsed State) -->
-                        <div class="module-preview" id="contract-preview">
-                            <div class="preview-scroll">
-                                <div class="preview-item" onclick="drillDeeper('cap-efficiency')">
-                                    <span class="preview-label">Cap Efficiency</span>
-                                    <span class="preview-value green">94%</span>
-                                </div>
-                                <div class="preview-item" onclick="drillDeeper('contract-deadlines')">
-                                    <span class="preview-label">Deadlines</span>
-                                    <span class="preview-value red">2 urgent</span>
-                                </div>
-                                <div class="preview-item" onclick="drillDeeper('restructure-opportunities')">
-                                    <span class="preview-label">Restructures</span>
-                                    <span class="preview-value yellow">$4.2M</span>
-                                </div>
-                                <div class="preview-item" onclick="drillDeeper('performance-value')">
-                                    <span class="preview-label">Performance</span>
-                                    <span class="preview-value green">89%</span>
-                                </div>
-                                <div class="preview-item" onclick="drillDeeper('agent-relations')">
-                                    <span class="preview-label">Agent Relations</span>
-                                    <span class="preview-value green">92%</span>
-                                </div>
-                                <div class="preview-item" onclick="drillDeeper('trade-scenarios')">
-                                    <span class="preview-label">Trade Value</span>
-                                    <span class="preview-value yellow">$47M</span>
-                                </div>
-                                <div class="preview-item" onclick="drillDeeper('extension-targets')">
-                                    <span class="preview-label">Extensions</span>
-                                    <span class="preview-value green">3 priority</span>
-                                </div>
-                                <div class="preview-item" onclick="drillDeeper('salary-distribution')">
-                                    <span class="preview-label">Distribution</span>
-                                    <span class="preview-value green">Balanced</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Enhanced Detailed Breakdown (Expanded State) -->
-                        <div class="module-breakdown" id="contract-breakdown" style="display: none;">
-                            <div class="breakdown-header">
-                                <span class="breakdown-title">CONTRACT INTELLIGENCE ANALYSIS</span>
-                                <span class="breakdown-updated">Updated 5 min ago</span>
-                            </div>
-                            
-                            <div class="breakdown-section">
-                                <div class="section-label">URGENT ACTIONS</div>
-                                <div class="breakdown-item" onclick="contractDetails('slay')">
-                                    <span class="breakdown-label">Darius Slay:</span>
-                                    <span class="breakdown-value red">Void: Mar 15 ($8.5M dead cap)</span>
-                                    <span class="breakdown-arrow">→</span>
-                                </div>
-                                <div class="breakdown-item" onclick="contractDetails('johnson')">
-                                    <span class="breakdown-label">Lane Johnson:</span>
-                                    <span class="breakdown-value yellow">Extension Window: Jun 1</span>
-                                    <span class="breakdown-arrow">→</span>
-                                </div>
-                            </div>
-                            
-                            <div class="breakdown-section">
-                                <div class="section-label">EFFICIENCY METRICS</div>
-                                <div class="breakdown-item" onclick="drillDeeper('cap-efficiency')">
-                                    <span class="breakdown-label">Cap Efficiency:</span>
-                                    <span class="breakdown-value green">94% (Top 5 NFL)</span>
-                                    <span class="breakdown-arrow">→</span>
-                                </div>
-                                <div class="breakdown-item" onclick="drillDeeper('performance-value')">
-                                    <span class="breakdown-label">Performance Value:</span>
-                                    <span class="breakdown-value green">89% vs contract</span>
-                                    <span class="breakdown-arrow">→</span>
-                                </div>
-                                <div class="breakdown-item" onclick="drillDeeper('salary-distribution')">
-                                    <span class="breakdown-label">Salary Distribution:</span>
-                                    <span class="breakdown-value green">Balanced across positions</span>
-                                    <span class="breakdown-arrow">→</span>
-                                </div>
-                            </div>
-                            
-                            <div class="breakdown-actions">
-                                <button class="breakdown-action-btn" onclick="generateContractReport()">Contract Analysis Report</button>
-                                <button class="breakdown-action-btn secondary" onclick="scheduleAgentMeetings()">Schedule Agent Meetings</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Enhanced Draft Capital Module -->
-                    <div class="intel-module" onclick="toggleDraftCapital()">
-                        <div class="module-header">
-                            <div class="module-title">Draft Capital</div>
-                            <div class="module-indicator"></div>
-                        </div>
-                        <div class="module-data">
-                            <div class="data-value">7 Picks</div>
-                            <div class="data-change">+1</div>
-                        </div>
-                        
-                        <!-- Scrollable Preview Panel (Collapsed State) -->
-                        <div class="module-preview" id="draft-preview">
-                            <div class="preview-scroll">
-                                <div class="preview-item" onclick="drillDeeper('draft-value')">
-                                    <span class="preview-label">Total Value</span>
-                                    <span class="preview-value green">1,848 pts</span>
-                                </div>
-                                <div class="preview-item" onclick="drillDeeper('round-1')">
-                                    <span class="preview-label">Round 1</span>
-                                    <span class="preview-value green">#22</span>
-                                </div>
-                                <div class="preview-item" onclick="drillDeeper('round-2')">
-                                    <span class="preview-label">Round 2</span>
-                                    <span class="preview-value green">#54</span>
-                                </div>
-                                <div class="preview-item" onclick="drillDeeper('position-needs')">
-                                    <span class="preview-label">Position Needs</span>
-                                    <span class="preview-value yellow">CB priority</span>
-                                </div>
-                                <div class="preview-item" onclick="drillDeeper('trade-opportunities')">
-                                    <span class="preview-label">Trade Ops</span>
-                                    <span class="preview-value green">3 active</span>
-                                </div>
-                                <div class="preview-item" onclick="drillDeeper('draft-strategy')">
-                                    <span class="preview-label">Strategy</span>
-                                    <span class="preview-value green">BPA 67%</span>
-                                </div>
-                                <div class="preview-item" onclick="drillDeeper('board-rankings')">
-                                    <span class="preview-label">Big Board</span>
-                                    <span class="preview-value green">Updated</span>
-                                </div>
-                                <div class="preview-item" onclick="drillDeeper('compensatory')">
-                                    <span class="preview-label">Comp Picks</span>
-                                    <span class="preview-value green">2 expected</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Enhanced Detailed Breakdown (Expanded State) -->
-                        <div class="module-breakdown" id="draft-breakdown" style="display: none;">
-                            <div class="breakdown-header">
-                                <span class="breakdown-title">DRAFT CAPITAL ANALYSIS</span>
-                                <span class="breakdown-updated">Updated 1 min ago</span>
-                            </div>
-                            
-                            <div class="breakdown-section">
-                                <div class="section-label">DRAFT PICKS INVENTORY</div>
-                                <div class="breakdown-item" onclick="drillDeeper('round-1')">
-                                    <span class="breakdown-label">Round 1 (#22):</span>
-                                    <span class="breakdown-value green">1,240 points</span>
-                                    <span class="breakdown-arrow">→</span>
-                                </div>
-                                <div class="breakdown-item" onclick="drillDeeper('round-2')">
-                                    <span class="breakdown-label">Round 2 (#54):</span>
-                                    <span class="breakdown-value green">380 points</span>
-                                    <span class="breakdown-arrow">→</span>
-                                </div>
-                                <div class="breakdown-item" onclick="drillDeeper('round-3')">
-                                    <span class="breakdown-label">Round 3 (#87):</span>
-                                    <span class="breakdown-value green">136 points</span>
-                                    <span class="breakdown-arrow">→</span>
-                                </div>
-                                <div class="breakdown-item" onclick="drillDeeper('later-rounds')">
-                                    <span class="breakdown-label">Rounds 4-7:</span>
-                                    <span class="breakdown-value green">92 points (4 picks)</span>
-                                    <span class="breakdown-arrow">→</span>
-                                </div>
-                            </div>
-                            
-                            <div class="breakdown-section">
-                                <div class="section-label">POSITION PRIORITIES</div>
-                                <div class="breakdown-item" onclick="drillDeeper('cb-need')">
-                                    <span class="breakdown-label">Cornerback:</span>
-                                    <span class="breakdown-value red">High Priority</span>
-                                    <span class="breakdown-arrow">→</span>
-                                </div>
-                                <div class="breakdown-item" onclick="drillDeeper('safety-need')">
-                                    <span class="breakdown-label">Safety:</span>
-                                    <span class="breakdown-value red">High Priority</span>
-                                    <span class="breakdown-arrow">→</span>
-                                </div>
-                                <div class="breakdown-item" onclick="drillDeeper('lb-need')">
-                                    <span class="breakdown-label">Linebacker:</span>
-                                    <span class="breakdown-value yellow">Medium Priority</span>
-                                    <span class="breakdown-arrow">→</span>
-                                </div>
-                            </div>
-                            
-                            <div class="breakdown-actions">
-                                <button class="breakdown-action-btn" onclick="generateDraftReport()">Draft Strategy Report</button>
-                                <button class="breakdown-action-btn secondary" onclick="runDraftSimulator()">Run Draft Simulator</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Enhanced Trade Assets Module -->
-                    <div class="intel-module" onclick="toggleTradeAssets()">
-                        <div class="module-header">
-                            <div class="module-title">Trade Assets</div>
-                            <div class="module-indicator"></div>
-                        </div>
-                        <div class="module-data">
-                            <div class="data-value">$47M</div>
-                            <div class="data-change">↗</div>
-                        </div>
-                        
-                        <!-- Scrollable Preview Panel (Collapsed State) -->
-                        <div class="module-preview" id="trade-preview">
-                            <div class="preview-scroll">
-                                <div class="preview-item" onclick="drillDeeper('asset-valuation')">
-                                    <span class="preview-label">Total Value</span>
-                                    <span class="preview-value green">$47M</span>
-                                </div>
-                                <div class="preview-item" onclick="drillDeeper('player-assets')">
-                                    <span class="preview-label">Player Assets</span>
-                                    <span class="preview-value green">8 tradeable</span>
-                                </div>
-                                <div class="preview-item" onclick="drillDeeper('draft-picks')">
-                                    <span class="preview-label">Draft Picks</span>
-                                    <span class="preview-value green">7 available</span>
-                                </div>
-                                <div class="preview-item" onclick="drillDeeper('cap-space')">
-                                    <span class="preview-label">Cap Space</span>
-                                    <span class="preview-value yellow">$4.2M</span>
-                                </div>
-                                <div class="preview-item" onclick="drillDeeper('market-demand')">
-                                    <span class="preview-label">Market Demand</span>
-                                    <span class="preview-value green">High</span>
-                                </div>
-                                <div class="preview-item" onclick="drillDeeper('trade-interest')">
-                                    <span class="preview-label">Active Interest</span>
-                                    <span class="preview-value green">5 teams</span>
-                                </div>
-                                <div class="preview-item" onclick="drillDeeper('contract-flexibility')">
-                                    <span class="preview-label">Contract Flex</span>
-                                    <span class="preview-value green">89%</span>
-                                </div>
-                                <div class="preview-item" onclick="drillDeeper('deadline-pressure')">
-                                    <span class="preview-label">Deadline Press</span>
-                                    <span class="preview-value yellow">Medium</span>
-                                </div>
-                                <div class="preview-item" onclick="drillDeeper('leverage-position')">
-                                    <span class="preview-label">Leverage</span>
-                                    <span class="preview-value green">Strong</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Enhanced Detailed Breakdown (Expanded State) -->
-                        <div class="module-breakdown" id="trade-breakdown" style="display: none;">
-                            <div class="breakdown-header">
-                                <span class="breakdown-title">TRADE ASSET ANALYSIS</span>
-                                <span class="breakdown-updated">Updated 7 min ago</span>
-                            </div>
-                            
-                            <div class="breakdown-section">
-                                <div class="section-label">HIGH-VALUE ASSETS</div>
-                                <div class="breakdown-item" onclick="drillDeeper('slay-trade-value')">
-                                    <span class="breakdown-label">Darius Slay:</span>
-                                    <span class="breakdown-value green">$12M value (5 teams interested)</span>
-                                    <span class="breakdown-arrow">→</span>
-                                </div>
-                                <div class="breakdown-item" onclick="drillDeeper('johnson-trade-value')">
-                                    <span class="breakdown-label">Lane Johnson:</span>
-                                    <span class="breakdown-value green">$18M value (3 teams interested)</span>
-                                    <span class="breakdown-arrow">→</span>
-                                </div>
-                                <div class="breakdown-item" onclick="drillDeeper('first-round-pick')">
-                                    <span class="breakdown-label">1st Round Pick (#22):</span>
-                                    <span class="breakdown-value green">$14M equivalent value</span>
-                                    <span class="breakdown-arrow">→</span>
-                                </div>
-                            </div>
-                            
-                            <div class="breakdown-section">
-                                <div class="section-label">MARKET CONDITIONS</div>
-                                <div class="breakdown-item" onclick="drillDeeper('cb-market')">
-                                    <span class="breakdown-label">CB Market Demand:</span>
-                                    <span class="breakdown-value green">Very High (8 teams need)</span>
-                                    <span class="breakdown-arrow">→</span>
-                                </div>
-                                <div class="breakdown-item" onclick="drillDeeper('ol-market')">
-                                    <span class="breakdown-label">OL Market Demand:</span>
-                                    <span class="breakdown-value yellow">Moderate (4 teams need)</span>
-                                    <span class="breakdown-arrow">→</span>
-                                </div>
-                            </div>
-                            
-                            <div class="breakdown-actions">
-                                <button class="breakdown-action-btn" onclick="generateTradeReport()">Trade Valuation Report</button>
-                                <button class="breakdown-action-btn secondary" onclick="openTradeSimulator()">Trade Simulator</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Additional Concept Modules -->
-                    <div class="intel-module" onclick="drillDown('free-agency')">
-                        <div class="module-header">
-                            <div class="module-title">Free Agency</div>
-                            <div class="module-indicator"></div>
-                        </div>
-                        <div class="module-data">
-                            <div class="data-value">12 Targets</div>
-                            <div class="data-change">+3</div>
-                        </div>
-                    </div>
-
-                    <div class="intel-module" onclick="drillDown('injury-management')">
-                        <div class="module-header">
-                            <div class="module-title">Injury Management</div>
-                            <div class="module-indicator"></div>
-                        </div>
-                        <div class="module-data">
-                            <div class="data-value">3 Active</div>
-                            <div class="data-change">-2</div>
-                        </div>
-                    </div>
-
-                    <div class="intel-module" onclick="drillDown('performance-analytics')">
-                        <div class="module-header">
-                            <div class="module-title">Performance Analytics</div>
-                            <div class="module-indicator"></div>
-                        </div>
-                        <div class="module-data">
-                            <div class="data-value">89.3%</div>
-                            <div class="data-change">+1.2%</div>
-                        </div>
-                    </div>
-
-                    <div class="intel-module" onclick="drillDown('opponent-analysis')">
-                        <div class="module-header">
-                            <div class="module-title">Opponent Analysis</div>
-                            <div class="module-indicator"></div>
-                        </div>
-                        <div class="module-data">
-                            <div class="data-value">Next: DAL</div>
-                            <div class="data-change">Week 10</div>
-                        </div>
-                    </div>
-
-                    <div class="intel-module" onclick="drillDown('practice-squad')">
-                        <div class="module-header">
-                            <div class="module-title">Practice Squad</div>
-                            <div class="module-indicator"></div>
-                        </div>
-                        <div class="module-data">
-                            <div class="data-value">16/16</div>
-                            <div class="data-change">Full</div>
-                        </div>
-                    </div>
-
-                    <div class="intel-module" onclick="drillDown('coaching-staff')">
-                        <div class="module-header">
-                            <div class="module-title">Coaching Staff</div>
-                            <div class="module-indicator"></div>
-                        </div>
-                        <div class="module-data">
-                            <div class="data-value">24 Active</div>
-                            <div class="data-change">+1</div>
-                        </div>
-                    </div>
-
-                    <div class="intel-module" onclick="drillDown('scouting-reports')">
-                        <div class="module-header">
-                            <div class="module-title">Scouting Reports</div>
-                            <div class="module-indicator"></div>
-                        </div>
-                        <div class="module-data">
-                            <div class="data-value">247 Active</div>
-                            <div class="data-change">+15</div>
-                        </div>
-                    </div>
-
-                    <div class="intel-module" onclick="drillDown('facilities')">
-                        <div class="module-header">
-                            <div class="module-title">Facilities</div>
-                            <div class="module-indicator"></div>
-                        </div>
-                        <div class="module-data">
-                            <div class="data-value">95% Util</div>
-                            <div class="data-change">+3%</div>
-                        </div>
-                    </div>
-
-                    <div class="intel-module" onclick="drillDown('fan-engagement')">
-                        <div class="module-header">
-                            <div class="module-title">Fan Engagement</div>
-                            <div class="module-indicator"></div>
-                        </div>
-                        <div class="module-data">
-                            <div class="data-value">92.7%</div>
-                            <div class="data-change">+2.1%</div>
-                        </div>
-                    </div>
-
-                    <div class="intel-module" onclick="drillDown('revenue-streams')">
-                        <div class="module-header">
-                            <div class="module-title">Revenue Streams</div>
-                            <div class="module-indicator"></div>
-                        </div>
-                        <div class="module-data">
-                            <div class="data-value">$847M</div>
-                            <div class="data-change">+12%</div>
-                        </div>
-                    </div>
-
-                    <div class="intel-module" onclick="drillDown('compliance')">
-                        <div class="module-header">
-                            <div class="module-title">Compliance</div>
-                            <div class="module-indicator"></div>
-                        </div>
-                        <div class="module-data">
-                            <div class="data-value">100%</div>
-                            <div class="data-change">✓</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Action Operations Panel -->
-            <div class="operations-panel">
-                <div class="operation-section">
-                    <div class="section-title">Quick Actions</div>
-                    <button class="quick-action" onclick="quickAction('trade-calculator')">Trade Calculator</button>
-                    <button class="quick-action" onclick="quickAction('waiver-claims')">Waiver Claims</button>
-                    <button class="quick-action" onclick="quickAction('contract-restructure')">Contract Restructure</button>
-                    <button class="quick-action secondary">Practice Squad</button>
-                    <button class="quick-action secondary">Injury Report</button>
-                </div>
-
-                <div class="operation-section">
-                    <div class="section-title">Live Feed</div>
-                    <div class="live-feed">
-                        <div class="feed-item">
-                            <span class="feed-time">2:47 PM</span> - Jalen Hurts completed 85% of passes in practice
-                        </div>
-                        <div class="feed-item">
-                            <span class="feed-time">2:34 PM</span> - Saquon Barkley logged 47 carries this week
-                        </div>
-                        <div class="feed-item">
-                            <span class="feed-time">2:22 PM</span> - A.J. Brown cleared concussion protocol
-                        </div>
-                        <div class="feed-item">
-                            <span class="feed-time">2:15 PM</span> - Lane Johnson contract extension talks ongoing
-                        </div>
-                        <div class="feed-item">
-                            <span class="feed-time">2:08 PM</span> - Cowboys released WR Brandin Cooks
-                        </div>
-                        <div class="feed-item">
-                            <span class="feed-time">1:55 PM</span> - Defensive coordinator meeting scheduled 3 PM
-                        </div>
-                        <div class="feed-item">
-                            <span class="feed-time">1:42 PM</span> - Medical staff reports 3 players questionable
-                        </div>
-                    </div>
-                </div>
-
-                <div class="operation-section">
-                    <div class="section-title">Smart Alerts</div>
-                    <button class="quick-action secondary">Cap Violations (0)</button>
-                    <button class="quick-action secondary">Contract Deadlines (2)</button>
-                    <button class="quick-action secondary">Roster Moves (3)</button>
-                </div>
-
-                <div class="operation-section">
-                    <div class="section-title">AI Recommendations</div>
-                    <button class="quick-action" onclick="aiRecommendation('trades')">Review Suggested Trades</button>
-                    <button class="quick-action secondary">Scout Recommendations</button>
-                    <button class="quick-action secondary">Cap Optimizations</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Operations View -->
-        <div class="view-section" id="operations-view">
-            <div class="command-dashboard">
+        <!-- Main Command Center View -->
+        <div id="mainCommandCenter">
+            <!-- Dynamic Command Dashboard -->
+            <div class="view-section active" id="command-view">
+                <div class="command-dashboard">
+                <!-- AI-Powered Insights Sidebar -->
                 <div class="insights-sidebar">
-                    <div class="insight-section">
+                    <div class="insight-section priority-alerts">
                         <div class="insight-header">
-                            <div class="insight-icon warning-icon"></div>
-                            <div class="insight-title">Daily Operations</div>
+                            <div class="insight-icon alert-icon"></div>
+                            <div class="insight-title">Priority Alert</div>
                         </div>
                         <div class="insight-content">
-                            Facility management, staff coordination, and operational efficiency monitoring.
+                            Jalen Carter injury concern - monitoring practice participation. Consider backup DT options.
                         </div>
-                        <button class="insight-action">View Operations</button>
+                        <button class="insight-action" onclick="analyzeInsight('depth-chart')">Analyze Depth Chart</button>
                     </div>
-                </div>
-                <div class="intelligence-grid">
-                    <div style="padding: 2rem; text-align: center; color: var(--amt-accent);">
-                        <h2>Operations Management Center</h2>
-                        <p>Comprehensive facility and operational management interface coming soon...</p>
-                    </div>
-                </div>
-                <div class="operations-panel">
-                    <div class="operation-section">
-                        <div class="section-title">Analytics Tools</div>
-                        <button class="quick-action">Player Metrics</button>
-                        <button class="quick-action">Team Analytics</button>
-                        <button class="quick-action">Predictive Models</button>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Draft View -->
-        <div class="view-section" id="draft-view">
-            <div class="command-dashboard">
-                <div class="insights-sidebar">
+                    <div class="insight-section market-intel">
+                        <div class="insight-header">
+                            <div class="insight-icon chart-icon"></div>
+                            <div class="insight-title">Market Intel</div>
+                        </div>
+                        <div class="insight-content">
+                            3 teams showing interest in available WR Calvin Ridley. Potential opportunity for depth.
+                        </div>
+                        <button class="insight-action" onclick="analyzeInsight('scout-report')">Scout Report</button>
+                    </div>
+
+                    <div class="insight-section">
+                        <div class="insight-header">
+                            <div class="insight-icon bulb-icon"></div>
+                            <div class="insight-title">AI Suggestion</div>
+                            <div class="gm-photo">
+                                <div class="gm-avatar">MS</div>
+                            </div>
+                        </div>
+                        <div class="insight-content">
+                            Cap space optimization: Restructure Lane Johnson contract to free $4.2M for mid-season moves.
+                        </div>
+                        <button class="insight-action" onclick="analyzeInsight('scenarios')">Run Scenarios</button>
+                    </div>
+
                     <div class="insight-section">
                         <div class="insight-header">
                             <div class="insight-icon target-icon"></div>
-                            <div class="insight-title">Draft Strategy</div>
+                            <div class="insight-title">Opportunity</div>
                         </div>
                         <div class="insight-content">
-                            2025 NFL Draft approaching. Focus on CB and Safety positions for defensive secondary upgrade.
+                            Cardinals releasing LB Zaven Collins. Perfect fit for Eagles linebacker needs.
                         </div>
-                        <button class="insight-action">View Draft Board</button>
+                        <button class="insight-action" onclick="analyzeInsight('evaluate-fit')">Evaluate Fit</button>
                     </div>
+
                     <div class="insight-section">
                         <div class="insight-header">
-                            <div class="insight-icon chart-icon"></div>
-                            <div class="insight-title">Trade Opportunities</div>
+                            <div class="insight-icon warning-icon"></div>
+                            <div class="insight-title">Risk Monitor</div>
                         </div>
                         <div class="insight-content">
-                            Cardinals interested in trading up. Potential to gain additional 3rd round pick.
+                            Darius Slay contract void risk if not extended by March 15th. $8.5M dead cap exposure.
                         </div>
-                        <button class="insight-action">Calculate Trade</button>
+                        <button class="insight-action" onclick="analyzeInsight('contract-analysis')">Contract Analysis</button>
+                    </div>
+
+                    <div class="insight-section schedule-section">
+                        <div class="insight-header">
+                            <div class="insight-icon calendar-icon"></div>
+                            <div class="insight-title">Schedule Analysis</div>
+                        </div>
+                        <div class="insight-content">
+                            Upcoming critical games require strategic planning. AI scenario modeling available.
+                        </div>
+                        
+                        <div style="margin: 0.75rem 0;">
+                            <div class="schedule-item" onclick="analyzeSchedule('dal-week10')">
+                                <div class="schedule-game">
+                                    <div class="opponent">vs DAL</div>
+                                    <div class="game-info">Week 10 • Sun 1:00 PM</div>
+                                </div>
+                                <div class="game-status upcoming">Upcoming</div>
+                            </div>
+                            
+                            <div class="schedule-item" onclick="analyzeSchedule('was-week11')">
+                                <div class="schedule-game">
+                                    <div class="opponent">@ WAS</div>
+                                    <div class="game-info">Week 11 • Thu 8:15 PM</div>
+                                </div>
+                                <div class="game-status analyzing">Analyzing</div>
+                            </div>
+                            
+                            <div class="schedule-item" onclick="analyzeSchedule('lac-week12')">
+                                <div class="schedule-game">
+                                    <div class="opponent">vs LAC</div>
+                                    <div class="game-info">Week 12 • Sun 4:25 PM</div>
+                                </div>
+                                <div class="game-status upcoming">Upcoming</div>
+                            </div>
+                        </div>
+                        
+                        <button class="insight-action" onclick="analyzeInsight('schedule-scenarios')">Schedule Scenarios</button>
                     </div>
                 </div>
+
+                <!-- Executive Intelligence Grid -->
                 <div class="intelligence-grid">
-                    <div style="padding: 2rem; text-align: center; color: var(--amt-accent);">
-                        <h2>2025 NFL Draft War Room</h2>
-                        <p>Comprehensive draft analysis and strategy planning interface coming soon...</p>
+                    <!-- Command Overview -->
+                    <div class="command-overview">
+                        <div class="intel-card" onclick="drillDown('salary-cap')">
+                            <div class="card-header">
+                                <div class="card-title">Salary Cap</div>
+                                <div class="card-status"></div>
+                            </div>
+                            <div class="card-metric">$4.2M</div>
+                            <div class="card-label">Available Space</div>
+                            <div class="card-trend">↗ +$1.2M this week</div>
+                            <button class="drill-down-btn">→</button>
+                        </div>
+
+                        <div class="intel-card" onclick="drillDown('performance')">
+                            <div class="card-header">
+                                <div class="card-title">Team Performance</div>
+                                <div class="card-status"></div>
+                            </div>
+                            <div class="card-metric">8.9</div>
+                            <div class="card-label">Overall Rating</div>
+                            <div class="card-trend">↗ +0.3 vs last week</div>
+                            <button class="drill-down-btn">→</button>
+                        </div>
+
+                        <div class="intel-card" onclick="drillDown('playoff-odds')">
+                            <div class="card-header">
+                                <div class="card-title">Playoff Odds</div>
+                                <div class="card-status"></div>
+                            </div>
+                            <div class="card-metric">91%</div>
+                            <div class="card-label">Championship Path</div>
+                            <div class="card-trend">↗ +5% this week</div>
+                            <button class="drill-down-btn">→</button>
+                        </div>
+                    </div>
+
+                    <!-- Deep Intelligence Panel -->
+                    <div class="deep-intel">
+                        <!-- Enhanced Roster Health Module -->
+                        <div class="intel-module" onclick="toggleRosterHealth()">
+                            <div class="module-header">
+                                <div class="module-title">Roster Health</div>
+                                <div class="module-indicator"></div>
+                            </div>
+                            <div class="module-data">
+                                <div class="data-value">94%</div>
+                                <div class="data-change">+2%</div>
+                            </div>
+                            
+                            <!-- Scrollable Preview Panel (Collapsed State) -->
+                            <div class="module-preview" id="roster-preview">
+                                <div class="preview-scroll">
+                                    <div class="preview-item" onclick="drillDeeper('injury-rate')">
+                                        <span class="preview-label">Injury Rate</span>
+                                        <span class="preview-value green">6%</span>
+                                    </div>
+                                    <div class="preview-item" onclick="drillDeeper('age-profile')">
+                                        <span class="preview-label">Age Profile</span>
+                                        <span class="preview-value green">26.4y</span>
+                                    </div>
+                                    <div class="preview-item" onclick="drillDeeper('depth-quality')">
+                                        <span class="preview-label">Depth Quality</span>
+                                        <span class="preview-value yellow">78%</span>
+                                    </div>
+                                    <div class="preview-item" onclick="drillDeeper('durability')">
+                                        <span class="preview-label">Durability</span>
+                                        <span class="preview-value green">91%</span>
+                                    </div>
+                                    <div class="preview-item" onclick="drillDeeper('practice-participation')">
+                                        <span class="preview-label">Practice</span>
+                                        <span class="preview-value green">96%</span>
+                                    </div>
+                                    <div class="preview-item" onclick="drillDeeper('load-management')">
+                                        <span class="preview-label">Load Mgmt</span>
+                                        <span class="preview-value green">100%</span>
+                                    </div>
+                                    <div class="preview-item" onclick="drillDeeper('recovery-metrics')">
+                                        <span class="preview-label">Recovery</span>
+                                        <span class="preview-value green">89%</span>
+                                    </div>
+                                    <div class="preview-item" onclick="drillDeeper('conditioning')">
+                                        <span class="preview-label">Conditioning</span>
+                                        <span class="preview-value green">92%</span>
+                                    </div>
+                                    <div class="preview-item" onclick="drillDeeper('roster-composition')">
+                                        <span class="preview-label">Roster</span>
+                                        <span class="preview-value green">53/53</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Detailed Breakdown (Expanded State) -->
+                            <div class="module-breakdown" id="roster-breakdown" style="display: none;">
+                                <div class="breakdown-header">
+                                    <span class="breakdown-title">COMPREHENSIVE HEALTH ANALYSIS</span>
+                                    <span class="breakdown-updated">Updated 3 min ago</span>
+                                </div>
+                                
+                                <div class="breakdown-section">
+                                    <div class="section-label">PHYSICAL METRICS</div>
+                                    <div class="breakdown-item" onclick="drillDeeper('injury-rate')">
+                                        <span class="breakdown-label">Injury Rate:</span>
+                                        <span class="breakdown-value green">6% (League Avg: 12%)</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="drillDeeper('age-profile')">
+                                        <span class="breakdown-label">Age Profile:</span>
+                                        <span class="breakdown-value green">26.4 yrs (Optimal)</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="drillDeeper('durability')">
+                                        <span class="breakdown-label">Durability Score:</span>
+                                        <span class="breakdown-value green">91% (5-yr avg)</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="breakdown-section">
+                                    <div class="section-label">OPERATIONAL METRICS</div>
+                                    <div class="breakdown-item" onclick="drillDeeper('practice-participation')">
+                                        <span class="breakdown-label">Practice Participation:</span>
+                                        <span class="breakdown-value green">96% (Full speed)</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="drillDeeper('load-management')">
+                                        <span class="breakdown-label">Load Management:</span>
+                                        <span class="breakdown-value green">Optimized (0 overuse)</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="drillDeeper('depth-quality')">
+                                        <span class="breakdown-label">Depth Quality:</span>
+                                        <span class="breakdown-value yellow">78% (CB concern)</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="breakdown-section">
+                                    <div class="section-label">PERFORMANCE METRICS</div>
+                                    <div class="breakdown-item" onclick="drillDeeper('recovery-metrics')">
+                                        <span class="breakdown-label">Recovery Rate:</span>
+                                        <span class="breakdown-value green">89% (Above target)</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="drillDeeper('conditioning')">
+                                        <span class="breakdown-label">Conditioning Level:</span>
+                                        <span class="breakdown-value green">92% (Peak form)</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="drillDeeper('mental-health')">
+                                        <span class="breakdown-label">Mental Health Index:</span>
+                                        <span class="breakdown-value green">94% (Excellent)</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="breakdown-actions">
+                                    <button class="breakdown-action-btn" onclick="generateHealthReport()">Full Health Report</button>
+                                    <button class="breakdown-action-btn secondary" onclick="scheduleCheckup()">Schedule Team Checkup</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Enhanced Contract Efficiency Module -->
+                        <div class="intel-module" onclick="toggleContractEfficiency()">
+                            <div class="module-header">
+                                <div class="module-title">Contract Efficiency</div>
+                                <div class="module-indicator"></div>
+                            </div>
+                            <div class="module-data">
+                                <div class="data-value">87%</div>
+                                <div class="data-change">-1%</div>
+                            </div>
+                            
+                            <!-- Scrollable Preview Panel (Collapsed State) -->
+                            <div class="module-preview" id="contract-preview">
+                                <div class="preview-scroll">
+                                    <div class="preview-item" onclick="drillDeeper('cap-efficiency')">
+                                        <span class="preview-label">Cap Efficiency</span>
+                                        <span class="preview-value green">94%</span>
+                                    </div>
+                                    <div class="preview-item" onclick="drillDeeper('contract-deadlines')">
+                                        <span class="preview-label">Deadlines</span>
+                                        <span class="preview-value red">2 urgent</span>
+                                    </div>
+                                    <div class="preview-item" onclick="drillDeeper('restructure-opportunities')">
+                                        <span class="preview-label">Restructures</span>
+                                        <span class="preview-value yellow">$4.2M</span>
+                                    </div>
+                                    <div class="preview-item" onclick="drillDeeper('performance-value')">
+                                        <span class="preview-label">Performance</span>
+                                        <span class="preview-value green">89%</span>
+                                    </div>
+                                    <div class="preview-item" onclick="drillDeeper('agent-relations')">
+                                        <span class="preview-label">Agent Relations</span>
+                                        <span class="preview-value green">92%</span>
+                                    </div>
+                                    <div class="preview-item" onclick="drillDeeper('trade-scenarios')">
+                                        <span class="preview-label">Trade Value</span>
+                                        <span class="preview-value yellow">$47M</span>
+                                    </div>
+                                    <div class="preview-item" onclick="drillDeeper('extension-targets')">
+                                        <span class="preview-label">Extensions</span>
+                                        <span class="preview-value green">3 priority</span>
+                                    </div>
+                                    <div class="preview-item" onclick="drillDeeper('salary-distribution')">
+                                        <span class="preview-label">Distribution</span>
+                                        <span class="preview-value green">Balanced</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Enhanced Detailed Breakdown (Expanded State) -->
+                            <div class="module-breakdown" id="contract-breakdown" style="display: none;">
+                                <div class="breakdown-header">
+                                    <span class="breakdown-title">CONTRACT INTELLIGENCE ANALYSIS</span>
+                                    <span class="breakdown-updated">Updated 5 min ago</span>
+                                </div>
+                                
+                                <div class="breakdown-section">
+                                    <div class="section-label">URGENT ACTIONS</div>
+                                    <div class="breakdown-item" onclick="contractDetails('slay')">
+                                        <span class="breakdown-label">Darius Slay:</span>
+                                        <span class="breakdown-value red">Void: Mar 15 ($8.5M dead cap)</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="contractDetails('johnson')">
+                                        <span class="breakdown-label">Lane Johnson:</span>
+                                        <span class="breakdown-value yellow">Extension Window: Jun 1</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="breakdown-section">
+                                    <div class="section-label">EFFICIENCY METRICS</div>
+                                    <div class="breakdown-item" onclick="drillDeeper('cap-efficiency')">
+                                        <span class="breakdown-label">Cap Efficiency:</span>
+                                        <span class="breakdown-value green">94% (Top 5 NFL)</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="drillDeeper('performance-value')">
+                                        <span class="breakdown-label">Performance Value:</span>
+                                        <span class="breakdown-value green">89% vs contract</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="drillDeeper('salary-distribution')">
+                                        <span class="breakdown-label">Salary Distribution:</span>
+                                        <span class="breakdown-value green">Balanced across positions</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="breakdown-actions">
+                                    <button class="breakdown-action-btn" onclick="generateContractReport()">Contract Analysis Report</button>
+                                    <button class="breakdown-action-btn secondary" onclick="scheduleAgentMeetings()">Schedule Agent Meetings</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Enhanced Draft Capital Module -->
+                        <div class="intel-module" onclick="toggleDraftCapital()">
+                            <div class="module-header">
+                                <div class="module-title">Draft Capital</div>
+                                <div class="module-indicator"></div>
+                            </div>
+                            <div class="module-data">
+                                <div class="data-value">7 Picks</div>
+                                <div class="data-change">+1</div>
+                            </div>
+                            
+                            <!-- Scrollable Preview Panel (Collapsed State) -->
+                            <div class="module-preview" id="draft-preview">
+                                <div class="preview-scroll">
+                                    <div class="preview-item" onclick="drillDeeper('draft-value')">
+                                        <span class="preview-label">Total Value</span>
+                                        <span class="preview-value green">1,848 pts</span>
+                                    </div>
+                                    <div class="preview-item" onclick="drillDeeper('round-1')">
+                                        <span class="preview-label">Round 1</span>
+                                        <span class="preview-value green">#22</span>
+                                    </div>
+                                    <div class="preview-item" onclick="drillDeeper('round-2')">
+                                        <span class="preview-label">Round 2</span>
+                                        <span class="preview-value green">#54</span>
+                                    </div>
+                                    <div class="preview-item" onclick="drillDeeper('position-needs')">
+                                        <span class="preview-label">Position Needs</span>
+                                        <span class="preview-value yellow">CB priority</span>
+                                    </div>
+                                    <div class="preview-item" onclick="drillDeeper('trade-opportunities')">
+                                        <span class="preview-label">Trade Ops</span>
+                                        <span class="preview-value green">3 active</span>
+                                    </div>
+                                    <div class="preview-item" onclick="drillDeeper('draft-strategy')">
+                                        <span class="preview-label">Strategy</span>
+                                        <span class="preview-value green">BPA 67%</span>
+                                    </div>
+                                    <div class="preview-item" onclick="drillDeeper('board-rankings')">
+                                        <span class="preview-label">Big Board</span>
+                                        <span class="preview-value green">Updated</span>
+                                    </div>
+                                    <div class="preview-item" onclick="drillDeeper('compensatory')">
+                                        <span class="preview-label">Comp Picks</span>
+                                        <span class="preview-value green">2 expected</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Enhanced Detailed Breakdown (Expanded State) -->
+                            <div class="module-breakdown" id="draft-breakdown" style="display: none;">
+                                <div class="breakdown-header">
+                                    <span class="breakdown-title">DRAFT CAPITAL ANALYSIS</span>
+                                    <span class="breakdown-updated">Updated 1 min ago</span>
+                                </div>
+                                
+                                <div class="breakdown-section">
+                                    <div class="section-label">DRAFT PICKS INVENTORY</div>
+                                    <div class="breakdown-item" onclick="drillDeeper('round-1')">
+                                        <span class="breakdown-label">Round 1 (#22):</span>
+                                        <span class="breakdown-value green">1,240 points</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="drillDeeper('round-2')">
+                                        <span class="breakdown-label">Round 2 (#54):</span>
+                                        <span class="breakdown-value green">380 points</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="drillDeeper('round-3')">
+                                        <span class="breakdown-label">Round 3 (#87):</span>
+                                        <span class="breakdown-value green">136 points</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="drillDeeper('later-rounds')">
+                                        <span class="breakdown-label">Rounds 4-7:</span>
+                                        <span class="breakdown-value green">92 points (4 picks)</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="breakdown-section">
+                                    <div class="section-label">POSITION PRIORITIES</div>
+                                    <div class="breakdown-item" onclick="drillDeeper('cb-need')">
+                                        <span class="breakdown-label">Cornerback:</span>
+                                        <span class="breakdown-value red">High Priority</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="drillDeeper('safety-need')">
+                                        <span class="breakdown-label">Safety:</span>
+                                        <span class="breakdown-value red">High Priority</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="drillDeeper('lb-need')">
+                                        <span class="breakdown-label">Linebacker:</span>
+                                        <span class="breakdown-value yellow">Medium Priority</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="breakdown-actions">
+                                    <button class="breakdown-action-btn" onclick="generateDraftReport()">Draft Strategy Report</button>
+                                    <button class="breakdown-action-btn secondary" onclick="runDraftSimulator()">Run Draft Simulator</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Enhanced Trade Assets Module -->
+                        <div class="intel-module" onclick="toggleTradeAssets()">
+                            <div class="module-header">
+                                <div class="module-title">Trade Assets</div>
+                                <div class="module-indicator"></div>
+                            </div>
+                            <div class="module-data">
+                                <div class="data-value">$47M</div>
+                                <div class="data-change">↗</div>
+                            </div>
+                            
+                            <!-- Scrollable Preview Panel (Collapsed State) -->
+                            <div class="module-preview" id="trade-preview">
+                                <div class="preview-scroll">
+                                    <div class="preview-item" onclick="drillDeeper('asset-valuation')">
+                                        <span class="preview-label">Total Value</span>
+                                        <span class="preview-value green">$47M</span>
+                                    </div>
+                                    <div class="preview-item" onclick="drillDeeper('player-assets')">
+                                        <span class="preview-label">Player Assets</span>
+                                        <span class="preview-value green">8 tradeable</span>
+                                    </div>
+                                    <div class="preview-item" onclick="drillDeeper('draft-picks')">
+                                        <span class="preview-label">Draft Picks</span>
+                                        <span class="preview-value green">7 available</span>
+                                    </div>
+                                    <div class="preview-item" onclick="drillDeeper('cap-space')">
+                                        <span class="preview-label">Cap Space</span>
+                                        <span class="preview-value yellow">$4.2M</span>
+                                    </div>
+                                    <div class="preview-item" onclick="drillDeeper('market-demand')">
+                                        <span class="preview-label">Market Demand</span>
+                                        <span class="preview-value green">High</span>
+                                    </div>
+                                    <div class="preview-item" onclick="drillDeeper('trade-interest')">
+                                        <span class="preview-label">Active Interest</span>
+                                        <span class="preview-value green">5 teams</span>
+                                    </div>
+                                    <div class="preview-item" onclick="drillDeeper('contract-flexibility')">
+                                        <span class="preview-label">Contract Flex</span>
+                                        <span class="preview-value green">89%</span>
+                                    </div>
+                                    <div class="preview-item" onclick="drillDeeper('deadline-pressure')">
+                                        <span class="preview-label">Deadline Press</span>
+                                        <span class="preview-value yellow">Medium</span>
+                                    </div>
+                                    <div class="preview-item" onclick="drillDeeper('leverage-position')">
+                                        <span class="preview-label">Leverage</span>
+                                        <span class="preview-value green">Strong</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Enhanced Detailed Breakdown (Expanded State) -->
+                            <div class="module-breakdown" id="trade-breakdown" style="display: none;">
+                                <div class="breakdown-header">
+                                    <span class="breakdown-title">TRADE ASSET ANALYSIS</span>
+                                    <span class="breakdown-updated">Updated 7 min ago</span>
+                                </div>
+                                
+                                <div class="breakdown-section">
+                                    <div class="section-label">HIGH-VALUE ASSETS</div>
+                                    <div class="breakdown-item" onclick="drillDeeper('slay-trade-value')">
+                                        <span class="breakdown-label">Darius Slay:</span>
+                                        <span class="breakdown-value green">$12M value (5 teams interested)</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="drillDeeper('johnson-trade-value')">
+                                        <span class="breakdown-label">Lane Johnson:</span>
+                                        <span class="breakdown-value green">$18M value (3 teams interested)</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="drillDeeper('first-round-pick')">
+                                        <span class="breakdown-label">1st Round Pick (#22):</span>
+                                        <span class="breakdown-value green">$14M equivalent value</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="breakdown-section">
+                                    <div class="section-label">MARKET CONDITIONS</div>
+                                    <div class="breakdown-item" onclick="drillDeeper('cb-market')">
+                                        <span class="breakdown-label">CB Market Demand:</span>
+                                        <span class="breakdown-value green">Very High (8 teams need)</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                    <div class="breakdown-item" onclick="drillDeeper('ol-market')">
+                                        <span class="breakdown-label">OL Market Demand:</span>
+                                        <span class="breakdown-value yellow">Moderate (4 teams need)</span>
+                                        <span class="breakdown-arrow">→</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="breakdown-actions">
+                                    <button class="breakdown-action-btn" onclick="generateTradeReport()">Trade Valuation Report</button>
+                                    <button class="breakdown-action-btn secondary" onclick="openTradeSimulator()">Trade Simulator</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Additional Concept Modules -->
+                        <div class="intel-module" onclick="drillDown('free-agency')">
+                            <div class="module-header">
+                                <div class="module-title">Free Agency</div>
+                                <div class="module-indicator"></div>
+                            </div>
+                            <div class="module-data">
+                                <div class="data-value">12 Targets</div>
+                                <div class="data-change">+3</div>
+                            </div>
+                        </div>
+
+                        <div class="intel-module" onclick="drillDown('injury-management')">
+                            <div class="module-header">
+                                <div class="module-title">Injury Management</div>
+                                <div class="module-indicator"></div>
+                            </div>
+                            <div class="module-data">
+                                <div class="data-value">3 Active</div>
+                                <div class="data-change">-2</div>
+                            </div>
+                        </div>
+
+                        <div class="intel-module" onclick="drillDown('performance-analytics')">
+                            <div class="module-header">
+                                <div class="module-title">Performance Analytics</div>
+                                <div class="module-indicator"></div>
+                            </div>
+                            <div class="module-data">
+                                <div class="data-value">89.3%</div>
+                                <div class="data-change">+1.2%</div>
+                            </div>
+                        </div>
+
+                        <div class="intel-module" onclick="drillDown('opponent-analysis')">
+                            <div class="module-header">
+                                <div class="module-title">Opponent Analysis</div>
+                                <div class="module-indicator"></div>
+                            </div>
+                            <div class="module-data">
+                                <div class="data-value">Next: DAL</div>
+                                <div class="data-change">Week 10</div>
+                            </div>
+                        </div>
+
+                        <div class="intel-module" onclick="drillDown('practice-squad')">
+                            <div class="module-header">
+                                <div class="module-title">Practice Squad</div>
+                                <div class="module-indicator"></div>
+                            </div>
+                            <div class="module-data">
+                                <div class="data-value">16/16</div>
+                                <div class="data-change">Full</div>
+                            </div>
+                        </div>
+
+                        <div class="intel-module" onclick="drillDown('coaching-staff')">
+                            <div class="module-header">
+                                <div class="module-title">Coaching Staff</div>
+                                <div class="module-indicator"></div>
+                            </div>
+                            <div class="module-data">
+                                <div class="data-value">24 Active</div>
+                                <div class="data-change">+1</div>
+                            </div>
+                        </div>
+
+                        <div class="intel-module" onclick="drillDown('scouting-reports')">
+                            <div class="module-header">
+                                <div class="module-title">Scouting Reports</div>
+                                <div class="module-indicator"></div>
+                            </div>
+                            <div class="module-data">
+                                <div class="data-value">247 Active</div>
+                                <div class="data-change">+15</div>
+                            </div>
+                        </div>
+
+                        <div class="intel-module" onclick="drillDown('facilities')">
+                            <div class="module-header">
+                                <div class="module-title">Facilities</div>
+                                <div class="module-indicator"></div>
+                            </div>
+                            <div class="module-data">
+                                <div class="data-value">95% Util</div>
+                                <div class="data-change">+3%</div>
+                            </div>
+                        </div>
+
+                        <div class="intel-module" onclick="drillDown('fan-engagement')">
+                            <div class="module-header">
+                                <div class="module-title">Fan Engagement</div>
+                                <div class="module-indicator"></div>
+                            </div>
+                            <div class="module-data">
+                                <div class="data-value">92.7%</div>
+                                <div class="data-change">+2.1%</div>
+                            </div>
+                        </div>
+
+                        <div class="intel-module" onclick="drillDown('revenue-streams')">
+                            <div class="module-header">
+                                <div class="module-title">Revenue Streams</div>
+                                <div class="module-indicator"></div>
+                            </div>
+                            <div class="module-data">
+                                <div class="data-value">$847M</div>
+                                <div class="data-change">+12%</div>
+                            </div>
+                        </div>
+
+                        <div class="intel-module" onclick="drillDown('compliance')">
+                            <div class="module-header">
+                                <div class="module-title">Compliance</div>
+                                <div class="module-indicator"></div>
+                            </div>
+                            <div class="module-data">
+                                <div class="data-value">100%</div>
+                                <div class="data-change">✓</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Action Operations Panel -->
                 <div class="operations-panel">
                     <div class="operation-section">
-                        <div class="section-title">Draft Tools</div>
-                        <button class="quick-action">Big Board</button>
-                        <button class="quick-action">Mock Simulator</button>
-                        <button class="quick-action">Trade Calculator</button>
+                        <div class="section-title">Quick Actions</div>
+                        <button class="quick-action" onclick="quickAction('trade-calculator')">Trade Calculator</button>
+                        <button class="quick-action" onclick="quickAction('waiver-claims')">Waiver Claims</button>
+                        <button class="quick-action" onclick="quickAction('contract-restructure')">Contract Restructure</button>
+                        <button class="quick-action secondary">Practice Squad</button>
+                        <button class="quick-action secondary">Injury Report</button>
+                    </div>
+
+                    <div class="operation-section">
+                        <div class="section-title">Live Feed</div>
+                        <div class="live-feed">
+                            <div class="feed-item">
+                                <span class="feed-time">2:47 PM</span> - Jalen Hurts completed 85% of passes in practice
+                            </div>
+                            <div class="feed-item">
+                                <span class="feed-time">2:34 PM</span> - Saquon Barkley logged 47 carries this week
+                            </div>
+                            <div class="feed-item">
+                                <span class="feed-time">2:22 PM</span> - A.J. Brown cleared concussion protocol
+                            </div>
+                            <div class="feed-item">
+                                <span class="feed-time">2:15 PM</span> - Lane Johnson contract extension talks ongoing
+                            </div>
+                            <div class="feed-item">
+                                <span class="feed-time">2:08 PM</span> - Cowboys released WR Brandin Cooks
+                            </div>
+                            <div class="feed-item">
+                                <span class="feed-time">1:55 PM</span> - Defensive coordinator meeting scheduled 3 PM
+                            </div>
+                            <div class="feed-item">
+                                <span class="feed-time">1:42 PM</span> - Medical staff reports 3 players questionable
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="operation-section">
+                        <div class="section-title">Smart Alerts</div>
+                        <button class="quick-action secondary">Cap Violations (0)</button>
+                        <button class="quick-action secondary">Contract Deadlines (2)</button>
+                        <button class="quick-action secondary">Roster Moves (3)</button>
+                    </div>
+
+                    <div class="operation-section">
+                        <div class="section-title">AI Recommendations</div>
+                        <button class="quick-action" onclick="aiRecommendation('trades')">Review Suggested Trades</button>
+                        <button class="quick-action secondary">Scout Recommendations</button>
+                        <button class="quick-action secondary">Cap Optimizations</button>
                     </div>
                 </div>
+            </div>
+
+            <!-- Operations View -->
+            <div class="view-section" id="operations-view">
+                <div class="command-dashboard">
+                    <div class="insights-sidebar">
+                        <div class="insight-section">
+                            <div class="insight-header">
+                                <div class="insight-icon warning-icon"></div>
+                                <div class="insight-title">Daily Operations</div>
+                            </div>
+                            <div class="insight-content">
+                                Facility management, staff coordination, and operational efficiency monitoring.
+                            </div>
+                            <button class="insight-action">View Operations</button>
+                        </div>
+                    </div>
+                    <div class="intelligence-grid">
+                        <div style="padding: 2rem; text-align: center; color: var(--amt-accent);">
+                            <h2>Operations Management Center</h2>
+                            <p>Comprehensive facility and operational management interface coming soon...</p>
+                        </div>
+                    </div>
+                    <div class="operations-panel">
+                        <div class="operation-section">
+                            <div class="section-title">Operations Tools</div>
+                            <button class="quick-action">Facility Management</button>
+                            <button class="quick-action">Staff Coordination</button>
+                            <button class="quick-action">Resource Planning</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics View -->
+            <div class="view-section" id="analytics-view">
+                <div class="command-dashboard">
+                    <div class="insights-sidebar">
+                        <div class="insight-section">
+                            <div class="insight-header">
+                                <div class="insight-icon chart-icon"></div>
+                                <div class="insight-title">Performance Metrics</div>
+                            </div>
+                            <div class="insight-content">
+                                Advanced analytics dashboard for player performance, team efficiency, and predictive modeling.
+                            </div>
+                            <button class="insight-action">View Analytics</button>
+                        </div>
+                    </div>
+                    <div class="intelligence-grid">
+                        <div style="padding: 2rem; text-align: center; color: var(--amt-accent);">
+                            <h2>Advanced Analytics Center</h2>
+                            <p>Comprehensive performance analytics and predictive modeling interface coming soon...</p>
+                        </div>
+                    </div>
+                    <div class="operations-panel">
+                        <div class="operation-section">
+                            <div class="section-title">Analytics Tools</div>
+                            <button class="quick-action">Player Metrics</button>
+                            <button class="quick-action">Team Analytics</button>
+                            <button class="quick-action">Predictive Models</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Draft View -->
+            <div class="view-section" id="draft-view">
+                <div class="command-dashboard">
+                    <div class="insights-sidebar">
+                        <div class="insight-section">
+                            <div class="insight-header">
+                                <div class="insight-icon target-icon"></div>
+                                <div class="insight-title">Draft Strategy</div>
+                            </div>
+                            <div class="insight-content">
+                                2025 NFL Draft approaching. Focus on CB and Safety positions for defensive secondary upgrade.
+                            </div>
+                            <button class="insight-action">View Draft Board</button>
+                        </div>
+                        <div class="insight-section">
+                            <div class="insight-header">
+                                <div class="insight-icon chart-icon"></div>
+                                <div class="insight-title">Trade Opportunities</div>
+                            </div>
+                            <div class="insight-content">
+                                Cardinals interested in trading up. Potential to gain additional 3rd round pick.
+                            </div>
+                            <button class="insight-action">Calculate Trade</button>
+                        </div>
+                    </div>
+                    <div class="intelligence-grid">
+                        <div style="padding: 2rem; text-align: center; color: var(--amt-accent);">
+                            <h2>2025 NFL Draft War Room</h2>
+                            <p>Comprehensive draft analysis and strategy planning interface coming soon...</p>
+                        </div>
+                    </div>
+                    <div class="operations-panel">
+                        <div class="operation-section">
+                            <div class="section-title">Draft Tools</div>
+                            <button class="quick-action">Big Board</button>
+                            <button class="quick-action">Mock Simulator</button>
+                            <button class="quick-action">Trade Calculator</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- Module Detail View - NEW ADDITION -->
+        <div id="moduleDetailView" class="module-detail-view">
+            <div class="detail-header">
+                <div class="detail-nav">
+                    <button class="back-btn" onclick="returnToMain()">← Back to Command</button>
+                    <div class="breadcrumb">
+                        Command Center / <span class="breadcrumb-current" id="currentModuleName">Module</span>
+                    </div>
+                </div>
+            </div>
+            <div class="detail-content" id="moduleDetailContent">
+                <!-- Module content will be loaded here -->
             </div>
         </div>
     </div>
@@ -2155,7 +2299,13 @@
         </div>
     </div>
 
+    <!-- Include salary cap data integration for when module is loaded -->
+    <script src="salary-cap-data-integration.js"></script>
+
     <script>
+        // Global state
+        let currentModule = null;
+
         // View Management
         function switchView(viewName) {
             // Handle HQ navigation
@@ -2185,6 +2335,128 @@
             
             console.log(`Switched to ${viewName.toUpperCase()} view`);
         }
+
+        // ENHANCED DRILL DOWN FUNCTION - MODIFIED TO SUPPORT SALARY CAP MODULE
+        async function drillDown(metric) {
+            if (metric === 'salary-cap') {
+                await loadModuleDetail('salary-cap', 'Salary Cap Management');
+            } else {
+                // For other modules, show coming soon
+                alert(`M.E.L. AI: Deep drilling ${metric} analysis...`);
+            }
+        }
+
+        // NEW FUNCTION: Load module detail view
+        async function loadModuleDetail(moduleId, moduleName) {
+            try {
+                currentModule = moduleId;
+                
+                // Update breadcrumb
+                document.getElementById('currentModuleName').textContent = moduleName;
+                
+                // Show loading state
+                document.getElementById('moduleDetailContent').innerHTML = `
+                    <div style="display: flex; justify-content: center; align-items: center; height: 50vh; font-size: 1.2rem;">
+                        <div style="text-align: center;">
+                            <div class="loading" style="width: 40px; height: 40px; margin: 0 auto 1rem; position: relative;"></div>
+                            Loading ${moduleName}...
+                        </div>
+                    </div>
+                `;
+                
+                // Hide main command center
+                document.getElementById('mainCommandCenter').style.display = 'none';
+                
+                // Show module detail view
+                document.getElementById('moduleDetailView').classList.add('active');
+                
+                if (moduleId === 'salary-cap') {
+                    // Load salary cap module content
+                    const response = await fetch('salary-cap-detail.html');
+                    if (response.ok) {
+                        let htmlContent = await response.text();
+                        
+                        // Extract only the body content (remove html, head tags)
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(htmlContent, 'text/html');
+                        const bodyContent = doc.body.innerHTML;
+                        
+                        // Load the content
+                        document.getElementById('moduleDetailContent').innerHTML = bodyContent;
+                        
+                        // Initialize salary cap data manager if available
+                        if (typeof SalaryCapDataManager !== 'undefined') {
+                            window.salaryCapManager = new SalaryCapDataManager();
+                            console.log('✅ Salary Cap Module loaded with live data integration');
+                        }
+                        
+                        // Re-run any initialization scripts
+                        const scripts = doc.querySelectorAll('script');
+                        scripts.forEach(script => {
+                            if (script.innerHTML) {
+                                try {
+                                    eval(script.innerHTML);
+                                } catch (e) {
+                                    console.warn('Script execution warning:', e);
+                                }
+                            }
+                        });
+                        
+                    } else {
+                        throw new Error('Failed to load salary cap module');
+                    }
+                } else {
+                    // For other modules - placeholder
+                    document.getElementById('moduleDetailContent').innerHTML = `
+                        <div style="padding: 2rem; text-align: center;">
+                            <h2 style="color: var(--amt-accent); margin-bottom: 1rem;">${moduleName}</h2>
+                            <p style="color: var(--amt-light-gray); margin-bottom: 2rem;">This module is under development and will be available soon.</p>
+                            <button class="back-btn" onclick="returnToMain()">Return to Command Center</button>
+                        </div>
+                    `;
+                }
+                
+                // Add to browser history
+                history.pushState({module: moduleId}, moduleName, `#${moduleId}`);
+                
+            } catch (error) {
+                console.error('Error loading module:', error);
+                document.getElementById('moduleDetailContent').innerHTML = `
+                    <div style="padding: 2rem; text-align: center;">
+                        <h2 style="color: var(--amt-red); margin-bottom: 1rem;">Error Loading Module</h2>
+                        <p style="color: var(--amt-light-gray); margin-bottom: 2rem;">There was an error loading ${moduleName}. Please try again.</p>
+                        <button class="back-btn" onclick="returnToMain()">Return to Command Center</button>
+                    </div>
+                `;
+            }
+        }
+
+        // NEW FUNCTION: Return to main command center
+        function returnToMain() {
+            // Hide module detail view
+            document.getElementById('moduleDetailView').classList.remove('active');
+            
+            // Show main command center
+            document.getElementById('mainCommandCenter').style.display = 'block';
+            
+            // Reset current module
+            currentModule = null;
+            
+            // Clear module content to free up memory
+            document.getElementById('moduleDetailContent').innerHTML = '';
+            
+            // Update browser history
+            history.pushState({}, 'Command Center', '#');
+            
+            console.log('✅ Returned to main command center');
+        }
+
+        // Handle browser back button
+        window.addEventListener('popstate', function(event) {
+            if (currentModule) {
+                returnToMain();
+            }
+        });
 
         // Enhanced Toggle Functions
         function toggleRosterHealth() {
@@ -2436,10 +2708,6 @@
             alert(`M.E.L. AI: Analyzing ${game} matchup scenarios and strategic implications...`);
         }
 
-        function drillDown(metric) {
-            alert(`M.E.L. AI: Deep drilling ${metric} analysis... Full breakdown available.`);
-        }
-
         function drillDeeper(metric) {
             alert(`M.E.L. AI: Comprehensive ${metric} analysis initiated. Generating detailed insights...`);
         }
@@ -2493,39 +2761,18 @@
             alert(`M.E.L. AI: Analyzing trade scenario: ${scenario}...`);
         }
 
-        console.log('NFL Executive Command Center - Fully Loaded and Operational');
+        // Add global refresh function for the salary cap module
+        function refreshData() {
+            if (window.salaryCapManager) {
+                window.salaryCapManager.forceRefresh();
+                console.log('🔄 Manual data refresh triggered');
+            } else {
+                alert('Live data refresh functionality will be available when viewing detailed modules.');
+            }
+        }
+
+        // Initialize
+        console.log('🚀 NFL Executive Command Center - Enhanced with Salary Cap Drill-Down functionality initialized');
     </script>
 </body>
-</html>Operations Tools</div>
-                        <button class="quick-action">Facility Management</button>
-                        <button class="quick-action">Staff Coordination</button>
-                        <button class="quick-action">Resource Planning</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Analytics View -->
-        <div class="view-section" id="analytics-view">
-            <div class="command-dashboard">
-                <div class="insights-sidebar">
-                    <div class="insight-section">
-                        <div class="insight-header">
-                            <div class="insight-icon chart-icon"></div>
-                            <div class="insight-title">Performance Metrics</div>
-                        </div>
-                        <div class="insight-content">
-                            Advanced analytics dashboard for player performance, team efficiency, and predictive modeling.
-                        </div>
-                        <button class="insight-action">View Analytics</button>
-                    </div>
-                </div>
-                <div class="intelligence-grid">
-                    <div style="padding: 2rem; text-align: center; color: var(--amt-accent);">
-                        <h2>Advanced Analytics Center</h2>
-                        <p>Comprehensive performance analytics and predictive modeling interface coming soon...</p>
-                    </div>
-                </div>
-                <div class="operations-panel">
-                    <div class="operation-section">
-                        <div class="section-title">
+</html>
