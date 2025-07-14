@@ -203,7 +203,7 @@
             border-color: var(--amt-red);
         }
 
-        /* Module Detail View Styles - NEW ADDITION */
+        /* Module Detail View Styles */
         .module-detail-view {
             display: none;
             position: fixed;
@@ -2260,9 +2260,8 @@
                 </div>
             </div>
         </div>
-        </div>
 
-        <!-- Module Detail View - NEW ADDITION -->
+        <!-- Module Detail View -->
         <div id="moduleDetailView" class="module-detail-view">
             <div class="detail-header">
                 <div class="detail-nav">
@@ -2331,12 +2330,14 @@
             });
             
             // Set active tab
-            event.target.classList.add('active');
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
             
             console.log(`Switched to ${viewName.toUpperCase()} view`);
         }
 
-        // ENHANCED DRILL DOWN FUNCTION - MODIFIED TO SUPPORT SALARY CAP MODULE
+        // ENHANCED DRILL DOWN FUNCTION - FIXED TO WORK WITH SALARY CAP MODULE
         async function drillDown(metric) {
             if (metric === 'salary-cap') {
                 await loadModuleDetail('salary-cap', 'Salary Cap Management');
@@ -2372,38 +2373,51 @@
                 
                 if (moduleId === 'salary-cap') {
                     // Load salary cap module content
-                    const response = await fetch('salary-cap-detail.html');
-                    if (response.ok) {
-                        let htmlContent = await response.text();
-                        
-                        // Extract only the body content (remove html, head tags)
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(htmlContent, 'text/html');
-                        const bodyContent = doc.body.innerHTML;
-                        
-                        // Load the content
-                        document.getElementById('moduleDetailContent').innerHTML = bodyContent;
-                        
-                        // Initialize salary cap data manager if available
-                        if (typeof SalaryCapDataManager !== 'undefined') {
-                            window.salaryCapManager = new SalaryCapDataManager();
-                            console.log('✅ Salary Cap Module loaded with live data integration');
-                        }
-                        
-                        // Re-run any initialization scripts
-                        const scripts = doc.querySelectorAll('script');
-                        scripts.forEach(script => {
-                            if (script.innerHTML) {
-                                try {
-                                    eval(script.innerHTML);
-                                } catch (e) {
-                                    console.warn('Script execution warning:', e);
-                                }
+                    try {
+                        const response = await fetch('salary-cap-detail.html');
+                        if (response.ok) {
+                            let htmlContent = await response.text();
+                            
+                            // Extract only the body content (remove html, head tags)
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(htmlContent, 'text/html');
+                            const bodyContent = doc.body.innerHTML;
+                            
+                            // Load the content
+                            document.getElementById('moduleDetailContent').innerHTML = bodyContent;
+                            
+                            // Initialize salary cap data manager if available
+                            if (typeof SalaryCapDataManager !== 'undefined') {
+                                window.salaryCapManager = new SalaryCapDataManager();
+                                console.log('✅ Salary Cap Module loaded with live data integration');
                             }
-                        });
-                        
-                    } else {
-                        throw new Error('Failed to load salary cap module');
+                            
+                            // Re-run any initialization scripts
+                            const scripts = doc.querySelectorAll('script');
+                            scripts.forEach(script => {
+                                if (script.innerHTML) {
+                                    try {
+                                        eval(script.innerHTML);
+                                    } catch (e) {
+                                        console.warn('Script execution warning:', e);
+                                    }
+                                }
+                            });
+                            
+                        } else {
+                            throw new Error('Failed to load salary cap module');
+                        }
+                    } catch (fetchError) {
+                        // If fetch fails, show fallback message
+                        console.warn('Could not load salary-cap-detail.html, showing fallback');
+                        document.getElementById('moduleDetailContent').innerHTML = `
+                            <div style="padding: 2rem; text-align: center;">
+                                <h2 style="color: var(--amt-accent); margin-bottom: 1rem;">Salary Cap Management</h2>
+                                <p style="color: var(--amt-light-gray); margin-bottom: 2rem;">The detailed salary cap module will load when salary-cap-detail.html is available.</p>
+                                <p style="color: var(--amt-light-gray); margin-bottom: 2rem;">Make sure both salary-cap-detail.html and salary-cap-data-integration.js are in the same directory.</p>
+                                <button class="back-btn" onclick="returnToMain()">Return to Command Center</button>
+                            </div>
+                        `;
                     }
                 } else {
                     // For other modules - placeholder
@@ -2463,12 +2477,14 @@
             const breakdown = document.getElementById('roster-breakdown');
             const preview = document.getElementById('roster-preview');
             
-            if (breakdown.style.display === 'none') {
-                breakdown.style.display = 'block';
-                preview.style.display = 'none';
-            } else {
-                breakdown.style.display = 'none';
-                preview.style.display = 'block';
+            if (breakdown && preview) {
+                if (breakdown.style.display === 'none') {
+                    breakdown.style.display = 'block';
+                    preview.style.display = 'none';
+                } else {
+                    breakdown.style.display = 'none';
+                    preview.style.display = 'block';
+                }
             }
         }
 
@@ -2476,12 +2492,14 @@
             const breakdown = document.getElementById('contract-breakdown');
             const preview = document.getElementById('contract-preview');
             
-            if (breakdown.style.display === 'none') {
-                breakdown.style.display = 'block';
-                preview.style.display = 'none';
-            } else {
-                breakdown.style.display = 'none';
-                preview.style.display = 'block';
+            if (breakdown && preview) {
+                if (breakdown.style.display === 'none') {
+                    breakdown.style.display = 'block';
+                    preview.style.display = 'none';
+                } else {
+                    breakdown.style.display = 'none';
+                    preview.style.display = 'block';
+                }
             }
         }
 
@@ -2489,12 +2507,14 @@
             const breakdown = document.getElementById('draft-breakdown');
             const preview = document.getElementById('draft-preview');
             
-            if (breakdown.style.display === 'none') {
-                breakdown.style.display = 'block';
-                preview.style.display = 'none';
-            } else {
-                breakdown.style.display = 'none';
-                preview.style.display = 'block';
+            if (breakdown && preview) {
+                if (breakdown.style.display === 'none') {
+                    breakdown.style.display = 'block';
+                    preview.style.display = 'none';
+                } else {
+                    breakdown.style.display = 'none';
+                    preview.style.display = 'block';
+                }
             }
         }
 
@@ -2502,12 +2522,14 @@
             const breakdown = document.getElementById('trade-breakdown');
             const preview = document.getElementById('trade-preview');
             
-            if (breakdown.style.display === 'none') {
-                breakdown.style.display = 'block';
-                preview.style.display = 'none';
-            } else {
-                breakdown.style.display = 'none';
-                preview.style.display = 'block';
+            if (breakdown && preview) {
+                if (breakdown.style.display === 'none') {
+                    breakdown.style.display = 'block';
+                    preview.style.display = 'none';
+                } else {
+                    breakdown.style.display = 'none';
+                    preview.style.display = 'block';
+                }
             }
         }
 
@@ -2771,8 +2793,10 @@
             }
         }
 
-        // Initialize
-        console.log('🚀 NFL Executive Command Center - Enhanced with Salary Cap Drill-Down functionality initialized');
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 NFL Executive Command Center - Fixed with Live Data Integration initialized');
+        });
     </script>
 </body>
 </html>
